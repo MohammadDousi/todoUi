@@ -2,7 +2,12 @@ header {
     width: 100%;
     height: 5rem;
     border-bottom: 2px solid #EDEFF2;
-    padding: 0 2rem 0 2rem;
+    padding: 0 1rem 0 1rem;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .exit-div {
@@ -12,6 +17,7 @@ header {
     align-content: center;
     justify-content: flex-end;
     align-items: center;
+    column-gap: 0.5rem;
 }
 
 .btn-header {
@@ -20,7 +26,7 @@ header {
     padding: .7rem;
     border-radius: 50%;
     background-color: #fff;
-    box-shadow: 0 2px 10px rgba(38, 51, 77, 0.10);
+    box-shadow: 0 2px 10px rgba(38, 51, 77, 0.16);
     margin: .3rem;
     cursor: pointer;
 }
@@ -30,7 +36,7 @@ header {
     height: 100%;
 }
 
-#ic-notif-hover{
+#ic-notif-hover {
     display: none;
 }
 
@@ -61,4 +67,76 @@ header {
     position: absolute;
     right: 6px;
     top: 7px;
+}
+
+
+
+/* ///////////////////////////////
+   navbar 
+   /////////////////////////////// */
+
+.center-side-hearder {
+    display: flex;
+    column-gap: 5rem;
+    align-content: center;
+    justify-content: center;
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 1rem;
+    font-size: 13px;
+    font-weight: 600;
+    color: #7D8FB3;
+}
+
+
+.navbar>li:hover {
+    cursor: pointer;
+}
+
+
+/* ///////////////////////////////
+   search 
+   /////////////////////////////// */
+
+.search-header {
+    display: flex;
+    height: 40px;
+    width: 28rem;
+    padding: 0.7rem 1.5rem 0.7rem 1.5rem;
+    border-radius: 1000px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgb(38 51 77 / 16%);
+    margin: 0.3rem;
+    flex-wrap: nowrap;
+    align-content: center;
+    column-gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.search-header input {
+    font-size: 13px;
+    font-weight: 500;
+    width: 100%;
+    text-align: left;
+    color: #7D8FB3;
+}
+
+.search-header input::placeholder {
+    color: #ADB8CC;
+}
+
+
+#search-btn {
+    padding: 5px 0 5px 10px;
+}
+#search-btn:hover{
+    cursor: pointer;
 }
