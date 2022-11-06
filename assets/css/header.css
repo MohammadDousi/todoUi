@@ -97,14 +97,15 @@ header {
     font-size: 13px;
     font-weight: 600;
     color: #7D8FB3;
-    transition: .3s;
+    transition: .3s all;
 }
 
 
 .navbar>li:hover {
     transform: scale(1.1);
-    transition: .3s;
+    transition: .3s all;
     cursor: pointer;
+    color: var(--blue);
 }
 
 

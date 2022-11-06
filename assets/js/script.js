@@ -4,9 +4,29 @@
 
 
 
+
+function seleced_grid(){
+   let select = document.querySelectorAll(".menu-grid div");
+
+   for(let i=0; i < select.length;i++){
+      console.log(i);
+      select[i].style.background = "#000000";
+   }
+}
+
+
+
+   // : 10px;
+   //  transform: scale(1.2);
+   //  transition: .3s;
+   //  background: #fff;
+   //  box-shadow: 0 2px 10px rgb(38 51 77 / 7%);
+   //  cursor: pointer;
+   //  font-weight: 600;
+
+
 let circle_progres = document.querySelector(".progress-circle"),
    all_task = 3 , ok_task = 2 , progressStartValue = 100, progressEndValue = 0, speed = 15;
-
 
    all_task = 360 / all_task ;
    ok_task = all_task * ok_task ;
