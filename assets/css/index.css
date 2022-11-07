@@ -513,5 +513,93 @@ body {
     border-radius: 1000px;
 }
 
+.body-task {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    row-gap: 1rem;
+    margin: 1.5rem 0;
+}
 
+.task {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 0 10px rgb(38 51 77 / 5%);
+    color: #4D5E80;
+    border-radius: 10px;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.img-task {
+    width: 100%;
+    max-height: 140px;
+    object-fit: fill;
+}
+
+.task-div-text {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-div-text div {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.title-task {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ADB8CC;
+}
+
+.text-task {
+    width: 100%;
+    color: #6B7A99;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    margin-top: .5rem;
+}
+
+.img-avator-task {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+}
+
+.task-div-attachment{
+    display: flex;
+    padding: 1rem;
+    flex-wrap: nowrap;
+    place-content: center;
+    align-items: center;
+    column-gap: .6rem;
+}
+
+.task-div-attachment img {
+    width: 20px;
+    height: 20px;
+}
+.task-div-attachment span {
+    color: #6B7A99;
+    font-size: 12px;
+}
