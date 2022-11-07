@@ -332,18 +332,18 @@ body {
 
 
 /* ///////////////////////////////
-   navbar left  
+   header content 
    /////////////////////////////// */
 
 .content {
     height: calc(100vh - 7rem);
     width: 72.5%;
-    margin: 1rem 0rem 1rem 0rem ;
+    margin: 1rem 0rem 1rem 0rem;
     border: 2px solid #EDEFF2;
     border-radius: 15px;
 }
 
-.header-content{
+.header-content {
     height: 10%;
     width: 100%;
     display: flex;
@@ -383,7 +383,7 @@ body {
     color: #ADB8CC;
 }
 
-.navbar-header-content{
+.navbar-header-content {
     display: flex;
     column-gap: 2.5rem;
     font-size: 13px;
@@ -407,12 +407,12 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1.4rem 0;
-    border-bottom: 2px solid transparent;  
+    border-bottom: 2px solid transparent;
 }
 
-.navbar-header-content li:hover{  
+.navbar-header-content li:hover {
     padding: 1.4rem 0;
-    border-bottom: 2px solid var(--blue);  
+    border-bottom: 2px solid var(--blue);
 }
 
 .navbar-header-content li p {
@@ -422,10 +422,11 @@ body {
 
 
 
+/* ///////////////////////////////
+   content 
+   /////////////////////////////// */
 
-
-
-.content-board{
+.content-board {
     height: calc(100% - 10%);
     width: 100%;
     display: flex;
@@ -434,6 +435,83 @@ body {
     align-content: center;
     justify-content: flex-start;
     align-items: flex-start;
+    column-gap: 2rem;
+    padding: 2rem;
 }
 
-.header-task {}
+.main-body-task {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.header-task {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    background: #fff;
+    box-shadow: 0 0 10px rgb(38 51 77 / 5%);
+    color: #4D5E80;
+    border-radius: 10px;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.header-task p {
+    font-size: 12px;
+    font-weight: 900;
+    color: #4D5E80;
+}
+
+.header-task div {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+    padding-right: 1.5rem;
+}
+
+.header-task div span {
+    width: 35px;
+    height: 35px;
+    box-shadow: 0 0 5px rgb(38 51 77 / 25%);
+    margin: 0.7rem 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6B7A99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.purpole {
+    background: var(--purpole);
+}
+
+.yellow {
+    background: var(--yellow);
+}
+
+.cayn {
+    background: var(--cayn);
+}
+
+.green {
+    background: var(--green);
+}
+
+.header-task hr {
+    width: 0.2rem;
+    height: 50%;
+    border-radius: 1000px;
+}
+
+
+
