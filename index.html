@@ -97,53 +97,55 @@
                     <button class="btn-header"><img src="assets/image/icon/ic_profile.svg" alt="ic ic_profile"></button>
                     <button class="btn-header"><img src="assets/image/icon/ic_more.svg" alt="ic more"></button>
                 </div>
-    
+
                 <div class="badge">
                     <div class="progress-circle">
                         <img id="avator-profile" src="assets/image/pic_user/Avatar_profile.png" alt="profile pic">
-                        <div class="badge-count-profile">
-                            <p>2</p>
+                        <div class="count-circle">
+                            <div class="badge-count-profile">
+                                <p>2</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-    
+
                 <div id="text-name-profile">
                     <h4>Hello Alfred Bryant</h4>
-                    <h5>adrain.nader@yahoo.com</h5>    
+                    <h5>adrain.nader@yahoo.com</h5>
                 </div>
             </div>
 
 
             <div class="menu-grid">
-                <div class="grid-item-1" onclick="seleced_grid()">
+                <div class="grid-item-1" id="item1">
                     <img src="assets/image/icon/ic_dashboard.svg" alt="icon dashboard">
                     <p>Dashboard</p>
                 </div>
-                <div class="grid-item-2"onclick="seleced_grid()">
+                <div class="grid-item-2" id="item2">
                     <img src="assets/image/icon/ic_task.svg" alt="icon task">
                     <p>Notes</p>
                 </div>
-                <div class="grid-item-3"onclick="seleced_grid()">
+                <div class="grid-item-3" id="item3">
                     <img src="assets/image/icon/ic_task_gray.svg" alt="icon task">
                     <p>Tasks</p>
                 </div>
-                <div class="grid-item-4"onclick="seleced_grid()">
+                <div class="grid-item-4" id="item4">
                     <img src="assets/image/icon/ic_cloud.svg" alt="icon task">
                     <p>Files</p>
                 </div>
-                <div class="grid-item-5"onclick="seleced_grid()">
+                <div class="grid-item-5" id="item5">
                     <img src="assets/image/icon/ic_mail_gray.svg" alt="icon task">
                     <p>Emails</p>
                 </div>
-                <div class="grid-item-6"onclick="seleced_grid()">
+                <div class="grid-item-6" id="item6">
                     <img src="assets/image/icon/ic_user.svg" alt="icon task">
                     <p>Clients</p>
                 </div>
-                <div class="grid-item-7"onclick="seleced_grid()">
+                <div class="grid-item-7" id="item7">
                     <img src="assets/image/icon/ic_calender.svg" alt="icon task">
                     <p>Calendars</p>
                 </div>
-                <div class="grid-item-8"onclick="seleced_grid()">
+                <div class="grid-item-8" id="item8">
                     <img src="assets/image/icon/ic_repair.svg" alt="icon task">
                     <p>Settings</p>
                 </div>
@@ -161,6 +163,54 @@
         </section>
 
         <section class="content">
+
+            <div class="header-content">
+
+                <ul class="navbar-header-content">
+                    <li>
+                        <img src="assets/image/icon/ic_task_gray.svg" alt="">
+                        <p>List Tasks</p>
+                    </li>
+                    <li>
+                        <img src="assets/image/icon/ic_dashboard_blue.svg" alt="">
+                        <p>Boards</p>
+                        <hr class="hr-li-header-content">
+                    </li>
+                    <li>
+                        <img src="assets/image/icon/ic_calender2.svg" alt="">
+                        <p>Calendar</p>
+                    </li>
+                    <li>
+                        <img src="assets/image/icon/ic_sort.svg" alt="">
+                        <p>Gantt</p>
+                    </li>
+                    <li>
+                        <img src="assets/image/icon/ic_menu_hamberger.svg" alt="">
+                        <p>Timeline</p>
+                    </li>
+                    <li>
+                        <img src="assets/image/icon/ic_grow-up.svg" alt="">
+                        <p>Activity</p>
+                    </li>
+                </ul>
+
+                <div class="search-header-content">
+                    <img src="assets/image/icon/ic_search.svg" alt="icon-search">
+                    <input type="text" placeholder="Search Tasks" autofocus="off">
+                </div>
+            </div>
+
+            <div class="content-board">
+
+                <div class="todo">
+                    <div class="header-task">
+                        
+                    </div>
+
+                    <div class="body-task"></div>
+                </div>
+            </div>
+
         </section>
 
     </main>

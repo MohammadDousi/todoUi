@@ -136,6 +136,7 @@ header {
     width: 100%;
     text-align: left;
     color: #7D8FB3;
+    letter-spacing: 0.03rem;
 }
 
 .search-header input::placeholder {
