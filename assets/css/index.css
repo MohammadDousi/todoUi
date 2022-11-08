@@ -436,7 +436,7 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     column-gap: 2rem;
-    padding: 2rem;
+    padding: 1rem 2rem;
 }
 
 .main-body-task {
@@ -521,8 +521,8 @@ body {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    row-gap: 1rem;
-    margin: 1.5rem 0;
+    row-gap: .7rem;
+    margin: 1rem 0;
 }
 
 .task {
@@ -556,7 +556,7 @@ body {
     align-items: center;
 }
 
-.task-div-text div {
+.task-div-text>div {
     display: flex;
     align-content: center;
     justify-content: space-between;
@@ -571,6 +571,13 @@ body {
     color: #ADB8CC;
 }
 
+.img-avator-task {
+    width: 25px;
+    height: 25px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .text-task {
     width: 100%;
     color: #6B7A99;
@@ -580,15 +587,9 @@ body {
     margin-top: .5rem;
 }
 
-.img-avator-task {
-    width: 25px;
-    height: 25px;
-    object-fit: cover;
-}
-
-.task-div-attachment{
+.task-div-attachment {
     display: flex;
-    padding: 1rem;
+    padding: .5rem 1rem 1rem 1rem;
     flex-wrap: nowrap;
     place-content: center;
     align-items: center;
@@ -599,6 +600,7 @@ body {
     width: 20px;
     height: 20px;
 }
+
 .task-div-attachment span {
     color: #6B7A99;
     font-size: 12px;
