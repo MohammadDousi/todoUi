@@ -447,7 +447,7 @@ body {
     flex-wrap: nowrap;
 }
 
-#main-body-task-1{
+#main-body-task-1 {
     justify-content: space-between;
 }
 
@@ -588,7 +588,7 @@ body {
 
 .img-avator-task {
     width: 25px;
-    height:25px;
+    height: 25px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -647,21 +647,42 @@ body {
     color: var(--red);
 }
 
-.new-task-btn {
+
+#div-new-btn {
     width: 100%;
+    position: relative;
+    padding: 1rem;
+}
+
+.new-task-btn {
     color: #6B7A99;
     font-size: 12px;
     font-weight: 600;
     border-radius: 1000px;
     cursor: pointer;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
     transition: .3s;
-    width: 100%;
-    padding: .7rem;
 }
 
-.new-task-btn:hover{
-    background: var(--blue);
-    color: #fff;
-    width: 100%;
+.new-task-btn:hover {
     transition: .3s;
+    animation: anim-btn-new 3s infinite forwards;
+}
+
+@keyframes anim-btn-new {
+    0% {
+        color: var(--blue);
+    }
+
+    50% {
+        color: var(--purpole);
+    }
+
+    100% {
+        color: var(--blue);
+    }
+
 }
