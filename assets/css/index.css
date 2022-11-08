@@ -447,10 +447,6 @@ body {
     flex-wrap: nowrap;
 }
 
-#main-body-task-1 {
-    justify-content: space-between;
-}
-
 .header-task {
     width: 100%;
     display: flex;
@@ -518,15 +514,26 @@ body {
 }
 
 .body-task {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
-    width: 100%;
     row-gap: .7rem;
     margin: 1rem 0;
+    border-radius: 10px;
+    scrollbar-width: none;
+    overflow: auto;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+}
+
+.body-task::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
 }
 
 .task {
@@ -541,6 +548,7 @@ body {
     align-content: center;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 .task-error {
@@ -647,11 +655,10 @@ body {
     color: var(--red);
 }
 
-
 #div-new-btn {
     width: 100%;
     position: relative;
-    padding: 1rem;
+    padding-bottom: 1rem;
 }
 
 .new-task-btn {
