@@ -76,6 +76,10 @@ header {
 
 
 
+
+
+
+
 /* ///////////////////////////////
    navbar 
    /////////////////////////////// */
@@ -100,13 +104,16 @@ header {
     transition: .3s all;
 }
 
-
 .navbar>li:hover {
     transform: scale(1.1);
     transition: .3s all;
     cursor: pointer;
     color: var(--blue);
 }
+
+
+
+
 
 
 /* ///////////////////////////////
@@ -129,7 +136,6 @@ header {
     justify-content: center;
 }
 
-
 .search-header input {
     font-size: 13px;
     font-weight: 500;
@@ -142,7 +148,6 @@ header {
 .search-header input::placeholder {
     color: #ADB8CC;
 }
-
 
 #search-btn {
     padding: 5px 0 5px 10px;
