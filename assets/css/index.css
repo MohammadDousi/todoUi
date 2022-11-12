@@ -609,6 +609,7 @@ body {
 .title-task {
     font-size: 12px;
     font-weight: 600;
+    text-align: left;
     color: #ADB8CC;
 }
 
