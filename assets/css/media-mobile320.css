@@ -218,74 +218,23 @@
 
 
 .checknet {
-    width: 100%;
-    height: 100%;
-    background: #EDEFF2;
-    z-index: 1;
-    display: none;
+    display: block;
 }
 
 .checknet>p {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin-bottom: 2.5rem;
-    margin-left: 2.5rem;
-    color: #4D5E80;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.checknet>p:nth-child(3) {
-    margin-bottom: 1.5rem;
-    color: #7D8FB3;
-    font-size: 12px;
-}
-
-.checknet>div {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+    right: 0;
+    margin-left: 0;
 }
 
 .checknet>div>img {
-    width: 5%;
-    margin-bottom: 1rem;
-
+    width: 15%;
 }
 
-.checknet>div>div>h1 {
-    font-weight: 600;
-    font-size: 3.5rem;
-    color: #4D5E80;
-}
-
-.checknet>div>div>h1:nth-child(2) {
-    font-weight: 500;
+.checknet > div h1 {
     font-size: 2rem;
-    margin-top: 1rem;
-    color: #7D8FB3;
 }
 
-.btn-checknet {
-    color: #4D5E80;
-    background: #fff;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 1rem 2rem;
-    border-radius: 1000px;
-    transition: .3s all;
-    cursor: progress;
-    margin-top: 3rem;
-}
-
-.btn-checknet:hover {
-    color: #fff;
-    background: var(--blue);
-    transition: .3s all;
+.checknet > div h1:nth-child(2) {
+    font-size: 1.2rem;
+    margin-top: .7rem;
 }

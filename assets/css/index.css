@@ -34,6 +34,7 @@ body {
 
 
 
+
 /* ///////////////////////////////
    navbar left  
    /////////////////////////////// */
@@ -733,6 +734,7 @@ body {
     height: 100%;
     background: #EDEFF2;
     z-index: 1;
+    padding: 2rem;
     display: none;
 }
 
@@ -770,13 +772,13 @@ body {
 
 }
 
-.checknet>div>div>h1 {
+.checknet > div h1 {
     font-weight: 600;
     font-size: 3.5rem;
     color: #4D5E80;
 }
 
-.checknet>div>div>h1:nth-child(2) {
+.checknet > div h1:nth-child(2) {
     font-weight: 500;
     font-size: 2rem;
     margin-top: 1rem;
