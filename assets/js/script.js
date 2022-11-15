@@ -33,6 +33,42 @@ item2.addEventListener("click", function () {
 
 
 
+
+// click navbar header content 
+
+let li = document.getElementById("navbar-header-content");
+let li_bottom_border = li.getElementsByClassName("navbar-header-content-li");
+
+for (var i = 0; i < li_bottom_border.length; i++) {
+   li_bottom_border[i].addEventListener("click", function () {
+
+      var current = document.getElementsByClassName("li_active");
+      current[0].className = current[0].className.replace(" li_active", "");
+      this.className += " li_active";
+   });
+}
+
+
+
+let boards = document.getElementById("boards");
+let list_task = document.getElementById("list-task");
+let content_boards = document.getElementsByClassName("content-board")[0];
+let content_list_task = document.getElementsByClassName("content-list-task")[0];
+
+boards.addEventListener("click", () => {
+   content_boards.style.display = "flex";
+   content_list_task.style.display = "none";
+});
+
+list_task.addEventListener("click", () => {
+   content_list_task.style.display = "flex";
+   content_boards.style.display = "none";
+});
+
+
+
+
+
 // check network connection 
 
 let check = document.getElementById("checknet");

@@ -24,13 +24,13 @@ body {
     background: var(--background);
 }
 
-
 .main-content {
     display: flex;
     flex-wrap: nowrap;
     align-content: flex-start;
     align-items: stretch;
 }
+
 
 
 
@@ -98,7 +98,7 @@ body {
 
 
 /* ///////////////////////////////
-   navbar left  
+   side bar 
    /////////////////////////////// */
 
 
@@ -356,6 +356,7 @@ body {
     margin: 1rem 0rem 1rem 0rem;
     border: 2px solid #EDEFF2;
     border-radius: 15px;
+    position: relative;
 }
 
 .header-content {
@@ -403,31 +404,41 @@ body {
     column-gap: 2.5rem;
     font-size: 13px;
     font-weight: 600;
-    color: #7D8FB3;
     transition: .3s all;
     align-items: baseline;
     align-content: center;
     justify-content: center
 }
 
-.navbar-header-content img {
+.svg-icon-navbar {
     width: 18px;
     height: 18px;
 }
 
-.navbar-header-content li {
+.svg-icon-navbar:hover {
+    fill: var(--blue);
+}
+
+.navbar-header-content-li {
     display: flex;
     flex-wrap: nowrap;
     align-content: center;
     justify-content: center;
     align-items: center;
     padding: 1.4rem 0;
-    border-bottom: 2px solid transparent;
+    color: #7D8FB3;
+    /* border-bottom: 2px solid transparent; */
+    cursor: pointer;
 }
 
-.navbar-header-content li:hover {
-    padding: 1.4rem 0;
+.navbar-header-content-li:hover {
     border-bottom: 2px solid var(--blue);
+}
+
+.li_active{
+    border-bottom: 2px solid var(--blue);
+    color: var(--blue);
+
 }
 
 .navbar-header-content li p {
@@ -443,7 +454,7 @@ body {
 
 
 /* ///////////////////////////////
-   content 
+   content board - dashboar page
    /////////////////////////////// */
 
 .content-board {
@@ -457,6 +468,8 @@ body {
     align-items: flex-start;
     column-gap: 2rem;
     padding: 1rem 2rem;
+    position: absolute;
+    z-index: 1;
 }
 
 .main-body-task {
@@ -721,6 +734,30 @@ body {
 
 
 
+/* ///////////////////////////////
+   content list task - dashboar page
+   /////////////////////////////// */
+
+.content-list-task {
+    height: calc(100% - 10%);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 2rem;
+    padding: 1rem 2rem;
+    position: absolute;
+    z-index: 0;
+}
+
+
+
+
+
+
 
 
 
@@ -817,4 +854,3 @@ body {
     }
 
 }
-
