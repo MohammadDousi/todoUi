@@ -12,6 +12,7 @@
     flex-wrap: nowrap;
     align-items: center;
     z-index: 1;
+    padding: 2rem;
 }
 
 .main-section >img {
@@ -24,10 +25,6 @@
     opacity: .2;
 }
 
-
-
-
-
 /* ///////////////////////////////
 left side
 /////////////////////////////// */
@@ -35,7 +32,6 @@ left side
 .left-side {
     width: 60%;
     height: 100%;
-    padding: 2rem 0rem 2rem 2rem;
 }
 
 .left-side>div {
@@ -78,47 +74,6 @@ left side
     margin-bottom: 5rem;
     margin-left: 3.5rem;
 }
-
-.slide {
-    width: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    column-gap: .5rem;
-    bottom: 0;
-    right: 0;
-    margin-bottom: 1.5rem;
-    margin-right: 1.5rem;
-    position: absolute;
-}
-
-.btn-slide-circle {
-    width: .5rem;
-    height: .5rem;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 1000px;
-    cursor: pointer;
-}
-
-.show-slide {
-    width: 2rem;
-    background: #fff;
-}
-
-.left-side-circle {
-    width: 3rem;
-    height: 20rem;
-    left: 0;
-    top: 0;
-    background-color: #fff;
-    opacity: .3;
-    border-radius: 1000px;
-    position: absolute;
-}
-
 
 
 
