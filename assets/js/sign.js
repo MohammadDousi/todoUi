@@ -24,3 +24,24 @@ function setOffline() {
 
 
 
+
+
+
+// check network connection 
+
+function ShowPass() {
+   var eye = document.getElementById("eye-pass");
+   var pass = document.getElementById("pass");
+   eye.onclick = function () {
+     if (pass.type === "text") {
+       pass.type = "password";
+       eye.style.color = "#ADB8CC";
+     } else {
+       pass.type = "text";
+       eye.style.color = "#E62E7B";
+     }
+   };
+ }
+
+
+

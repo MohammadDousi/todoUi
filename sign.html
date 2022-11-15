@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="assets/css/sign.css">
+    <link rel="stylesheet" href="assets/css/all.css">
 
     <link rel="stylesheet" href="assets/css/media-mobile320.css" media="(max-width: 320px)">
 
@@ -65,9 +66,16 @@
             <p>Welcome Back</p>
             <p>Please enter your detials.</p>
             <form action="" method="post" enctype="multipart/form-data">
-                <input type="text" placeholder="Username" class="input-text-sign" autocomplete="off" autofocus="off">
-                <input type="password" placeholder="*******" class="input-text-sign" autocomplete="off" autofocus="off">
-               
+                
+                <div class="input-text-sign" >
+                    <input type="text" placeholder="Username" autocomplete="off" autofocus="off">
+                </div>
+                
+                <div class="input-text-sign" >
+                    <input type="password" id="pass" placeholder="Password" autocomplete="off" autofocus="off">
+                    <li id="eye-pass" onclick="ShowPass()" class="fa fa-eye-slash"></li>
+                </div>
+
                 <div class="div-btn-sign">
                    
                     <div class="forget-remaber">
@@ -75,7 +83,7 @@
                             <input type="checkbox" id="checkbox-remaber">
                             <label for="checkbox-remaber">Remamber</label>
                         </div>
-                        <p>Forget Username or Password?</p>
+                        <p>Forget password?</p>
                     </div>
                    
                     <button type="button" class="btn btn-sign">SIGN IN</button>
