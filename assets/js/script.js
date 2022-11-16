@@ -34,6 +34,50 @@ item2.addEventListener("click", function () {
 
 
 
+
+// check network connection
+
+let show = document.getElementById("content-list-task").getElementsByClassName("list-task-task");
+
+for (var i = 0; i < show.length; i++) {
+
+   show[i].addEventListener("click", function () {
+
+      var class_body = this.getElementsByClassName("list-task-body")[0];
+      // console.log("class list->" + class_body.className);
+      // class_body.className = class_body.className.replace("show-list-task-body","");
+      // class_body.className += " show-list-task-body"
+      console.log("class list 2->" + class_body.className);
+
+      if (class_body.className.trim() == "list-task-body") {
+         class_body.className += " show-list-task-body"
+         console.log("1->" + class_body.className);
+      } else {
+         class_body.className = class_body.className.replace("show-list-task-body","");
+         console.log("2->" + class_body.className);
+      }
+
+   });
+}
+
+
+
+
+
+
+// check network connection 
+
+let exit = document.getElementById("exit-btn");
+exit.addEventListener("click", () => {
+   window.location.href = "sign.html";
+})
+
+
+
+
+
+
+
 // click navbar header content 
 
 let li = document.getElementById("navbar-header-content");
@@ -47,8 +91,6 @@ for (var i = 0; i < li_bottom_border.length; i++) {
       this.className += " li_active";
    });
 }
-
-
 
 let boards = document.getElementById("boards");
 let list_task = document.getElementById("list-task");
@@ -64,6 +106,9 @@ list_task.addEventListener("click", () => {
    content_list_task.style.display = "flex";
    content_boards.style.display = "none";
 });
+
+
+
 
 
 
@@ -89,6 +134,13 @@ function setOnline() {
 function setOffline() {
    check.style.display = "block";
 }
+
+
+
+
+
+
+
 
 
 
