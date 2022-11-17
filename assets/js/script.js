@@ -44,17 +44,10 @@ for (var i = 0; i < show.length; i++) {
    show[i].addEventListener("click", function () {
 
       var class_body = this.getElementsByClassName("list-task-body")[0];
-      // console.log("class list->" + class_body.className);
-      // class_body.className = class_body.className.replace("show-list-task-body","");
-      // class_body.className += " show-list-task-body"
-      console.log("class list 2->" + class_body.className);
-
       if (class_body.className.trim() == "list-task-body") {
          class_body.className += " show-list-task-body"
-         console.log("1->" + class_body.className);
       } else {
          class_body.className = class_body.className.replace("show-list-task-body","");
-         console.log("2->" + class_body.className);
       }
 
    });
