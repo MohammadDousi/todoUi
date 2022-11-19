@@ -33,26 +33,20 @@ item2.addEventListener("click", function () {
 
 
 
+let show = document.querySelectorAll(".list-task-task");
 
-
-// check network connection
-
-let show = document.getElementById("content-list-task").getElementsByClassName("list-task-task");
-
-for (var i = 0; i < show.length; i++) {
-
-   show[i].addEventListener("click", function () {
+show.forEach(element => {
+   element.addEventListener("click", function () {
 
       var class_body = this.getElementsByClassName("list-task-body")[0];
       if (class_body.className.trim() == "list-task-body") {
          class_body.className += " show-list-task-body"
       } else {
-         class_body.className = class_body.className.replace("show-list-task-body","");
+         class_body.className = class_body.className.replace("show-list-task-body", "");
       }
 
    });
-}
-
+});
 
 
 
@@ -67,41 +61,30 @@ exit.addEventListener("click", () => {
 
 
 
+let li_bottom_border = document.querySelectorAll(".navbar-header-content-li");
 
-
-
-
-// click navbar header content 
-
-let li = document.getElementById("navbar-header-content");
-let li_bottom_border = li.getElementsByClassName("navbar-header-content-li");
-
-for (var i = 0; i < li_bottom_border.length; i++) {
-   li_bottom_border[i].addEventListener("click", function () {
+li_bottom_border.forEach(element => {
+   element.addEventListener("click", function () {
 
       var current = document.getElementsByClassName("li_active");
       current[0].className = current[0].className.replace(" li_active", "");
       this.className += " li_active";
+
+
+
+      switch (element.id) {
+         case "boards":
+            document.querySelector(".content-board").style.display = "flex";
+            document.querySelector(".content-list-task").style.display = "none";
+         break;
+         case "list-task":
+            document.querySelector(".content-board").style.display = "none";
+            document.querySelector(".content-list-task").style.display = "flex";
+         break;
+      }
+
    });
-}
-
-let boards = document.getElementById("boards");
-let list_task = document.getElementById("list-task");
-let content_boards = document.getElementsByClassName("content-board")[0];
-let content_list_task = document.getElementsByClassName("content-list-task")[0];
-
-boards.addEventListener("click", () => {
-   content_boards.style.display = "flex";
-   content_list_task.style.display = "none";
 });
-
-list_task.addEventListener("click", () => {
-   content_list_task.style.display = "flex";
-   content_boards.style.display = "none";
-});
-
-
-
 
 
 
