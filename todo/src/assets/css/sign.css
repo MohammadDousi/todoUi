@@ -1,0 +1,210 @@
+@import url(root.css);
+@import url(font.css);
+
+
+
+.main-section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+    z-index: 1;
+    padding: 2rem;
+}
+
+.main-section >img {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transform: rotate(90deg);
+    position: absolute;
+    right: -30%;
+    opacity: .2;
+}
+
+/* ///////////////////////////////
+left side
+/////////////////////////////// */
+
+.left-side {
+    width: 60%;
+    height: 100%;
+}
+
+.left-side>div {
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+    background: linear-gradient(0deg, #3361ff, rgba(51, 191, 255, 1));
+    position: relative;
+}
+
+.left-side img {
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+    object-fit: cover;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.text-1{
+    width: 100%;
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: left;
+    z-index: 2;
+    position: absolute;
+    margin-left: 3rem;
+    margin-bottom: 7.5rem;
+    bottom: 0;
+}
+
+.text-1:nth-child(3){
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 5rem;
+    margin-left: 3.5rem;
+}
+
+
+
+
+
+
+
+
+/* ///////////////////////////////
+right side
+/////////////////////////////// */
+
+.right-side {
+    width: 40%;
+    height: 100%;
+    /* box-shadow: 0 0 25px rgb(38 51 77 / 20%); */
+    display: flex;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-side>p {
+    color: #3361ff;
+    margin-bottom: .7rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.right-side>p:nth-child(2) {
+    color: #4D5E80;
+    margin-bottom: 3rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.main-section form {
+    width: 70%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-text-sign {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-radius: 1000px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgb(38 51 77 / 5%);
+    margin: 0.5rem 0;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-text-sign input {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    color: #7D8FB3;
+    letter-spacing: 0.03rem;
+}
+
+.input-text-sign li {
+    font-size: 12px;
+    color: #ADB8CC;
+    cursor: pointer;
+}
+
+
+.input-text-sign input::placeholder {
+    color: #ADB8CC;
+}
+
+.div-btn-sign {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+
+.forget-remaber {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.forget-remaber p {
+    color: #7D8FB3;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    transition: .3s all;
+    cursor: pointer;
+}
+
+.forget-remaber p:hover {
+    transition: .3s all;
+    color: var(--red);
+}
+
+.input-checkbox, input[type="checkbox"], label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #7D8FB3;
+    display: flex;
+    column-gap: .5rem;
+    cursor: pointer;
+}
+
+.input-checkbox input[type="checkbox"]:checked {
+    color: red;
+    background-color: #4D5E80;
+}
+
+.btn-sign {
+    margin-top: 3rem;
+    padding: 1rem 4.5rem;
+}

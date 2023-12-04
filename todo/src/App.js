@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+
+import Header from "./components/header/Header";
+import Sidebar from "./components/sideBar/Sidebar";
+
+import BoardContainer from "./components/board/BoardContainer";
+import CreateTask from "./components/taskCreate/CreateTask";
+
+import pattern from "./assets/image/pattern.svg";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+
+      <main className="w-screen h-full flex flex-row justify-start items-start">
+        <Sidebar />
+      
+      <img src={pattern} alt="pattern background" className="w-full h-full absolute opacity-[20%] -z-20 object-cover bg-repeat" />
+        <Routes>
+          <Route path="/" element={<BoardContainer />} />
+          <Route path="/board" element={<BoardContainer />} />
+          <Route path="/createTask" element={<CreateTask />} />
+        </Routes>
+      </main>
+    </>
   );
 }
 

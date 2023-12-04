@@ -1,0 +1,9 @@
+.progress-circle {
+  @apply w-28 h-28 relative flex justify-center items-center  rounded-full;
+  background: conic-gradient(#fff 3.6deg, bg-blue-500 0deg);
+}
+
+.progress-circle::before {
+  content: "";
+  @apply w-[6.7rem] h-[6.7rem] absolute flex content-center justify-center items-center rounded-full bg-white border-2 border-white;
+}
