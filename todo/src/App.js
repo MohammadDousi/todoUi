@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 
 import Header from "./components/header/Header";
@@ -9,14 +10,19 @@ import CreateTask from "./components/taskCreate/CreateTask";
 import pattern from "./assets/image/pattern.svg";
 
 function App() {
+
   return (
     <>
       <Header />
 
       <main className="w-screen h-full flex flex-row justify-start items-start">
         <Sidebar />
-      
-      <img src={pattern} alt="pattern background" className="w-full h-full absolute opacity-[20%] -z-20 object-cover bg-repeat" />
+
+        <img
+          src={pattern}
+          alt="pattern background"
+          className="w-full h-full absolute opacity-[15%] -z-20 object-cover bg-repeat"
+        />
         <Routes>
           <Route path="/" element={<BoardContainer />} />
           <Route path="/board" element={<BoardContainer />} />

@@ -44,8 +44,6 @@ export default function Sidebar() {
 
   let location = useLocation();
 
-  console.log(location.pathname);
-
   return (
     <>
       {/* mini sidebar */}
@@ -86,7 +84,7 @@ export default function Sidebar() {
           <Link to="/board">
             <section
               className={
-                location.pathname === "/board"
+                location.pathname === "/" || location.pathname === "/board"
                   ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
                   : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400/50 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
@@ -99,7 +97,7 @@ export default function Sidebar() {
               className={
                 location.pathname === "/createTask"
                   ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400/50 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-plus text-sm"></i>
@@ -193,9 +191,9 @@ export default function Sidebar() {
           <Link to="/board">
             <section
               className={
-                location.pathname === "/board"
+                location.pathname === "/" || location.pathname === "/board"
                   ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400/50 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-500 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-map"></i>
@@ -207,7 +205,7 @@ export default function Sidebar() {
               className={
                 location.pathname === "/createTask"
                   ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400/50 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-500 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-plus"></i>
