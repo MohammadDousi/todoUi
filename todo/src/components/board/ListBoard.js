@@ -8,9 +8,8 @@ import avator6 from "../../assets/image/userAvator/profile (16).png";
 export default function ListBoard() {
   return (
     <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-col justify-start items-start gap-5">
-      <section className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-3 overflow-auto">
+      <section className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-3">
         <table className="w-full h-full">
-          
           <thead className="w-full px-8 flex bg-white rounded-t-xl border-b border-slate-300 shadow-md shadow-slate-200">
             <tr className="w-full py-5 flex justify-start items-start gap-6 uppercase">
               <th className="w-2/12 text-slate-400 font-black text-sm flex justify-start items-start">
@@ -37,7 +36,7 @@ export default function ListBoard() {
             </tr>
           </thead>
 
-          <tbody className="w-full h-96  flex flex-col justify-start items-start bg-white divide-y divide-slate-300/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
+          <tbody className="w-full h-full  flex flex-col justify-start items-start bg-white divide-y divide-slate-300/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
             <tr className="w-full py-4 px-8 text-slate-600 font-normal text-sm capitalize flex justify-center items-center gap-6 cursor-pointer hover:bg-amber-50">
               <th className="w-2/12 flex justify-start items-start">
                 <p className="h-full py-1 px-5 bg-green-100 font-bold text-center text-green-600 rounded-full">
@@ -91,7 +90,6 @@ export default function ListBoard() {
               </th>
             </tr>
           </tbody>
-
         </table>
       </section>
     </section>

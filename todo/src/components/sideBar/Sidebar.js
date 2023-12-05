@@ -56,16 +56,12 @@ export default function Sidebar() {
       >
         <section className="w-full flex flex-col justify-center items-center gap-10">
           <section className="w-full flex flex-col-reverse justify-between items-center gap-3">
-            <div className="iconContainer bg-blue-100">
-              <i className="fa fa-user text-blue-500/80 text-sm"></i>
-            </div>
+            <i className="fa fa-user iconContainer bg-blue-100 text-blue-500/80 text-sm"></i>
 
-            <div
+            <i
               onClick={() => setShowSidebar("B")}
-              className="iconContainer bg-gray-200/50"
-            >
-              <i className="fa fa-angle-right text-gray-400 text-sm"></i>
-            </div>
+              className="fa fa-angle-right iconContainer bg-gray-200/50 text-gray-400 text-sm"
+            ></i>
           </section>
 
           <div className="w-full h-auto flex flex-col justify-center items-center gap-2">
@@ -144,16 +140,12 @@ export default function Sidebar() {
       >
         <section className="w-full flex flex-col justify-center items-center gap-4">
           <section className="w-full flex flex-row justify-between items-center">
-            <div className="iconContainer bg-blue-100">
-              <i className="fa fa-user text-blue-500/80 text-sm"></i>
-            </div>
+            <i className="fa fa-user iconContainer bg-blue-100 text-blue-500/80 text-sm"></i>
 
-            <div
+            <i
               onClick={() => setShowSidebar("M")}
-              className="iconContainer bg-gray-200/50"
-            >
-              <i className="fa fa-angle-left text-gray-400 text-sm"></i>
-            </div>
+              className="fa fa-angle-left iconContainer bg-gray-200/50 text-gray-400 text-sm"
+            ></i>
           </section>
 
           <div className="badge">

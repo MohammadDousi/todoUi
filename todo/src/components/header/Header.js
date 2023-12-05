@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
-      <div className="iconContainer bg-gray-200/50">
-        <i className="fa fa-bars text-gray-400 text-sm"></i>
-      </div>
+      <i className="fa fa-bars iconContainer bg-gray-200/50 text-gray-400 text-sm"></i>
 
       <div className="flex justify-center items-center gap-14">
         <ul className="flex justify-start items-center gap-6">
@@ -39,14 +37,10 @@ export default function Header() {
       </div>
 
       <div className="flex items-center justify-end gap-4">
-        <div className="iconContainer relative bg-amber-100">
-          <i className="fa fa-bell text-amber-600 text-sm"></i>
-        </div>
+        <i className="fa fa-bell iconContainer bg-amber-100 text-amber-600 text-sm"></i>
 
         <Link to="/login">
-          <div className="iconContainer bg-rose-100">
-            <i className="fas fa-times text-rose-600 text-sm"></i>
-          </div>
+          <i className="fas fa-times iconContainer bg-rose-100 text-rose-600 text-sm"></i>
         </Link>
       </div>
     </header>

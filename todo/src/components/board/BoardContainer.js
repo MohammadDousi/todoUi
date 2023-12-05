@@ -13,27 +13,23 @@ export default function BoardContainer() {
     <section className="w-full h-full pb-8 space-y-4 relative overflow-hidden duration-1000">
       <section className="w-full pt-4 px-6 flex flex-row justify-start items-center gap-8">
         <div className="flex flex-row justify-center items-start gap-2">
-          <div
+          <i
             onClick={() => setBoard("Grid")}
             className={
               board === "Grid"
-                ? "w-8 h-8 flex justify-center items-center bg-white shadow-lg shadow-slate-200 duration-500 rounded-xl"
-                : "w-8 h-8 flex justify-center items-center cursor-pointer duration-500 "
+                ? "fa fa-th-large iconContainer text-slate-500 text-xs bg-white shadow-lg"
+                : "fa fa-th-large iconContainer text-slate-500 text-xs "
             }
-          >
-            <i className="fa fa-th-large text-slate-600 text-xs"></i>
-          </div>
+          ></i>
 
-          <div
+          <i
             onClick={() => setBoard("List")}
             className={
               board === "List"
-                ? "w-8 h-8 flex justify-center items-center bg-white shadow-lg shadow-slate-200 duration-500 rounded-xl"
-                : "w-8 h-8 flex justify-center items-center cursor-pointer duration-500 "
+                ? "fas fa-list-ul iconContainer text-slate-500 text-xs bg-white shadow-lg"
+                : "fas fa-list-ul iconContainer text-slate-500 text-xs"
             }
-          >
-            <i className="fas fa-list-ul text-slate-600 text-xs"></i>
-          </div>
+          ></i>
         </div>
 
         <Link to="/createTask">
