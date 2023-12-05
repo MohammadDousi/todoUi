@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -38,14 +39,15 @@ export default function Header() {
       </div>
 
       <div className="flex items-center justify-end gap-4">
-        <div className="iconContainer relative bg-amber-100 ">
-          {/* <div className="w-2 h-2 absolute top-0.5 left-0.5 rounded-full bg-pink-500 animate-pulse"></div> */}
+        <div className="iconContainer relative bg-amber-100">
           <i className="fa fa-bell text-amber-600 text-sm"></i>
         </div>
 
-        <div className="iconContainer bg-rose-100 ">
-          <i className="fas fa-times text-rose-600 text-sm"></i>
-        </div>
+        <Link to="/login">
+          <div className="iconContainer bg-rose-100">
+            <i className="fas fa-times text-rose-600 text-sm"></i>
+          </div>
+        </Link>
       </div>
     </header>
   );

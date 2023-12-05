@@ -1,5 +1,4 @@
-
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import Header from "./components/header/Header";
 import Sidebar from "./components/sideBar/Sidebar";
@@ -9,26 +8,18 @@ import CreateTask from "./components/taskCreate/CreateTask";
 
 import pattern from "./assets/image/pattern.svg";
 
-function App() {
+import Login from "./components/login/Login";
+import Main from "./Main";
 
+function App() {
   return (
     <>
-      <Header />
-
-      <main className="w-screen h-full flex flex-row justify-start items-start">
-        <Sidebar />
-
-        <img
-          src={pattern}
-          alt="pattern background"
-          className="w-full h-full absolute opacity-[15%] -z-20 object-cover bg-repeat"
-        />
-        <Routes>
-          <Route path="/" element={<BoardContainer />} />
-          <Route path="/board" element={<BoardContainer />} />
-          <Route path="/createTask" element={<CreateTask />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/main/*" element={<Main />} />
+        <Route path="/*" element={<Main />} />
+        <Route path="/register" element={""} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </>
   );
 }

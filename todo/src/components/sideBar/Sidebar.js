@@ -81,23 +81,23 @@ export default function Sidebar() {
         </section>
 
         <section className="w-full flex flex-col justify-center items-center gap-3">
-          <Link to="/board">
+          <Link to="/main/board">
             <section
               className={
-                location.pathname === "/" || location.pathname === "/board"
+                location.pathname === "/" || location.pathname === "/main/board"
                   ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400/50 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-map text-sm"></i>
             </section>
           </Link>
-          <Link to="/createTask">
+          <Link to="/main/createTask">
             <section
               className={
-                location.pathname === "/createTask"
+                location.pathname === "/main/createTask"
                   ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 hover:scale-105 hover:rounded-xl"
+                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-plus text-sm"></i>
@@ -188,24 +188,24 @@ export default function Sidebar() {
         </section>
 
         <section className="w-full grid grid-cols-2 justify-stretch justify-items-stretch content-stretch">
-          <Link to="/board">
+          <Link to="/main/board">
             <section
               className={
-                location.pathname === "/" || location.pathname === "/board"
+                location.pathname === "/" || location.pathname === "/main/board"
                   ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-500 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-map"></i>
               <h3 className="text-xs font-black">Dashboard</h3>
             </section>
           </Link>
-          <Link to="/createTask">
+          <Link to="/main/createTask">
             <section
               className={
-                location.pathname === "/createTask"
+                location.pathname === "/main/createTask"
                   ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-500 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }
             >
               <i className="fas fa-plus"></i>
