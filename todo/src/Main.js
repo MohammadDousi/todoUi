@@ -7,8 +7,7 @@ import Sidebar from "./components/sideBar/Sidebar";
 
 import BoardContainer from "./components/board/BoardContainer";
 import CreateTask from "./components/taskCreate/CreateTask";
-
-import pattern from "./assets/image/pattern.svg";
+import NotFound from "./components/notFound/NotFound";
 
 export default function Main() {
   return (
@@ -18,15 +17,11 @@ export default function Main() {
       <main className="w-screen h-full flex flex-row justify-start items-start">
         <Sidebar />
 
-        <img
-          src={pattern}
-          alt="pattern background"
-          className="w-full h-full absolute opacity-[15%] -z-20 object-cover bg-repeat"
-        />
         <Routes>
           <Route path="/" element={<BoardContainer />} />
           <Route path="/board" element={<BoardContainer />} />
           <Route path="/createTask" element={<CreateTask />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
     </>

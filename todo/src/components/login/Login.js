@@ -1,16 +1,13 @@
 import React from "react";
 
 import pic from "../../assets/image/pic/sign-pic.jpg";
-import pattern from "../../assets/image/pattern.svg";
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import OtpInput from "react-otp-input";
 
-import axios from "axios";
-
-export default function Login() {
+export default function Login({ setToken }) {
   const navigate = useNavigate();
 
   const [levelLogin, setLevelLogin] = useState("MOBILE");
@@ -28,12 +25,6 @@ export default function Login() {
 
   return (
     <main className="w-screen h-screen relative bg-gray-200/30 flex flex-row justify-center items-center gap-6">
-      <img
-        src={pattern}
-        alt="pattern background"
-        className="w-full h-full absolute opacity-30 -z-20 object-cover bg-repeat"
-      />
-
       <section className="w-1/2 flex flex-row justify-end items-center">
         <img src={pic} alt={pic} className="w-10/12 object-cover rounded-xl" />
       </section>
@@ -59,15 +50,15 @@ export default function Login() {
             <input
               type="number"
               placeholder="09xx xx xxx xx"
-              className="w-full h-14 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+              className="w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.target.value)}
             />
 
             <button
               onClick={() => {
-                setLevelLogin("OTP");
                 if (mobileOk) {
+                  setLevelLogin("OTP");
                   // console.log(mobileNumber);
                   // let formData = new FormData();
                   // formData.append("fun", "verfiyMobile");
@@ -85,7 +76,7 @@ export default function Login() {
                   // });
                 }
               }}
-              className="h-10 px-10 hover:px-14 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest duration-300 rounded-xl"
+              className="h-10 px-8 hover:px-10 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
             >
               verify number
             </button>
@@ -105,14 +96,13 @@ export default function Login() {
           ></i>
 
           <section className="w-full mb-6 flex flex-col justify-center items-start gap-1">
-            <p className="w-full text-blue-600 font-black text-3xl capitalize duration-300">
+            <p className="w-full text-blue-600 font-black text-3xl capitalize ">
               OTP code
             </p>
             <p className="w-full text-slate-600 font-normal text-lg">
               The login code has been sent to <b>{mobileNumber}</b> mobile
               number.
             </p>
-            <p className=""></p>
           </section>
 
           <section className="w-full flex flex-col justify-center items-center gap-10">
@@ -122,7 +112,7 @@ export default function Login() {
               numInputs={4}
               inputType="tel"
               containerStyle="w-full flex justify-center items-start"
-              inputStyle="!w-14 !h-14 bg-white border border-slate-300 text-slate-600 text-base font-black rounded-xl duration-300 focus:border-blue-500"
+              inputStyle="!w-14 !h-14 bg-white border border-slate-300 text-slate-600 text-base font-black rounded-xl focus:border-blue-500"
               renderSeparator={<span className="px-2"></span>}
               renderInput={(props) => <input {...props} />}
             />
@@ -130,15 +120,20 @@ export default function Login() {
             <button
               onClick={() => {
                 checkedOTP === otp && navigate("/main");
+
+                const token = {
+                  mobileNumber,
+                  otp,
+                };
+                setToken(token);
               }}
-              className="h-10 px-10 hover:px-14 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest duration-300 rounded-xl"
+              className="h-10 px-8 hover:px-10 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
             >
               check & Login
             </button>
           </section>
         </section>
       </section>
-
     </main>
   );
 }

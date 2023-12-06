@@ -183,7 +183,7 @@ export default function Sidebar() {
           <Link to="/main/board">
             <section
               className={
-                location.pathname === "/" || location.pathname === "/main/board"
+                location.pathname === "/main" || location.pathname === "/main/board"
                   ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
                   : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
               }

@@ -44,7 +44,7 @@ export default function CreateTask() {
           <input
             type="text"
             placeholder="Description of the subject"
-            className="w-full h-10 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+            className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
           />
         </section>
 
@@ -65,7 +65,7 @@ export default function CreateTask() {
             Priority
           </h4>
 
-          <div className="w-full h-10 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
+          <div className="w-full h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
             <div className="w-full flex justify-center items-center">
               <input
                 type="radio"
@@ -142,8 +142,8 @@ export default function CreateTask() {
               <section className="w-full min-h-fit h-auto flex justify-between gap-2 pl-8 pr-3 bg-white border border-slate-300 rounded-xl">
                 <div
                   className={
-                    selectedTeammate.length == 0
-                      ? "w-full py-2 h-10 flex flex-row flex-wrap gap-2"
+                    selectedTeammate.length === 0
+                      ? "w-full py-2 h-12 flex flex-row flex-wrap gap-2"
                       : "w-full py-2 flex flex-row flex-wrap gap-2"
                   }
                 >
@@ -223,7 +223,7 @@ export default function CreateTask() {
                       <img
                         src={person.avator}
                         alt={person.avator}
-                        className="h-full"
+                        className="h-full rounded-full"
                       />
                       <h3 className="text-slate-600 text-sm font-normal tracking-wide capitalize">
                         {person.name}

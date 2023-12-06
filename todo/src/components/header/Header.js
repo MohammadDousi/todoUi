@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
       <i className="fa fa-bars iconContainer bg-gray-200/50 text-gray-400 text-sm"></i>
@@ -39,9 +41,16 @@ export default function Header() {
       <div className="flex items-center justify-end gap-4">
         <i className="fa fa-bell iconContainer bg-amber-100 text-amber-600 text-sm"></i>
 
-        <Link to="/login">
-          <i className="fas fa-times iconContainer bg-rose-100 text-rose-600 text-sm"></i>
-        </Link>
+        {/* <Link to="/login"> */}
+        <i
+          onClick={() => {
+            sessionStorage.clear();
+            localStorage.clear();
+            navigate("/login");
+          }}
+          className="fas fa-times iconContainer bg-rose-100 text-rose-600 text-sm"
+        ></i>
+        {/* </Link> */}
       </div>
     </header>
   );
