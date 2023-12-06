@@ -19,7 +19,7 @@ export default function NotFound() {
           No page or item found for this section. Maybe an error has occurred.
           Try again later.
         </p>
-        <Link to="/" className="px-8 hover:px-12 py-2 bg-amber-200 text-amber-700 text-sm font-black mt-4 rounded-xl">
+        <Link to="/" className="h-10 px-8 mt-4 hover:px-10 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl">
           Return Home
         </Link>
       </div>

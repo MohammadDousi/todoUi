@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 
 import "./SidebarStyle.css";
 import avator from "../../assets/image/userAvator/profile (4).png";
-import avator3 from "../../assets/image/userAvator/profile (7).png";
 import avator4 from "../../assets/image/userAvator/profile (11).png";
 import avator5 from "../../assets/image/userAvator/profile (14).png";
 import avator6 from "../../assets/image/userAvator/profile (15).png";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
-  const [showSidebar, setShowSidebar] = useState("B");
+  const [showSidebar, setShowSidebar] = useState("BIG");
 
   const circle_progres = useRef();
   const circle_count = useRef();
@@ -44,25 +43,27 @@ export default function Sidebar() {
 
   let location = useLocation();
 
+  const sideTab = [
+    { name: "Dashboard", path: "/main/board", icon: "fas fa-map" },
+    { name: "Create Task", path: "/main/createTask", icon: "fas fa-plus" },
+    { name: "Profile", path: "/main/profile", icon: "fas fa-user" },
+  ];
+
   return (
     <>
       {/* mini sidebar */}
       <section
         className={
-          showSidebar === "M"
+          showSidebar === "MINI"
             ? "w-20 h-full py-4 bg-white flex flex-col justify-between items-center gap-5 border-r border-gray-300 -translate-x-0 duration-1000 overflow-hidden"
             : "w-0 h-full py-4 bg-white flex flex-col justify-between items-center gap-5 -translate-x-20 duration-1000 overflow-hidden"
         }
       >
         <section className="w-full flex flex-col justify-center items-center gap-10">
-          <section className="w-full flex flex-col-reverse justify-between items-center gap-3">
-            <i className="fa fa-user iconContainer bg-blue-100 text-blue-500/80 text-sm"></i>
-
-            <i
-              onClick={() => setShowSidebar("B")}
-              className="fa fa-angle-right iconContainer bg-gray-200/50 text-gray-400 text-sm"
-            ></i>
-          </section>
+          <i
+            onClick={() => setShowSidebar("BIG")}
+            className="fa fa-angle-right iconContainer bg-gray-200/50 text-gray-400 text-sm"
+          ></i>
 
           <div className="w-full h-auto flex flex-col justify-center items-center gap-2">
             <img
@@ -77,73 +78,35 @@ export default function Sidebar() {
         </section>
 
         <section className="w-full flex flex-col justify-center items-center gap-3">
-          <Link to="/main/board">
-            <section
-              className={
-                location.pathname === "/" || location.pathname === "/main/board"
-                  ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
-              }
-            >
-              <i className="fas fa-map text-sm"></i>
-            </section>
-          </Link>
-          <Link to="/main/createTask">
-            <section
-              className={
-                location.pathname === "/main/createTask"
-                  ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                  : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
-              }
-            >
-              <i className="fas fa-plus text-sm"></i>
-            </section>
-          </Link>
-        </section>
-
-        <section className="bg-white border border-slate-300 px-3 pt-3 pb-0.5 rounded-full flex flex-row justify-between items-center">
-          <section className="grid grid-rows-[repeat(6,1.2rem)]">
-            <img
-              className="max-h-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
-              src={avator3}
-              alt={avator3}
-            />
-            <img
-              className="max-h-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
-              src={avator4}
-              alt={avator4}
-            />
-            <img
-              className="max-h-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
-              src={avator5}
-              alt={avator5}
-            />
-            <img
-              className="max-h-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
-              src={avator6}
-              alt={avator6}
-            />
-            <div className="max-h-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300  bg-green-100  flex justify-center items-center text-xs font-medium">
-              +2
-            </div>
-          </section>
+          {sideTab &&
+            sideTab.map((tab) => (
+              <Link key={tab.name} to={tab.path}>
+                <section
+                  className={
+                    location.pathname === tab.path
+                      ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
+                      : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  }
+                >
+                  <i className={`${tab.icon} text-sm`}></i>
+                </section>
+              </Link>
+            ))}
         </section>
       </section>
 
       {/*  big sidebar */}
       <section
         className={
-          showSidebar === "B"
+          showSidebar === "BIG"
             ? "w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-5 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
             : "w-0 h-full bg-white flex flex-col justify-between items-center gap-5 -translate-x-80 duration-1000 overflow-hidden"
         }
       >
         <section className="w-full flex flex-col justify-center items-center gap-4">
-          <section className="w-full flex flex-row justify-between items-center">
-            <i className="fa fa-user iconContainer bg-blue-100 text-blue-500/80 text-sm"></i>
-
+          <section className="w-full flex flex-row justify-end items-center">
             <i
-              onClick={() => setShowSidebar("M")}
+              onClick={() => setShowSidebar("MINI")}
               className="fa fa-angle-left iconContainer bg-gray-200/50 text-gray-400 text-sm"
             ></i>
           </section>
@@ -180,58 +143,44 @@ export default function Sidebar() {
         </section>
 
         <section className="w-full grid grid-cols-2 justify-stretch justify-items-stretch content-stretch">
-          <Link to="/main/board">
-            <section
-              className={
-                location.pathname === "/main" || location.pathname === "/main/board"
-                  ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
-              }
-            >
-              <i className="fas fa-map"></i>
-              <h3 className="text-xs font-black">Dashboard</h3>
-            </section>
-          </Link>
-          <Link to="/main/createTask">
-            <section
-              className={
-                location.pathname === "/main/createTask"
-                  ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                  : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
-              }
-            >
-              <i className="fas fa-plus"></i>
-              <h3 className="text-xs font-black">Create Task</h3>
-            </section>
-          </Link>
+          {sideTab &&
+            sideTab.map((tab) => (
+              <Link key={tab.name} to={tab.path}>
+                <section
+                  className={
+                    location.pathname === tab.path
+                      ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
+                      : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                  }
+                >
+                  <i className={tab.icon}></i>
+                  <h3 className="text-xs font-black">{tab.name}</h3>
+                </section>
+              </Link>
+            ))}
         </section>
 
         <section className="w-full bg-green-100 border border-green-300 p-3 rounded-xl flex flex-row justify-between items-center">
           <h3 className="text-green-600 font-bold text-xs pl-2 capitalize">
             is online :
           </h3>
-          <section className="grid grid-cols-[repeat(6,1rem)]">
+          <section className="pr-2 hover:pr-0 grid grid-cols-[repeat(4,1rem)] hover:grid-cols-[repeat(4,1.7rem)]">
             <img
-              className="max-w-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
-              src={avator3}
-              alt={avator3}
-            />
-            <img
-              className="max-w-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
+              className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
               src={avator4}
               alt={avator4}
             />
             <img
-              className="max-w-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
+              className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
               src={avator5}
               alt={avator5}
             />
             <img
-              className="max-w-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300 "
+              className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
               src={avator6}
               alt={avator6}
             />
-            <div className="max-w-none w-7 h-7 ring-2 ring-white rounded-full hover:scale-110 hover:-translate-y-2 hover:scale-125 duration-300  bg-white  flex justify-center items-center text-xs font-medium">
+            <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
               +2
             </div>
           </section>

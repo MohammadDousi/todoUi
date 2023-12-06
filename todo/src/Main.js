@@ -8,6 +8,7 @@ import Sidebar from "./components/sideBar/Sidebar";
 import BoardContainer from "./components/board/BoardContainer";
 import CreateTask from "./components/taskCreate/CreateTask";
 import NotFound from "./components/notFound/NotFound";
+import Profile from "./components/profile/Profile";
 
 export default function Main() {
   return (
@@ -21,6 +22,7 @@ export default function Main() {
           <Route path="/" element={<BoardContainer />} />
           <Route path="/board" element={<BoardContainer />} />
           <Route path="/createTask" element={<CreateTask />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>

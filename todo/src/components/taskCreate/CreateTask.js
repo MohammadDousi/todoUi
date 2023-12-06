@@ -5,16 +5,22 @@ import avator1 from "../../assets/image/userAvator/profile (11).png";
 import avator2 from "../../assets/image/userAvator/profile (3).png";
 import avator3 from "../../assets/image/userAvator/profile (1).png";
 import avator4 from "../../assets/image/userAvator/profile (8).png";
+import TitlePage from "../titlePage/TitlePage";
 
 export default function CreateTask() {
-  // show and hide hover person teammate
-  const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false);
-  // array teammate selected
-  const [selectedTeammate, setSelectedTeammate] = useState([]);
-  // search teammate
-  const [searchTeammate, setSearchTeammate] = useState("");
+  const [dataToSend, setDataToSend] = useState({
+    subject: "",
+    description: "",
+    priority: "",
+    group: "",
+    image: "",
+  });
 
-  let [filterSearchTeammate, setFilterSearchTeammate] = useState([]);
+  const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
+  const [selectedTeammate, setSelectedTeammate] = useState([]); // array teammate selected
+  const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
+  let [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
+
   let group = [
     { id: 1, name: "@ Dina Wangui", avator: avator },
     { id: 2, name: "@ Bud Choi", avator: avator1 },
@@ -30,13 +36,7 @@ export default function CreateTask() {
   return (
     <section className="w-full h-full relative">
       <section className="w-full h-full pt-5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
-        <section className="w-full sticky top-0 mb-4 flex flex-row justify-start items-center gap-4">
-          <hr className="w-1 h-4 bg-blue-500 rounded-full" />
-          <h2 className="text-blue-600 font-black text-xl capitalize">
-            create new task
-          </h2>
-        </section>
-
+        <TitlePage title="create new task" />
         <section className="w-1/2 flex flex-col justify-start items-start gap-6">
           <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
             subject
@@ -238,7 +238,57 @@ export default function CreateTask() {
             </section>
           </section>
         </section>
-        
+
+        <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+          <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+            select Image
+          </h4>
+
+          <section className="w-full h-52 flex flex-col justify-start items-start gap-6">
+            <section className="w-32 h-32 bg-white border-dotted border-2 border-slate-300 rounded-xl">
+              <label
+                htmlFor="inputFile"
+                className="w-full h-full text-slate-300 font-normal text-base tracking-wide placeholder:text-slate-300 focus:border-blue-500 capitalize cursor-pointer flex flex-col justify-center items-center gap-1"
+              >
+                <i className="fas fa-upload text-xl"></i>
+                upload
+              </label>
+            </section>
+
+            <input
+              id="inputFile"
+              className="absolute opacity-0 invisible w-0 h-0"
+              type="file"
+              accept="image/*"
+              onChange={(event) => {
+                // setDataToSend({ ...dataToSend, logo: event.target.files[0] });
+                console.log(event.target.files);
+              }}
+            />
+
+            {/* <div className="nameSize">
+              <p className="nameText">
+                نام تصویر : {dataToSend.logo && dataToSend.logo.name}
+              </p>
+              <div>
+                <p className="sizeText">
+                  حجم :
+                  {dataToSend.logo &&
+                    Math.floor(dataToSend.logo.size / 1024) + " KB"}
+                </p>
+                <p className="typeText">
+                  نوع و پسوند : {dataToSend.logo && dataToSend.logo.type}
+                </p>
+              </div>
+              {dataToSend.image.size > 2000000 && (
+                <p className="warnText">
+                  حجم تصویر باید کمتر از 300 کیلوبایت و با فرمت های png ، jpg ،
+                  jpeg باشد .
+                </p>
+              )}
+            </div> */}
+          </section>
+        </section>
       </section>
     </section>
   );

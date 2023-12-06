@@ -32,7 +32,7 @@ export default function BoardContainer() {
           ></i>
         </div>
 
-        <Link to="/createTask">
+        <Link to="/main/createTask">
           <button className="h-8 px-4 bg-blue-500 hover:px-7 text-white text-xs font-semibold uppercase cursor-pointer duration-300 rounded-xl">
             + create task
           </button>
