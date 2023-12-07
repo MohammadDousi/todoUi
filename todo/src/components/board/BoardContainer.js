@@ -4,14 +4,16 @@ import GridBord from "./GridBord";
 import ListBoard from "./ListBoard";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function BoardContainer() {
   const [board, setBoard] = useState("Grid");
 
+  const navigate = useNavigate();
+
   return (
     <section className="w-full h-full pb-8 space-y-4 relative overflow-hidden duration-1000">
-      <section className="w-full pt-4 px-6 flex flex-row justify-start items-center gap-8">
+      <section className="w-full pt-4 px-6 flex flex-row justify-between items-center gap-8">
         <div className="flex flex-row justify-center items-start gap-2">
           <i
             onClick={() => setBoard("Grid")}
@@ -32,11 +34,12 @@ export default function BoardContainer() {
           ></i>
         </div>
 
-        <Link to="/main/createTask">
-          <button className="h-8 px-4 bg-blue-500 hover:px-7 text-white text-xs font-semibold uppercase cursor-pointer duration-300 rounded-xl">
-            + create task
-          </button>
-        </Link>
+        <button
+          onClick={() => navigate("/main/createTask")}
+          className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
+        >
+          + create task
+        </button>
       </section>
 
       {board === "Grid" ? <GridBord /> : <ListBoard />}

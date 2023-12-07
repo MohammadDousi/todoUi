@@ -3,10 +3,10 @@ import React from "react";
 export default function HeaderGridTask({ data }) {
   return (
     <section
-      className={`w-full relative bg-white flex flex-row justify-between items-center shadow-lg shadow-slate-200 rounded-xl overflow-hidden`}
+      className={`w-full relative bg-white flex flex-row justify-between items-center shadow-lg rounded-xl overflow-hidden`}
     >
       <span
-        className={`w-full h-full absolute ${data.color} opacity-25 z-10`}
+        className={`w-full h-full absolute ${data.color} opacity-0 z-10`}
       ></span>
       <hr className={`w-1 h-1/2 rounded-full ${data.color}`} />
 

@@ -4,7 +4,7 @@ import Main from "./Main";
 import Login from "./components/login/Login";
 import useToken from "./components/login/useToken";
 import NotFound from "./components/notFound/NotFound";
-import pattern from "./assets/image/pattern.svg";
+import pattern from "./assets/image/svg/pattern.svg";
 
 function App() {
 
@@ -13,6 +13,8 @@ function App() {
   if (!token) {
     return <Login setToken={setToken} />;
   }
+
+  console.log(token)
 
   return (
     <>

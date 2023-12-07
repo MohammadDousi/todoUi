@@ -1,11 +1,10 @@
 import React from "react";
 
-import pic from "../../assets/image/pic/sign-pic.jpg";
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import OtpInput from "react-otp-input";
+import pic from "../../assets/image/svg/pic_standOut.svg";
 
 export default function Login({ setToken }) {
   const navigate = useNavigate();
@@ -24,9 +23,9 @@ export default function Login({ setToken }) {
   }, [mobileNumber]);
 
   return (
-    <main className="w-screen h-screen relative bg-gray-200/30 flex flex-row justify-center items-center gap-6">
-      <section className="w-1/2 flex flex-row justify-end items-center">
-        <img src={pic} alt={pic} className="w-10/12 object-cover rounded-xl" />
+    <main className="w-screen h-screen relative bg-gray-200/30 flex flex-row justify-center items-center">
+      <section className="w-1/2 flex flex-row justify-center items-center">
+        <img src={pic} alt={pic} className="w-7/12 object-cover rounded-xl" />
       </section>
 
       <section className="w-1/2 relative flex flex-row justify-start items-center">
@@ -76,7 +75,7 @@ export default function Login({ setToken }) {
                   // });
                 }
               }}
-              className="h-10 px-8 hover:px-10 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
+              className="h-10 px-8 hover:px-10 bg-amber-200 text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
             >
               verify number
             </button>

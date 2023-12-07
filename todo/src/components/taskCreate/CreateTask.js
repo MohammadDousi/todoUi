@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_en from "react-date-object/locales/persian_en";
 
 import avator from "../../assets/image/userAvator/profile (15).png";
 import avator1 from "../../assets/image/userAvator/profile (11).png";
@@ -8,6 +11,8 @@ import avator4 from "../../assets/image/userAvator/profile (8).png";
 import TitlePage from "../titlePage/TitlePage";
 
 export default function CreateTask() {
+  const [value, setValue] = useState(new Date());
+
   const [dataToSend, setDataToSend] = useState({
     subject: "",
     description: "",
@@ -37,99 +42,121 @@ export default function CreateTask() {
     <section className="w-full h-full relative">
       <section className="w-full h-full pt-5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         <TitlePage title="create new task" />
-        <section className="w-1/2 flex flex-col justify-start items-start gap-6">
-          <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
-            subject
-          </h4>
-          <input
-            type="text"
-            placeholder="Description of the subject"
-            className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
-          />
+
+        <section className="w-full flex flex-row justify-start items-start gap-4">
+          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+            <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+              subject
+            </h4>
+            <input
+              type="text"
+              placeholder="Description of the subject"
+              className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+            />
+          </section>
+
+          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5 ">
+            <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+              Priority
+            </h4>
+
+            <div className="w-full h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
+              <div className="w-full flex justify-center items-center">
+                <input
+                  type="radio"
+                  name="option"
+                  id="force"
+                  value="force"
+                  className="peer hidden"
+                />
+                <label
+                  htmlFor="force"
+                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize hover:bg-rose-100 hover:text-rose-600 cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-rose-300 peer-checked:bg-rose-100 peer-checked:font-bold peer-checked:text-rose-600"
+                >
+                  force
+                </label>
+              </div>
+
+              <div className="w-full flex justify-center items-center">
+                <input
+                  type="radio"
+                  name="option"
+                  id="high"
+                  value="high"
+                  className="peer hidden"
+                />
+                <label
+                  htmlFor="high"
+                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-amber-100 hover:text-amber-600 peer-checked:border peer-checked:border-amber-300 peer-checked:bg-amber-100 peer-checked:font-bold peer-checked:text-amber-600"
+                >
+                  high
+                </label>
+              </div>
+
+              <div className="w-full flex justify-center items-center">
+                <input
+                  type="radio"
+                  name="option"
+                  id="normal"
+                  value="normal"
+                  className="peer hidden"
+                />
+                <label
+                  htmlFor="normal"
+                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-green-100 hover:text-green-600 peer-checked:border peer-checked:border-green-300 peer-checked:bg-green-100 peer-checked:font-bold peer-checked:text-green-600"
+                >
+                  normal
+                </label>
+              </div>
+
+              <div className="w-full flex justify-center items-center">
+                <input
+                  type="radio"
+                  name="option"
+                  id="low"
+                  value="low"
+                  className="peer hidden"
+                />
+                <label
+                  htmlFor="low"
+                  className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-blue-100 hover:text-blue-600 peer-checked:border peer-checked:border-blue-300 peer-checked:bg-blue-100 peer-checked:font-bold peer-checked:text-blue-600"
+                >
+                  low
+                </label>
+              </div>
+            </div>
+          </section>
         </section>
 
-        <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
-          <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
-            description
-          </h4>
+        <section className="w-full flex flex-row justify-start items-start gap-4">
+          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+            <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+              description
+            </h4>
 
-          <textarea
-            type="text"
-            placeholder="Write a few lines about what needs to be done"
-            className="w-full h-32 px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
-          />
-        </section>
+            <textarea
+              type="text"
+              placeholder="Write a few lines about what needs to be done"
+              className="w-full h-32 px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
+            />
+          </section>
 
-        <section className="w-1/2 flex flex-col justify-start items-start gap-1.5 ">
-          <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
-            Priority
-          </h4>
+          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+            <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+              deadline
+            </h4>
 
-          <div className="w-full h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
-            <div className="w-full flex justify-center items-center">
-              <input
-                type="radio"
-                name="option"
-                id="force"
-                value="force"
-                className="peer hidden"
-              />
-              <label
-                htmlFor="force"
-                className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-rose-300 peer-checked:bg-rose-100 peer-checked:font-bold peer-checked:text-rose-600"
-              >
-                force
-              </label>
-            </div>
-
-            <div className="w-full flex justify-center items-center">
-              <input
-                type="radio"
-                name="option"
-                id="high"
-                value="high"
-                className="peer hidden"
-              />
-              <label
-                htmlFor="high"
-                className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-amber-300 peer-checked:bg-amber-100 peer-checked:font-bold peer-checked:text-amber-600"
-              >
-                high
-              </label>
-            </div>
-
-            <div className="w-full flex justify-center items-center">
-              <input
-                type="radio"
-                name="option"
-                id="normal"
-                value="normal"
-                className="peer hidden"
-              />
-              <label
-                htmlFor="normal"
-                className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-green-300 peer-checked:bg-green-100 peer-checked:font-bold peer-checked:text-green-600"
-              >
-                normal
-              </label>
-            </div>
-
-            <div className="w-full flex justify-center items-center">
-              <input
-                type="radio"
-                name="option"
-                id="low"
-                value="low"
-                className="peer hidden"
-              />
-              <label
-                htmlFor="low"
-                className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-blue-300 peer-checked:bg-blue-100 peer-checked:font-bold peer-checked:text-blue-600"
-              >
-                low
-              </label>
-            </div>
-          </div>
+            <DatePicker
+              calendar={persian}
+              locale={persian_en}
+              calendarPosition="bottom-right"
+            />
+            <input
+              type="text"
+              placeholder="Description of the subject"
+              className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+            />
+          </section>
         </section>
 
         <section className="w-full flex flex-col justify-start items-start gap-1.5">
@@ -138,7 +165,7 @@ export default function CreateTask() {
           </h4>
 
           <section className="w-1/2 flex flex-col items-center">
-            <section className="w-full flex flex-col items-center gap-0">
+            <section className="w-full relative flex flex-col items-center">
               <section className="w-full min-h-fit h-auto flex justify-between gap-2 pl-8 pr-3 bg-white border border-slate-300 rounded-xl">
                 <div
                   className={
@@ -199,7 +226,7 @@ export default function CreateTask() {
                 onMouseLeave={() => setShowHoverTagTeammate(false)}
                 className={
                   showHoverTagTeammate
-                    ? "w-full max-h-40 bg-white flex flex-col justify-start items-start divide-y divide-slate-100 shadow rounded-xl overflow-y-auto"
+                    ? "w-full absolute top-14 max-h-40 bg-white flex flex-col justify-start items-start divide-y divide-slate-100 shadow rounded-xl overflow-y-auto"
                     : "h-0 overflow-hidden"
                 }
               >
@@ -244,7 +271,7 @@ export default function CreateTask() {
             select Image
           </h4>
 
-          <section className="w-full h-52 flex flex-col justify-start items-start gap-6">
+          <section className="w-full flex flex-col justify-start items-start gap-6">
             <section className="w-32 h-32 bg-white border-dotted border-2 border-slate-300 rounded-xl">
               <label
                 htmlFor="inputFile"

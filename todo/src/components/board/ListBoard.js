@@ -36,7 +36,7 @@ export default function ListBoard() {
             </tr>
           </thead>
 
-          <tbody className="w-full h-full flex flex-col justify-start items-start bg-white divide-y divide-slate-200/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
+          <tbody className="w-full max-h-full flex flex-col justify-start items-start bg-white divide-y divide-slate-200/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
             <tr className="w-full py-4 px-8 text-slate-600 font-normal text-sm capitalize flex justify-center items-center gap-6 cursor-pointer hover:bg-amber-50">
               <th className="w-2/12 flex justify-start items-start">
                 <p className="h-full py-1 px-5 bg-green-100 font-bold text-center text-green-600 rounded-full">

@@ -32,7 +32,7 @@
   }
 
   ::-webkit-scrollbar {
-    @apply w-1;
+    @apply w-0.5;
   }
 
   ::-webkit-scrollbar-track {
@@ -40,7 +40,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-300 rounded-full;
+    @apply bg-slate-200 rounded-full;
   }
 
   ::-webkit-outer-spin-button,
