@@ -6,7 +6,7 @@ export default function Header() {
 
   return (
     <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
-      <i className="fa fa-bars iconContainer bg-gray-200/50 text-gray-400 text-sm"></i>
+      <i className="fa fa-bars iconContainer bg-gray-100 text-slate-400 text-sm"></i>
 
       <div className="flex justify-center items-center gap-14">
         <ul className="flex justify-start items-center gap-6">
@@ -40,8 +40,8 @@ export default function Header() {
 
       <div className="flex items-center justify-end gap-4">
         <i className="fa fa-bell iconContainer bg-amber-100 text-amber-600 text-sm"></i>
+        <i className="fas fa-exclamation-triangle	iconContainer bg-slate-100 text-slate-400 hover:bg-rose-100 hover:text-rose-600 text-sm"></i>
 
-        {/* <Link to="/login"> */}
         <i
           onClick={() => {
             sessionStorage.clear();
@@ -50,7 +50,6 @@ export default function Header() {
           }}
           className="fas fa-times iconContainer bg-rose-100 text-rose-600 text-sm"
         ></i>
-        {/* </Link> */}
       </div>
     </header>
   );

@@ -44,9 +44,30 @@ export default function Sidebar() {
   let location = useLocation();
 
   const sideTab = [
-    { name: "Dashboard", path: "/main/board", path2 : "/main", icon: "fas fa-map" },
-    { name: "Create Task", path: "/main/createTask", path2 : "/main/createTask", icon: "fas fa-plus" },
-    { name: "Profile", path: "/main/profile", path2 : "/main/profile", icon: "fas fa-user" },
+    {
+      name: "Dashboard",
+      path: "/main/board",
+      path2: "/main",
+      icon: "fas fa-map",
+    },
+    {
+      name: "Create Task",
+      path: "/main/createTask",
+      path2: "/main/createTask",
+      icon: "fas fa-plus",
+    },
+    {
+      name: "Profile",
+      path: "/main/profile",
+      path2: "/main/profile",
+      icon: "fas fa-user",
+    },
+    {
+      name: "Push",
+      path: "/main/pushBox",
+      path2: "/main/pushBox",
+      icon: "fas fa-envelope-open",
+    },
   ];
 
   return (
@@ -62,7 +83,7 @@ export default function Sidebar() {
         <section className="w-full flex flex-col justify-center items-center gap-5">
           <i
             onClick={() => setShowSidebar("BIG")}
-            className="fa fa-angle-right iconContainer bg-gray-200/50 text-gray-400 text-sm"
+            className="fa fa-angle-right iconContainer bg-gray-100 text-slate-400 text-sm"
           ></i>
 
           <div className="w-full h-auto flex flex-col justify-center items-center gap-2">
@@ -107,7 +128,7 @@ export default function Sidebar() {
           <section className="w-full flex flex-row justify-start items-center">
             <i
               onClick={() => setShowSidebar("MINI")}
-              className="fa fa-angle-left iconContainer bg-gray-200/50 text-gray-400 text-sm"
+              className="fa fa-angle-left iconContainer bg-gray-100 text-slate-400 text-sm"
             ></i>
           </section>
 
@@ -148,7 +169,8 @@ export default function Sidebar() {
               <Link key={tab.name} to={tab.path}>
                 <section
                   className={
-                    location.pathname === tab.path || location.pathname === tab.path2
+                    location.pathname === tab.path ||
+                    location.pathname === tab.path2
                       ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
                       : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
                   }
