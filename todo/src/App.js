@@ -5,17 +5,14 @@ import Login from "./components/login/Login";
 import useToken from "./components/login/useToken";
 import NotFound from "./components/notFound/NotFound";
 import pattern from "./assets/image/svg/pattern.svg";
+import Loader from "./components/loader/Loader";
 
 function App() {
-
   const { token, setToken } = useToken();
-  
+
   if (!token) {
     return <Login setToken={setToken} />;
   }
-
-  console.log(token)
-
   return (
     <>
       <img
@@ -31,7 +28,7 @@ function App() {
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
-  );  
+  );
 }
 
 export default App;

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import DatePicker from "react-multi-date-picker";
+import axios from "axios";
+
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_en from "react-date-object/locales/persian_en";
 import transition from "react-element-popper/animations/transition";
@@ -13,26 +15,13 @@ import avator3 from "../../assets/image/userAvator/profile (1).png";
 import avator4 from "../../assets/image/userAvator/profile (8).png";
 
 import TitlePage from "../titlePage/TitlePage";
+import Loader from "../loader/Loader";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Toastiy from "../toastfiy/Toastfiy";
 
 export default function CreateTask() {
-  const [dataToSend, setDataToSend] = useState({
-    subject: "",
-    description: "",
-    priority: "",
-    deadline: "",
-    group: "",
-    image: "",
-  });
-
-  const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
-  const [selectedTeammate, setSelectedTeammate] = useState([]); // array teammate selected
-  const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
-  const [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
-
-  const [UploadImagesList, setUploadImagesList] = useState([
-    { name: "a1", img: avator },
-  ]); // get and save upload image in array
-
   let group = [
     { id: 1, name: "@ Dina Wangui", avator: avator },
     { id: 2, name: "@ Bud Choi", avator: avator1 },
@@ -45,19 +34,94 @@ export default function CreateTask() {
     setFilterSearchTeammate(group);
   }, []);
 
+  const [loader, setLoader] = useState(false);
+
+  const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
+  const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
+  const [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
+
+  const [dataToSend, setDataToSend] = useState({
+    subject: "",
+    description: "",
+    priority: "",
+    deadline: new DateObject("YYYY/MM/DD HH:mm"),
+    selectedTeammate: [],
+    image: [],
+  });
+
+  const sendData = () => {
+    setLoader(true);
+    if (
+      dataToSend.subject &&
+      dataToSend.description &&
+      dataToSend.deadline &&
+      dataToSend.priority
+    ) {
+      let formData = new FormData();
+      formData.append("fun", "createNewTask");
+      // formData.append("userId", dataToSend.subject);
+      formData.append("subject", dataToSend.subject);
+      formData.append("description", dataToSend.description);
+      formData.append("priority", dataToSend.priority);
+      formData.append("deadline", JSON.stringify(dataToSend.deadline));
+
+      // selected id in select team mate for send to DB
+      // let select = [];
+      // dataToSend.selectedTeammate.map((item) => select.push(item.id));
+      formData.append(
+        "selectedTeammate",
+        JSON.stringify(dataToSend.selectedTeammate)
+      );
+
+      for (let i = 0; i < dataToSend.image.length; i++) {
+        formData.append("files[]", dataToSend.image[i]);
+      }
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          switch (response.data) {
+            case "SuccessInsert":
+              Toastiy("Create new task is successful.", "su");
+
+              setLoader(false);
+              // setDataToSend([
+              //   {
+              //     subject: "",
+              //     description: "",
+              //     priority: "",
+              //     deadline: new DateObject("YYYY/MM/DD HH:mm"),
+              //     selectedTeammate: [],
+              //     image: [],
+              //   },
+              // ]);
+              break;
+            default:
+              console.log(response.data);
+              break;
+          }
+        })
+        .catch((e) => console.log(e));
+    } else {
+      Toastiy("Enter the ", "wa");
+    }
+  };
+
   return (
     <section className="w-full h-full relative">
       <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+        {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="create new task" />
           <button
-            // onClick={() => navigate("/main/createTask")}
+            onClick={() => sendData()}
             className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
           >
             add to list
           </button>
         </section>
 
+        {/* subject and Priority */}
         <section className="w-full flex flex-row justify-start items-start gap-4">
           <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
@@ -67,6 +131,10 @@ export default function CreateTask() {
               type="text"
               placeholder="Description of the subject"
               className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+              value={dataToSend.subject}
+              onChange={(e) =>
+                setDataToSend({ ...dataToSend, subject: e.target.value })
+              }
             />
           </section>
 
@@ -79,9 +147,12 @@ export default function CreateTask() {
               <div className="w-full flex justify-center items-center">
                 <input
                   type="radio"
-                  name="option"
+                  name="priority"
                   id="force"
                   value="force"
+                  onChange={(e) =>
+                    setDataToSend({ ...dataToSend, priority: e.target.id })
+                  }
                   className="peer hidden"
                 />
                 <label
@@ -95,9 +166,12 @@ export default function CreateTask() {
               <div className="w-full flex justify-center items-center">
                 <input
                   type="radio"
-                  name="option"
+                  name="priority"
                   id="high"
                   value="high"
+                  onChange={(e) =>
+                    setDataToSend({ ...dataToSend, priority: e.target.id })
+                  }
                   className="peer hidden"
                 />
                 <label
@@ -111,9 +185,12 @@ export default function CreateTask() {
               <div className="w-full flex justify-center items-center">
                 <input
                   type="radio"
-                  name="option"
+                  name="priority"
                   id="normal"
                   value="normal"
+                  onChange={(e) =>
+                    setDataToSend({ ...dataToSend, priority: e.target.id })
+                  }
                   className="peer hidden"
                 />
                 <label
@@ -127,9 +204,12 @@ export default function CreateTask() {
               <div className="w-full flex justify-center items-center">
                 <input
                   type="radio"
-                  name="option"
+                  name="priority"
                   id="low"
                   value="low"
+                  onChange={(e) =>
+                    setDataToSend({ ...dataToSend, priority: e.target.id })
+                  }
                   className="peer hidden"
                 />
                 <label
@@ -143,6 +223,7 @@ export default function CreateTask() {
           </section>
         </section>
 
+        {/* description */}
         <section className="w-full flex flex-col justify-start items-start gap-1.5">
           <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
             description
@@ -152,9 +233,14 @@ export default function CreateTask() {
             type="text"
             placeholder="Write a few lines about what needs to be done"
             className="w-full h-32 px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
+            value={dataToSend.description}
+            onChange={(e) =>
+              setDataToSend({ ...dataToSend, description: e.target.value })
+            }
           />
         </section>
 
+        {/* tag teammate and deadline */}
         <section className="w-full flex flex-row justify-start items-start gap-4">
           <section className="w-full flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
@@ -166,7 +252,7 @@ export default function CreateTask() {
                 <section className="w-full min-h-fit h-auto flex justify-between gap-2 pl-8 pr-3 bg-white border border-slate-300 rounded-xl">
                   <div
                     className={
-                      selectedTeammate.length === 0
+                      dataToSend.selectedTeammate.length === 0
                         ? "w-full py-2 h-12 flex flex-row flex-wrap gap-2"
                         : "w-full py-2 flex flex-row flex-wrap gap-2"
                     }
@@ -192,8 +278,8 @@ export default function CreateTask() {
                       value={searchTeammate}
                     />
 
-                    {selectedTeammate &&
-                      selectedTeammate.map((person) => (
+                    {dataToSend.selectedTeammate &&
+                      dataToSend.selectedTeammate.map((person) => (
                         <div
                           key={person.id}
                           className="px-3 py-0.5 text-slate-600 text-sm font-normal capitalize bg-amber-100 border border-amber-300 flex flex-row justify-center items-center gap-3 rounded-full"
@@ -201,11 +287,13 @@ export default function CreateTask() {
                           {person.name}
                           <i
                             onClick={() => {
-                              setSelectedTeammate(
-                                selectedTeammate.filter(
-                                  (item) => item.id !== person.id
-                                )
-                              );
+                              setDataToSend({
+                                ...dataToSend,
+                                selectedTeammate:
+                                  dataToSend.selectedTeammate.filter(
+                                    (item) => item.id !== person.id
+                                  ),
+                              });
                             }}
                             className="fa fa-times pt-0.5 !text-slate-400 hover:!text-red-500 cursor-pointer"
                           ></i>
@@ -234,12 +322,18 @@ export default function CreateTask() {
                       <section
                         key={person.id}
                         onClick={() => {
-                          const foundPerson = selectedTeammate.find(
+                          const foundPerson = dataToSend.selectedTeammate.find(
                             (x) => x.id === person.id
                           );
 
                           !foundPerson &&
-                            setSelectedTeammate([...selectedTeammate, person]);
+                            setDataToSend({
+                              ...dataToSend,
+                              selectedTeammate: [
+                                ...dataToSend.selectedTeammate,
+                                person,
+                              ],
+                            });
 
                           !foundPerson && setSearchTeammate("");
                           !foundPerson && setFilterSearchTeammate(group);
@@ -263,9 +357,7 @@ export default function CreateTask() {
                 </div>
               </section>
             </section>
-
           </section>
-
 
           <section className="w-full relative flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
@@ -283,10 +375,26 @@ export default function CreateTask() {
               calendarPosition="bottom-center"
               numberOfMonths={2}
               animations={[transition({ duration: 800, from: 35 })]}
+              editable={false}
+              placeholder="click to open"
+              format="YYYY/MM/DD HH:mm"
+              onChange={(date) =>
+                setDataToSend({
+                  ...dataToSend,
+                  deadline: {
+                    year: date.year,
+                    month: date.month.number,
+                    day: date.day,
+                    hour: date.hour,
+                    min: date.minute,
+                  },
+                })
+              }
             />
           </section>
         </section>
 
+        {/* upload image  */}
         <section className="w-full flex flex-col justify-start items-start gap-1.5">
           <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
             select Image
@@ -303,23 +411,26 @@ export default function CreateTask() {
               </label>
             </section>
 
-            {UploadImagesList.map((image) => (
+            {dataToSend.image.map((image) => (
               <section
-                key={image.name}
-                className="w-2h-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
+                key={image.size + Math.random()}
+                className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
               >
                 <img
-                  src={image.img}
-                  alt={image.img}
+                  src={image && URL.createObjectURL(image)}
+                  alt={image.name}
                   className="w-full h-full object-contain"
                 />
                 <i
                   onClick={() => {
-                    setUploadImagesList(
-                      UploadImagesList.filter((x) => x.name !== image.name)
-                    );
+                    setDataToSend({
+                      ...dataToSend,
+                      image: dataToSend.image.filter(
+                        (x) => x.name !== image.name
+                      ),
+                    });
                   }}
-                  className="fas fa-times-circle absolute bottom-1 right-2 text-rose-300 hover:text-red-500 text-xl cursor-pointer"
+                  className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"
                 ></i>
               </section>
             ))}
@@ -328,16 +439,34 @@ export default function CreateTask() {
               id="inputFile"
               className="absolute opacity-0 invisible w-0 h-0"
               type="file"
+              name="file[]"
+              multiple
               accept="image/*"
               onChange={(event) => {
-                // setDataToSend({ ...dataToSend, logo: event.target.files[0] });
-                console.log(event.target.files);
+                setDataToSend({
+                  ...dataToSend,
+                  image: [...dataToSend.image, event.target.files[0]],
+                });
               }}
             />
           </section>
-          
         </section>
+
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          limit={5}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </section>
+      {loader && <Loader />}
     </section>
   );
 }

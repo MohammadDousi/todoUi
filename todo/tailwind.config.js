@@ -13,22 +13,10 @@ module.exports = {
           "0% ,100%": { color: "#0ea5e9" },
           "50%": { color: "#3b82f6" },
         },
-
-
-        animMenuOpen: {
-          "100%": { left: 0 },
-        },
-        animMenuClose: {
-          "0%": { left: 0 },
-        },
-        
-
       },
 
       animation: {
         newBtnAnim: "animNewBtn 3s infinite forwards",
-        "anim-menuHOpen": "animMenuOpen .5s 1 forwards",
-        "anim-menuHClose": "animMenuClose .5s 1 forwards",
       },
 
     },

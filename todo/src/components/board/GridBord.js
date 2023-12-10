@@ -1,11 +1,29 @@
-import React from "react";
-
-import HeaderGridTask from "./gridTask/HeaderGridTask.jsx";
-import ItemGridTask from "./gridTask/ItemGridTask.jsx";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import HeaderGridTask from "./gridTask/HeaderGridTask.js";
+import ItemGridTask from "./gridTask/ItemGridTask.js";
 
 export default function GridBord() {
+  const [allTask, setAllTask] = useState([]);
+
+  useEffect(() => {
+    let formData = new FormData();
+    formData.append("fun", "getAllTask");
+
+    axios
+      .post("php/api.php", formData)
+      .then((response) => setAllTask(response.data))
+      .catch((e) => console.log(e));
+
+    for (let [key, value] of formData) {
+      formData.delete(key, value);
+    }
+  }, []);
+
+  const todo = allTask.filter((item) => item.status === "todo");
+
   return (
-    <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-row justify-start items-start gap-5">
+    <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-row justify-start items-start gap-6">
       <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
         <HeaderGridTask
           data={{
@@ -16,12 +34,9 @@ export default function GridBord() {
         />
 
         <div className="w-full h-5/6 pb-6 flex flex-col justify-start items-start gap-3 overflow-auto">
-          <ItemGridTask />
-          <ItemGridTask />
-          <ItemGridTask />
-          <ItemGridTask />
-          <ItemGridTask />
-          <ItemGridTask />
+          {todo?.map((item) => (
+            <ItemGridTask data={item} />
+          ))}
         </div>
       </div>
 
@@ -34,9 +49,7 @@ export default function GridBord() {
           }}
         />
 
-        <div className="w-full h-full flex flex-col justify-start items-start gap-3 overflow-auto">
-          <ItemGridTask />
-        </div>
+        <div className="w-full h-full flex flex-col justify-start items-start gap-3 overflow-auto"></div>
       </div>
 
       <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
@@ -48,9 +61,7 @@ export default function GridBord() {
           }}
         />
 
-        <div className="w-full h-full flex flex-col justify-start items-start gap-3 overflow-auto">
-          <ItemGridTask />
-        </div>
+        <div className="w-full h-full flex flex-col justify-start items-start gap-3 overflow-auto"></div>
       </div>
 
       <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
@@ -62,9 +73,7 @@ export default function GridBord() {
           }}
         />
 
-        <div className="w-full h-full flex flex-col justify-start items-start gap-3 overflow-auto">
-          <ItemGridTask />
-        </div>
+        <div className="w-full h-full flex flex-col justify-start items-start gap-3 overflow-auto"></div>
       </div>
     </section>
   );

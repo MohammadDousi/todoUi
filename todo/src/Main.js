@@ -27,6 +27,8 @@ export default function Main() {
           <Route path="/pushBox" element={<Push />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
+
+        
       </main>
     </>
   );

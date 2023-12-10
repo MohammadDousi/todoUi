@@ -25,4 +25,4 @@ yarn-error.log*
 
 
 ## manual config in host
-config.php
+*.php
