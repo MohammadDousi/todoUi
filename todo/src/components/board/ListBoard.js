@@ -1,9 +1,9 @@
 import React from "react";
 
-import avator3 from "../../assets/image/userAvator/profile (6).png";
-import avator4 from "../../assets/image/userAvator/profile (5).png";
-import avator5 from "../../assets/image/userAvator/profile (4).png";
-import avator6 from "../../assets/image/userAvator/profile (16).png";
+import avator3 from "../../assets/image/userAvator/profile(12).png";
+import avator4 from "../../assets/image/userAvator/profile(5).png";
+import avator5 from "../../assets/image/userAvator/profile(4).png";
+import avator6 from "../../assets/image/userAvator/profile(11).png";
 
 export default function ListBoard() {
   return (
@@ -55,7 +55,7 @@ export default function ListBoard() {
                 <p className="w-full text-left">1 Days Left</p>
               </th>
               <th className="w-2/12 flex justify-start items-start">
-                <section className="w-full pr-2 hover:pr-0 grid grid-cols-[repeat(5,1rem)] hover:grid-cols-[repeat(5,1.7rem)]">
+                <section className="w-full flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
                   <div className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
                     +2
                   </div>

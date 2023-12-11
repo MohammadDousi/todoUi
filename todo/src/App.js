@@ -6,12 +6,24 @@ import useToken from "./components/login/useToken";
 import NotFound from "./components/notFound/NotFound";
 import pattern from "./assets/image/svg/pattern.svg";
 import Loader from "./components/loader/Loader";
+import axios from "axios";
 
 function App() {
   const { token, setToken } = useToken();
 
   if (!token) {
     return <Login setToken={setToken} />;
+  } else {
+    let formData = new FormData();
+    formData.append("fun", "getSingleUser");
+    formData.append("token", token);
+
+    axios
+      .post("php/api.php", formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => console.log(e));
   }
   return (
     <>

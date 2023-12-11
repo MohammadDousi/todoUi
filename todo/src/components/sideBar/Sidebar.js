@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import "./SidebarStyle.css";
-import avator from "../../assets/image/userAvator/profile (4).png";
-import avator4 from "../../assets/image/userAvator/profile (11).png";
-import avator5 from "../../assets/image/userAvator/profile (14).png";
-import avator6 from "../../assets/image/userAvator/profile (15).png";
+import avator from "../../assets/image/userAvator/profile(1).png";
+import avator4 from "../../assets/image/userAvator/profile(2).png";
+import avator5 from "../../assets/image/userAvator/profile(9).png";
+import avator6 from "../../assets/image/userAvator/profile(10).png";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
@@ -186,7 +186,7 @@ export default function Sidebar() {
           <h3 className="text-green-600 font-bold text-xs pl-2 capitalize">
             is online :
           </h3>
-          <section className="pr-2 hover:pr-0 grid grid-cols-[repeat(4,1rem)] hover:grid-cols-[repeat(4,1.7rem)]">
+          <section className="flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
             <img
               className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
               src={avator4}

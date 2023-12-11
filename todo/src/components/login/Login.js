@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,133 +7,319 @@ import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import pic from "../../assets/image/svg/pic_standOut.svg";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Toastiy from "../toastfiy/Toastfiy";
+import Loader from "../loader/Loader";
+
 export default function Login({ setToken }) {
   const navigate = useNavigate();
 
-  const [levelLogin, setLevelLogin] = useState("MOBILE");
+  const [loader, setLoader] = useState(false);
 
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [mobileOk, setMobileOk] = useState(false);
+  const [levelLogin, setLevelLogin] = useState("MOBILE"); // check and switch between conatiner mobile and otp code
+  const [mobileOk, setMobileOk] = useState(false); // check for regiex moile - true is ok number mobile
+  const [data, setData] = useState({ mobileNumber: "", otp: "" }); // set mobiel and otp code
 
-  const [otp, setOtp] = useState("");
+  const [touched, setTouched] = useState({});
 
-  const checkedOTP = "1234";
+  const countTimer = useRef();
+  const agianCode = useRef();
+
+  let intervalTimer = useRef();
+
+  const verifyMobile = () => {
+    setLoader(true);
+    if (mobileOk) {
+      let formData = new FormData();
+      formData.append("fun", "verifyMobile");
+      formData.append("mobileNumber", data.mobileNumber);
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          switch (response.data) {
+            case "insertOk":
+              setLoader(false);
+              setLevelLogin("OTP");
+              code();
+              timer();
+              break;
+            case "noInsert":
+              Toastiy("Login error, please try again.", "in");
+              setLoader(false);
+              break;
+            case "dataInvalied":
+              Toastiy("The number entered is not correct", "er");
+              setLoader(false);
+              break;
+            case "noData":
+              Toastiy("An error has occurred, contact support", "in");
+              setLoader(false);
+              break;
+          }
+        })
+        .catch((e) => console.log(e));
+    }
+  };
+
+  const verifyOtpCode = () => {
+    setLoader(true);
+    if (data.otp.length === 4) {
+      let formData = new FormData();
+      formData.append("fun", "verifyOtpCode");
+      formData.append("mobileNumber", data.mobileNumber);
+      formData.append("otp", data.otp);
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          // console.log(response.data);
+
+          response.data?.map((item) => {
+            switch (item.msg) {
+              case "insertOk":
+                const token = item.token;
+                setToken(token);
+                Toastiy("Welcome o Todo Application", "in");
+                setLoader(false);
+                clearInterval(intervalTimer.current);
+                navigate("/main");
+                break;
+              case "noInsert":
+                break;
+              case "otpNok":
+                break;
+              case "noFoundNum":
+                break;
+              case "noData":
+                break;
+              default:
+                break;
+            }
+
+            // signIn({
+            //   token: res.data.token,
+            //   expiresIn: 3600,
+            //   tokenType: "Bearer",
+            //   authState: { mobile: item.mobile },
+            // });
+
+            // });
+          });
+
+          // console.log(response.data);
+        })
+        .catch((e) => console.log(e));
+    }
+  };
+
+  const timer = () => {
+    let count = 0.1;
+    count = count * 60;
+    let min = Math.floor(count / 60);
+    let second = Math.floor(count - min * 60);
+
+    agianCode.current.style.opacity = "0";
+
+    intervalTimer.current = setInterval(() => {
+      second--;
+
+      if (second === 0) {
+        if (min === 0) {
+          min = 0;
+          clearInterval(intervalTimer.current);
+        } else {
+          second = min * 60;
+          min--;
+        }
+      }
+
+      second < 10 && (second = "0" + second);
+
+      countTimer.current.innerText = "0" + min + ":" + second;
+
+      if (second == 0 && min == 0) {
+        agianCode.current.style.opacity = "1";
+      }
+    }, 1000);
+    // return () => clearInterval(intervalTimer.current);
+
+    // const startTimer = () => {
+
+    // };
+  };
+
+  useEffect(() => {}, []);
+
+  // const reSendCodeOtp = () => {
+  //   clearInterval(intervalTimer.current);
+  //   intervalTimer.current = setInterval(startTimer, 1000);
+
+  //   agianCode.current.style.display = "none";
+  //   countTimer.current.style.display = "block";
+  // };
 
   useEffect(() => {
-    /^09[0-9]{9}$/g.test(mobileNumber) ? setMobileOk(true) : setMobileOk(false);
-  }, [mobileNumber]);
+    /^09[0-9]{9}$/g.test(data.mobileNumber.trim())
+      ? setMobileOk(true)
+      : setMobileOk(false);
+  }, [data.mobileNumber]);
+
+  const [helpOtp, setHelpOtp] = useState("");
+  const code = () => {
+    let formData = new FormData();
+    formData.append("fun", "getcode");
+    formData.append("mobileNumber", data.mobileNumber);
+
+    axios.post("php/api.php", formData).then((response) => {
+      // setO(response.data);
+      setHelpOtp(response.data[0].otpCode);
+    });
+  };
 
   return (
-    <main className="w-screen h-screen relative bg-gray-200/30 flex flex-row justify-center items-center">
-      <section className="w-1/2 flex flex-row justify-center items-center">
-        <img src={pic} alt={pic} className="w-7/12 object-cover rounded-xl" />
-      </section>
+    <>
+      <main className="w-screen h-screen relative bg-gray-200/30 flex flex-row justify-center items-center">
+        {/* image  */}
+        <section className="w-1/2 flex flex-row justify-center items-center">
+          <img src={pic} alt={pic} className="w-7/12 object-cover rounded-xl" />
+        </section>
 
-      <section className="w-1/2 relative flex flex-row justify-start items-center">
-        <section
-          className={
-            levelLogin === "MOBILE"
-              ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
-              : "w-10/12 p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 overflow-hidden"
-          }
-        >
-          <section className="w-full mb-6 flex flex-col justify-center items-start gap-1">
-            <p className="w-full text-blue-600 font-black text-3xl capitalize">
-              Welcome Back
-            </p>
-            <p className="w-full text-slate-600 font-normal text-lg ">
-              Enter your mobile number to log in or register.
-            </p>
-          </section>
+        {/* container mobile and otp code */}
+        <section className="w-1/2 relative flex flex-row justify-start items-center">
+          <section
+            className={
+              levelLogin === "MOBILE"
+                ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
+                : "w-10/12 p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 overflow-hidden"
+            }
+          >
+            <section className="w-full flex flex-col justify-center items-start gap-1">
+              <p className="w-full text-blue-600 font-black text-3xl capitalize">
+                Welcome Back
+              </p>
+              <p className="w-full text-slate-600 font-normal text-lg ">
+                Enter your mobile number to log in or register.
+              </p>
+            </section>
 
-          <section className="w-full flex flex-col justify-center items-end gap-10">
-            <input
-              type="number"
-              placeholder="09xx xx xxx xx"
-              className="w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
-              value={mobileNumber}
-              onChange={(e) => setMobileNumber(e.target.value)}
-            />
+            <section className="w-full relative flex flex-col justify-center items-end gap-2">
+              <input
+                type="number"
+                name="mobile"
+                placeholder="09xx xx xxx xx"
+                className={
+                  !mobileOk && touched.mobile
+                    ? "w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-rose-500 focus:border-blue-500"
+                    : "w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+                }
+                value={data.mobileNumber}
+                onChange={(e) => {
+                  setData({ mobileNumber: e.target.value });
+                }}
+                onFocus={(e) =>
+                  setTouched({ ...touched, [e.target.name]: true })
+                }
+              />
+              {!data.mobileNumber && touched.mobile && (
+                <span className="w-full absolute -bottom-7 pl-8 text-rose-500 font-normal text-sm text-left">
+                  The number entered is not correct.
+                </span>
+              )}
+            </section>
 
             <button
-              onClick={() => {
-                if (mobileOk) {
-                  setLevelLogin("OTP");
-                  // console.log(mobileNumber);
-                  // let formData = new FormData();
-                  // formData.append("fun", "verfiyMobile");
-                  // formData.append("mobileNum", mobileNumber);
-                  // axios.post("php/apiInvilla.php", formData).then((res) => {
-                  //   switch (res.data) {
-                  //     case "insertOk":
-                  //       break;
-                  //     case "noInsert":
-                  //       break;
-                  //     case "noData":
-                  //       break;
-                  //   }
-                  //   console.log(res.data);
-                  // });
-                }
-              }}
-              className="h-10 px-8 hover:px-10 bg-amber-200 text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
+              onClick={() => verifyMobile()}
+              className="h-10 px-8 hover:px-10 bg-amber-200 text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
             >
               verify number
             </button>
           </section>
+
+          <section
+            className={
+              levelLogin === "OTP"
+                ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
+                : "w-10/12 p-16 bg-white absolute bg-gray-200/50 translate-y-full scale-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 overflow-hidden"
+            }
+          >
+            <i
+              onClick={() => setLevelLogin("MOBILE")}
+              className="fa fa-angle-left iconContainer absolute left-6 top-6 bg-gray-200/50 text-gray-400 text-sm"
+            ></i>
+
+            <section className="w-full mb-6 flex flex-col justify-center items-start gap-1">
+              <p className="w-full text-blue-600 font-black text-3xl capitalize ">
+                OTP code
+              </p>
+              <p className="w-full text-slate-600 font-normal text-lg">
+                The login code has been sent to <b>{data.mobileNumber}</b>{" "}
+                mobile number.
+              </p>
+            </section>
+
+            <section className="w-full relative flex flex-col justify-center items-center gap-10">
+              <OtpInput
+                value={data.otp}
+                onChange={(value) => setData({ ...data, otp: value.trim() })}
+                numInputs={4}
+                inputType="tel"
+                containerStyle="w-full flex justify-center items-start"
+                inputStyle="!w-14 !h-14 bg-white border border-slate-300 text-slate-600 text-2xl font-black rounded-xl focus:border-blue-500"
+                renderSeparator={<span className="px-2"></span>}
+                renderInput={(props) => <input {...props} />}
+              />
+
+              <h4 className="w-full text-green-500 font-normal text-base">
+                otp code for you : {helpOtp}
+              </h4>
+
+              <section className="absolute bottom-1.5 left-0 flex flex-row justify-center items-center gap-8">
+                <i
+                  ref={agianCode}
+                  onClick={() => timer()}
+                  className="fa fa-undo opacity-0 text-red-500 text-base rotate-45 cursor-pointer"
+                ></i>
+                <p
+                  className="text-slate-600 text-base font-normal text-center tracking-widest"
+                  ref={countTimer}
+                ></p>
+              </section>
+
+              <button
+                onClick={() => verifyOtpCode()}
+                className="h-10 px-8 hover:px-10 bg-amber-200 text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+              >
+                check & Login
+              </button>
+            </section>
+          </section>
         </section>
 
-        <section
-          className={
-            levelLogin === "OTP"
-              ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
-              : "w-10/12 p-16 bg-white absolute bg-gray-200/50 translate-y-full scale-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 overflow-hidden"
-          }
+        {loader && <Loader />}
+
+        <h3
+          onClick={() => window.location.replace("https://kaktusprog.ir")}
+          className="absolute bottom-5 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer"
         >
-          <i
-            onClick={() => setLevelLogin("MOBILE")}
-            className="fa fa-angle-left iconContainer absolute left-6 top-6 bg-gray-200/50 text-gray-400 text-sm"
-          ></i>
+          develop and design by mohammad dosi
+        </h3>
+      </main>
 
-          <section className="w-full mb-6 flex flex-col justify-center items-start gap-1">
-            <p className="w-full text-blue-600 font-black text-3xl capitalize ">
-              OTP code
-            </p>
-            <p className="w-full text-slate-600 font-normal text-lg">
-              The login code has been sent to <b>{mobileNumber}</b> mobile
-              number.
-            </p>
-          </section>
-
-          <section className="w-full flex flex-col justify-center items-center gap-10">
-            <OtpInput
-              value={otp}
-              onChange={setOtp}
-              numInputs={4}
-              inputType="tel"
-              containerStyle="w-full flex justify-center items-start"
-              inputStyle="!w-14 !h-14 bg-white border border-slate-300 text-slate-600 text-base font-black rounded-xl focus:border-blue-500"
-              renderSeparator={<span className="px-2"></span>}
-              renderInput={(props) => <input {...props} />}
-            />
-
-            <button
-              onClick={() => {
-                checkedOTP === otp && navigate("/main");
-
-                const token = {
-                  mobileNumber,
-                  otp,
-                };
-                setToken(token);
-              }}
-              className="h-10 px-8 hover:px-10 bg-amber-200  text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
-            >
-              check & Login
-            </button>
-          </section>
-        </section>
-      </section>
-    </main>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        limit={5}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   );
 }

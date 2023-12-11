@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ItemGridTask(props) {
   const { data } = props;
 
-  const [tagTeam, setTagTeam] = useState([]);
   let date = JSON.parse(data?.date); // get data from data
   let tag = JSON.parse(data.tagTeam);
 
@@ -39,10 +37,11 @@ export default function ItemGridTask(props) {
           </span>
         </section>
 
-        <section className="pr-2 hover:pr-0 grid grid-cols-[repeat(5,1rem)] hover:grid-cols-[repeat(5,1.7rem)]">
+        <section className="flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
           {tag?.map((item) => (
             <img
-              className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
+              key={item.avator}
+              className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
               src={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
               alt={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
             />

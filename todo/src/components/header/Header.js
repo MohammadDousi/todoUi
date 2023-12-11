@@ -13,7 +13,12 @@ export default function Header() {
           <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">
             Dashboard
           </li>
-          <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">
+          <li
+            onClick={() =>
+              window.location.replace("https://private-site-next.vercel.app/")
+            }
+            className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer"
+          >
             About Us
           </li>
           <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">

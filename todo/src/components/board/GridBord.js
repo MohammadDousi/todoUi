@@ -35,7 +35,7 @@ export default function GridBord() {
 
         <div className="w-full h-5/6 pb-6 flex flex-col justify-start items-start gap-3 overflow-auto">
           {todo?.map((item) => (
-            <ItemGridTask data={item} />
+            <ItemGridTask key={item.id} data={item} />
           ))}
         </div>
       </div>

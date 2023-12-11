@@ -8,32 +8,16 @@ import persian_en from "react-date-object/locales/persian_en";
 import transition from "react-element-popper/animations/transition";
 import weekends from "react-multi-date-picker/plugins/highlight_weekends";
 
-import avator from "../../assets/image/userAvator/profile (15).png";
-import avator1 from "../../assets/image/userAvator/profile (11).png";
-import avator2 from "../../assets/image/userAvator/profile (3).png";
-import avator3 from "../../assets/image/userAvator/profile (1).png";
-import avator4 from "../../assets/image/userAvator/profile (8).png";
-
 import TitlePage from "../titlePage/TitlePage";
 import Loader from "../loader/Loader";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 
+import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+
 export default function CreateTask() {
-  let group = [
-    { id: 1, name: "@ Dina Wangui", avator: avator },
-    { id: 2, name: "@ Bud Choi", avator: avator1 },
-    { id: 3, name: "@ Andreas Glover", avator: avator2 },
-    { id: 4, name: "@ Rosemary Lane", avator: avator3 },
-    { id: 5, name: "@ Ericka Drake", avator: avator4 },
-  ];
-
-  useEffect(() => {
-    setFilterSearchTeammate(group);
-  }, []);
-
   const [loader, setLoader] = useState(false);
 
   const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
@@ -48,6 +32,25 @@ export default function CreateTask() {
     selectedTeammate: [],
     image: [],
   });
+
+  const [user, setUser] = useState([]); // get user from server and show for teammate
+
+  useEffect(() => {
+    let formData = new FormData();
+    formData.append("fun", "getAllUser");
+
+    axios
+      .post("php/api.php", formData)
+      .then((response) => {
+        setUser(response.data);
+        setFilterSearchTeammate(response.data);
+      })
+      .catch((e) => console.log(e));
+
+    for (let [key, value] of formData) {
+      formData.delete(key, value);
+    }
+  }, []);
 
   const sendData = () => {
     setLoader(true);
@@ -81,9 +84,8 @@ export default function CreateTask() {
         .post("php/api.php", formData)
         .then((response) => {
           switch (response.data) {
-            case "SuccessInsert":
+            case "insertOk":
               Toastiy("Create new task is successful.", "su");
-
               setLoader(false);
               // setDataToSend([
               //   {
@@ -268,7 +270,7 @@ export default function CreateTask() {
                         setSearchTeammate(e.target.value);
 
                         setFilterSearchTeammate(
-                          group.filter((person) =>
+                          user.filter((person) =>
                             person.name
                               .toLowerCase()
                               .includes(e.target.value.toLocaleLowerCase())
@@ -331,26 +333,34 @@ export default function CreateTask() {
                               ...dataToSend,
                               selectedTeammate: [
                                 ...dataToSend.selectedTeammate,
-                                person,
+                                {
+                                  id: person.id,
+                                  name: person.name,
+                                  avator: person.avator,
+                                },
                               ],
                             });
 
                           !foundPerson && setSearchTeammate("");
-                          !foundPerson && setFilterSearchTeammate(group);
+                          !foundPerson && setFilterSearchTeammate(user);
                         }}
-                        className="w-full h-10 py-1.5 px-8 flex flex-row justify-start items-center gap-3 cursor-pointer hover:bg-blue-50"
+                        className="w-full h-12 py-1.5 px-8 flex flex-row justify-start items-center gap-4 cursor-pointer hover:bg-blue-50"
                       >
                         <img
-                          src={person.avator}
+                          src={
+                            person.avator
+                              ? `${axios.defaults.baseURL}image/userAvator/${person?.avator}`
+                              : { defultAvator }
+                          }
                           alt={person.avator}
                           className="h-full rounded-full"
                         />
-                        <h3 className="text-slate-600 text-sm font-normal tracking-wide capitalize">
+                        <h3 className="text-slate-600 text-sm font-bold tracking-wide capitalize">
                           {person.name}
                         </h3>
 
                         <h3 className="ml-14 text-slate-600 text-sm font-normal tracking-wide capitalize">
-                          Editor
+                          {person.jobPostion}
                         </h3>
                       </section>
                     ))}

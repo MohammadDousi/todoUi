@@ -8,7 +8,7 @@ export default function useToken() {
     const tokenString = localStorage.getItem('token');
     // const tokenString = sessionStorage.getItem("token");
     const userToken = JSON.parse(tokenString);
-    return userToken?.mobileNumber;
+    return userToken;
   };
 
   const [token, setToken] = useState(getToken());
@@ -16,7 +16,7 @@ export default function useToken() {
   const saveToken = (userToken) => {
     localStorage.setItem('token', JSON.stringify(userToken));
     // sessionStorage.setItem("token", JSON.stringify(userToken));
-    setToken(userToken.mobileNumber);
+    setToken(userToken);
   };
 
   return {
