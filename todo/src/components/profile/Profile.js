@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+import { UserContext } from "../../context/UserContext";
 
 import TitlePage from "../titlePage/TitlePage";
 
@@ -13,52 +14,21 @@ import avator5 from "../../assets/image/userAvator/profile(4).png";
 import avator6 from "../../assets/image/userAvator/profile(8).png";
 
 export default function Profile() {
-  let formData = new FormData();
-
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const editName = useRef("");
   const editMail = useRef("");
   const editJobPostion = useRef("");
 
-  const [styleStatus, setStyleStatus] = useState("");
-
+  let formData = new FormData();
+  const { userData } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const [user, setUser] = useState({});
+  const [editButton, setEditButton] = useState(false);
 
   useEffect(() => {
-    formData.append("fun", "getSingleUser");
-    formData.append("token", "d776b3f2a7d11f83b7e0dd26cb4353ac4d07d4d15064");
-    axios
-      .post("php/api.php", formData)
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((e) => console.log(e));
-
-    for (let [key, value] of formData) {
-      formData.delete(key, value);
-    }
-  }, []);
-
-  useEffect(() => {
-    switch (user?.status) {
-      case "active":
-        setStyleStatus(
-          "w-full h-12 px-8 bg-green-100 text-green-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-green-300"
-        );
-        break;
-      case "deactive":
-        setStyleStatus(
-          "w-full h-12 px-8 bg-rose-100 text-rose-600 font-black text-base capitalize rounded-xl placeholder:text-rose-300 border border-rose-300"
-        );
-        break;
-      case "ban":
-        setStyleStatus(
-          "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
-        );
-        break;
-    }
-  }, [user]);
+    setUser(userData);
+  }, [userData]);
 
   return (
     <section className="w-full h-full relative overflow-x-hidden ">
@@ -71,8 +41,13 @@ export default function Profile() {
                 editName.current.disabled = true;
                 editMail.current.disabled = true;
                 editJobPostion.current.disabled = true;
+                setEditButton(!editButton);
               }}
-              className="h-8 px-8 hover:px-10 bg-rose-200 hover:bg-rose-500 text-rose-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+              className={
+                editButton
+                  ? "h-8 px-8 hover:px-10 bg-rose-200 hover:bg-rose-500 text-rose-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                  : "hidden"
+              }
             >
               cancel
             </button>
@@ -86,16 +61,14 @@ export default function Profile() {
                 formData.append("name", user.name);
                 formData.append("mail", user.mail);
                 formData.append("jobPostion", user.jobPostion);
-                formData.append(
-                  "token",
-                  "d776b3f2a7d11f83b7e0dd26cb4353ac4d07d4d15064"
-                );
+                formData.append("token", user?.token);
 
                 axios
                   .post("php/api.php", formData)
                   .then((response) => {
                     console.log(response.data);
-                    setUser(response.data);
+                    setUserData(response.data);
+                    setEditButton(!editButton);
                   })
                   .catch((e) => console.log(e));
 
@@ -104,7 +77,9 @@ export default function Profile() {
                 }
               }}
               className={
-                "h-8 px-8 hover:px-10 bg-green-200 hover:bg-green-500 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                editButton
+                  ? "h-8 px-8 hover:px-10 bg-green-200 hover:bg-green-500 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                  : "hidden"
               }
             >
               update
@@ -114,8 +89,7 @@ export default function Profile() {
                 editName.current.disabled = false;
                 editMail.current.disabled = false;
                 editJobPostion.current.disabled = false;
-
-                console.log(editJobPostion.current.disabled);
+                setEditButton(!editButton);
               }}
               className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
             >
@@ -124,16 +98,16 @@ export default function Profile() {
           </section>
         </section>
 
-        <section className="w-full flex flex-row justify-center items-center gap-4">
-          <section className="w-1/6 flex flex-col justify-center items-start gap-1.5">
+        <section className="w-full flex flex-row justify-between items-stretch gap-8">
+          <section className="w-40 h-40 flex flex-col justify-start items-start gap-1.5">
             <img
               src={
-                user.avator
+                user?.avator
                   ? `${axios.defaults.baseURL}image/userAvator/${user?.avator}`
-                  : {defultAvator}
+                  : { defultAvator }
               }
               alt={user?.avator}
-              className="w-36 h-36 ml-1 mt-2 bg-white rounded-xl ring-2 ring-amber-300 ring-offset-4"
+              className="w-36 h-36 ml-1 mt-4 rounded-xl ring-2 ring-amber-300 ring-offset-4 bg-white"
             />
           </section>
 
@@ -234,7 +208,15 @@ export default function Profile() {
                   type="text"
                   disabled
                   defaultValue={user?.status || ""}
-                  className={styleStatus}
+                  className={
+                    user?.status === "active"
+                      ? "w-full h-12 px-8 bg-green-100 text-green-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-green-300"
+                      : user?.status === "deactive"
+                      ? "w-full h-12 px-8 bg-rose-100 text-rose-600 font-black text-base capitalize rounded-xl placeholder:text-rose-300 border border-rose-300"
+                      : user?.status === "ban"
+                      ? "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
+                      : "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
+                  }
                 />
               </section>
             </section>

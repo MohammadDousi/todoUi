@@ -7,7 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://todoui.kaktusprog.ir/assets/"
+axios.defaults.baseURL = "https://todoui.kaktusprog.ir/assets/";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

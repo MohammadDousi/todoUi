@@ -17,7 +17,12 @@ import Toastiy from "../toastfiy/Toastfiy";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+
 export default function CreateTask() {
+  const { userData } = useContext(UserContext);
+
   const [loader, setLoader] = useState(false);
 
   const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
@@ -62,15 +67,12 @@ export default function CreateTask() {
     ) {
       let formData = new FormData();
       formData.append("fun", "createNewTask");
-      // formData.append("userId", dataToSend.subject);
+      formData.append("token", userData?.token);
       formData.append("subject", dataToSend.subject);
       formData.append("description", dataToSend.description);
       formData.append("priority", dataToSend.priority);
       formData.append("deadline", JSON.stringify(dataToSend.deadline));
 
-      // selected id in select team mate for send to DB
-      // let select = [];
-      // dataToSend.selectedTeammate.map((item) => select.push(item.id));
       formData.append(
         "selectedTeammate",
         JSON.stringify(dataToSend.selectedTeammate)
@@ -87,25 +89,16 @@ export default function CreateTask() {
             case "insertOk":
               Toastiy("Create new task is successful.", "su");
               setLoader(false);
-              // setDataToSend([
-              //   {
-              //     subject: "",
-              //     description: "",
-              //     priority: "",
-              //     deadline: new DateObject("YYYY/MM/DD HH:mm"),
-              //     selectedTeammate: [],
-              //     image: [],
-              //   },
-              // ]);
               break;
             default:
-              console.log(response.data);
+              Toastiy("Error, Please contact support.", "wa");
+              setLoader(false);
               break;
           }
         })
         .catch((e) => console.log(e));
     } else {
-      Toastiy("Enter the ", "wa");
+      Toastiy("Enter the information task", "wa");
     }
   };
 
@@ -197,7 +190,7 @@ export default function CreateTask() {
                 />
                 <label
                   htmlFor="normal"
-                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-green-100 hover:text-green-600 peer-checked:border peer-checked:border-green-300 peer-checked:bg-green-100 peer-checked:font-bold peer-checked:text-green-600"
+                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-lime-100 hover:text-lime-600 peer-checked:border peer-checked:border-lime-300 peer-checked:bg-lime-100 peer-checked:font-bold peer-checked:text-lime-600"
                 >
                   normal
                 </label>
@@ -216,7 +209,7 @@ export default function CreateTask() {
                 />
                 <label
                   htmlFor="low"
-                  className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-blue-100 hover:text-blue-600 peer-checked:border peer-checked:border-blue-300 peer-checked:bg-blue-100 peer-checked:font-bold peer-checked:text-blue-600"
+                  className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-sky-100 hover:text-sky-600 peer-checked:border peer-checked:border-sky-300 peer-checked:bg-sky-100 peer-checked:font-bold peer-checked:text-sky-600"
                 >
                   low
                 </label>

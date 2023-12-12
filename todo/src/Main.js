@@ -10,6 +10,7 @@ import CreateTask from "./components/task/CreateTask";
 import NotFound from "./components/notFound/NotFound";
 import Profile from "./components/profile/Profile";
 import Push from "./components/push/Push";
+import EditTask from "./components/task/EditTask";
 
 export default function Main() {
   return (
@@ -23,12 +24,11 @@ export default function Main() {
           <Route path="/" element={<BoardContainer />} />
           <Route path="/board" element={<BoardContainer />} />
           <Route path="/createTask" element={<CreateTask />} />
+          <Route path="/editTask" element={<EditTask />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/pushBox" element={<Push />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-
-        
       </main>
     </>
   );

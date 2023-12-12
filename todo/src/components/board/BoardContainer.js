@@ -5,12 +5,28 @@ import GridBord from "./GridBord";
 import ListBoard from "./ListBoard";
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function BoardContainer() {
+
   const [board, setBoard] = useState("Grid");
-  
+
   const navigate = useNavigate();
+
+  const [allTask, setAllTask] = useState([]);
+  useEffect(() => {
+    let formData = new FormData();
+    formData.append("fun", "getAllTask");
+
+    axios
+      .post("php/api.php", formData)
+      .then((response) => setAllTask(response.data))
+      .catch((e) => console.log(e));
+
+    for (let [key, value] of formData) {
+      formData.delete(key, value);
+    }
+  }, []);
 
   return (
     <section className="w-full h-full pb-8 space-y-4 relative overflow-hidden duration-1000">
@@ -43,7 +59,11 @@ export default function BoardContainer() {
         </button>
       </section>
 
-      {board === "Grid" ? <GridBord /> : <ListBoard />}
+      {board === "Grid" ? (
+        <GridBord allTask={allTask} />
+      ) : (
+        <ListBoard allTask={allTask} />
+      )}
     </section>
   );
 }

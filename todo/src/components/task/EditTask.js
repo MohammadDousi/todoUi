@@ -1,65 +1,124 @@
 import React, { useEffect, useState } from "react";
 
-import DatePicker from "react-multi-date-picker";
+import axios from "axios";
+
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_en from "react-date-object/locales/persian_en";
 import transition from "react-element-popper/animations/transition";
 import weekends from "react-multi-date-picker/plugins/highlight_weekends";
 
-import avator from "../../assets/image/userAvator/profile (15).png";
-import avator1 from "../../assets/image/userAvator/profile (11).png";
-import avator2 from "../../assets/image/userAvator/profile (3).png";
-import avator3 from "../../assets/image/userAvator/profile (1).png";
-import avator4 from "../../assets/image/userAvator/profile (8).png";
-
 import TitlePage from "../titlePage/TitlePage";
+import Loader from "../loader/Loader";
 
-export default function EditTask() {
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Toastiy from "../toastfiy/Toastfiy";
+
+import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+
+export default function EditTask2() {
+  const { userData } = useContext(UserContext);
+
+  const [loader, setLoader] = useState(false);
+
+  const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
+  const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
+  const [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
+
   const [dataToSend, setDataToSend] = useState({
     subject: "",
     description: "",
     priority: "",
-    deadline: "",
-    group: "",
-    image: "",
+    deadline: new DateObject("YYYY/MM/DD HH:mm"),
+    selectedTeammate: [],
+    image: [],
   });
 
-  const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
-  const [selectedTeammate, setSelectedTeammate] = useState([]); // array teammate selected
-  const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
-  const [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
-
-  const [UploadImagesList, setUploadImagesList] = useState([
-    { name: "a1", img: avator },
-  ]); // get and save upload image in array
-
-  let group = [
-    { id: 1, name: "@ Dina Wangui", avator: avator },
-    { id: 2, name: "@ Bud Choi", avator: avator1 },
-    { id: 3, name: "@ Andreas Glover", avator: avator2 },
-    { id: 4, name: "@ Rosemary Lane", avator: avator3 },
-    { id: 5, name: "@ Ericka Drake", avator: avator4 },
-  ];
+  const [user, setUser] = useState([]); // get user from server and show for teammate
 
   useEffect(() => {
-    setFilterSearchTeammate(group);
+    let formData = new FormData();
+    formData.append("fun", "getAllUser");
+
+    axios
+      .post("php/api.php", formData)
+      .then((response) => {
+        setUser(response.data);
+        setFilterSearchTeammate(response.data);
+      })
+      .catch((e) => console.log(e));
+
+    for (let [key, value] of formData) {
+      formData.delete(key, value);
+    }
   }, []);
+
+  const sendData = () => {
+    setLoader(true);
+    if (
+      dataToSend.subject &&
+      dataToSend.description &&
+      dataToSend.deadline &&
+      dataToSend.priority
+    ) {
+      let formData = new FormData();
+      formData.append("fun", "createNewTask");
+      formData.append("token", userData?.token);
+      formData.append("subject", dataToSend.subject);
+      formData.append("description", dataToSend.description);
+      formData.append("priority", dataToSend.priority);
+      formData.append("deadline", JSON.stringify(dataToSend.deadline));
+
+      formData.append(
+        "selectedTeammate",
+        JSON.stringify(dataToSend.selectedTeammate)
+      );
+
+      for (let i = 0; i < dataToSend.image.length; i++) {
+        formData.append("files[]", dataToSend.image[i]);
+      }
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          switch (response.data) {
+            case "insertOk":
+              Toastiy("Create new task is successful.", "su");
+              setLoader(false);
+              break;
+            default:
+              Toastiy("Error, Please contact support.", "wa");
+              setLoader(false);
+              break;
+          }
+        })
+        .catch((e) => console.log(e));
+    } else {
+      Toastiy("Enter the information task", "wa");
+    }
+  };
 
   return (
     <section className="w-full h-full relative">
       <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+        {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
-          <TitlePage title="edit task" />
+          <TitlePage title="edit task 2" />
           <button
-            // onClick={() => navigate("/main/createTask")}
+            onClick={() => sendData()}
             className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
           >
-            apply change
+            add to list
           </button>
         </section>
 
-        <section className="w-full flex flex-row justify-start items-start gap-4 ">
+        <section className="w-full flex flex-row justify-start items-start gap-4">
           <div className="w-3/4 flex flex-col justify-start items-start gap-6">
+            {/* subject and Priority */}
             <section className="w-full flex flex-row justify-start items-start gap-4">
               <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
@@ -69,6 +128,10 @@ export default function EditTask() {
                   type="text"
                   placeholder="Description of the subject"
                   className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+                  value={dataToSend.subject}
+                  onChange={(e) =>
+                    setDataToSend({ ...dataToSend, subject: e.target.value })
+                  }
                 />
               </section>
 
@@ -81,9 +144,12 @@ export default function EditTask() {
                   <div className="w-full flex justify-center items-center">
                     <input
                       type="radio"
-                      name="option"
+                      name="priority"
                       id="force"
                       value="force"
+                      onChange={(e) =>
+                        setDataToSend({ ...dataToSend, priority: e.target.id })
+                      }
                       className="peer hidden"
                     />
                     <label
@@ -97,9 +163,12 @@ export default function EditTask() {
                   <div className="w-full flex justify-center items-center">
                     <input
                       type="radio"
-                      name="option"
+                      name="priority"
                       id="high"
                       value="high"
+                      onChange={(e) =>
+                        setDataToSend({ ...dataToSend, priority: e.target.id })
+                      }
                       className="peer hidden"
                     />
                     <label
@@ -113,14 +182,17 @@ export default function EditTask() {
                   <div className="w-full flex justify-center items-center">
                     <input
                       type="radio"
-                      name="option"
+                      name="priority"
                       id="normal"
                       value="normal"
+                      onChange={(e) =>
+                        setDataToSend({ ...dataToSend, priority: e.target.id })
+                      }
                       className="peer hidden"
                     />
                     <label
                       htmlFor="normal"
-                      className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-green-100 hover:text-green-600 peer-checked:border peer-checked:border-green-300 peer-checked:bg-green-100 peer-checked:font-bold peer-checked:text-green-600"
+                      className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-lime-100 hover:text-lime-600 peer-checked:border peer-checked:border-lime-300 peer-checked:bg-lime-100 peer-checked:font-bold peer-checked:text-lime-600"
                     >
                       normal
                     </label>
@@ -129,14 +201,17 @@ export default function EditTask() {
                   <div className="w-full flex justify-center items-center">
                     <input
                       type="radio"
-                      name="option"
+                      name="priority"
                       id="low"
                       value="low"
+                      onChange={(e) =>
+                        setDataToSend({ ...dataToSend, priority: e.target.id })
+                      }
                       className="peer hidden"
                     />
                     <label
                       htmlFor="low"
-                      className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-blue-100 hover:text-blue-600 peer-checked:border peer-checked:border-blue-300 peer-checked:bg-blue-100 peer-checked:font-bold peer-checked:text-blue-600"
+                      className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-sky-100 hover:text-sky-600 peer-checked:border peer-checked:border-sky-300 peer-checked:bg-sky-100 peer-checked:font-bold peer-checked:text-sky-600"
                     >
                       low
                     </label>
@@ -145,6 +220,7 @@ export default function EditTask() {
               </section>
             </section>
 
+            {/* description */}
             <section className="w-full flex flex-col justify-start items-start gap-1.5">
               <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                 description
@@ -154,9 +230,14 @@ export default function EditTask() {
                 type="text"
                 placeholder="Write a few lines about what needs to be done"
                 className="w-full h-32 px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
+                value={dataToSend.description}
+                onChange={(e) =>
+                  setDataToSend({ ...dataToSend, description: e.target.value })
+                }
               />
             </section>
 
+            {/* tag teammate and deadline */}
             <section className="w-full flex flex-row justify-start items-start gap-4">
               <section className="w-full flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
@@ -168,7 +249,7 @@ export default function EditTask() {
                     <section className="w-full min-h-fit h-auto flex justify-between gap-2 pl-8 pr-3 bg-white border border-slate-300 rounded-xl">
                       <div
                         className={
-                          selectedTeammate.length === 0
+                          dataToSend.selectedTeammate.length === 0
                             ? "w-full py-2 h-12 flex flex-row flex-wrap gap-2"
                             : "w-full py-2 flex flex-row flex-wrap gap-2"
                         }
@@ -184,7 +265,7 @@ export default function EditTask() {
                             setSearchTeammate(e.target.value);
 
                             setFilterSearchTeammate(
-                              group.filter((person) =>
+                              user.filter((person) =>
                                 person.name
                                   .toLowerCase()
                                   .includes(e.target.value.toLocaleLowerCase())
@@ -194,8 +275,8 @@ export default function EditTask() {
                           value={searchTeammate}
                         />
 
-                        {selectedTeammate &&
-                          selectedTeammate.map((person) => (
+                        {dataToSend.selectedTeammate &&
+                          dataToSend.selectedTeammate.map((person) => (
                             <div
                               key={person.id}
                               className="px-3 py-0.5 text-slate-600 text-sm font-normal capitalize bg-amber-100 border border-amber-300 flex flex-row justify-center items-center gap-3 rounded-full"
@@ -203,11 +284,13 @@ export default function EditTask() {
                               {person.name}
                               <i
                                 onClick={() => {
-                                  setSelectedTeammate(
-                                    selectedTeammate.filter(
-                                      (item) => item.id !== person.id
-                                    )
-                                  );
+                                  setDataToSend({
+                                    ...dataToSend,
+                                    selectedTeammate:
+                                      dataToSend.selectedTeammate.filter(
+                                        (item) => item.id !== person.id
+                                      ),
+                                  });
                                 }}
                                 className="fa fa-times pt-0.5 !text-slate-400 hover:!text-red-500 cursor-pointer"
                               ></i>
@@ -236,32 +319,44 @@ export default function EditTask() {
                           <section
                             key={person.id}
                             onClick={() => {
-                              const foundPerson = selectedTeammate.find(
-                                (x) => x.id === person.id
-                              );
+                              const foundPerson =
+                                dataToSend.selectedTeammate.find(
+                                  (x) => x.id === person.id
+                                );
 
                               !foundPerson &&
-                                setSelectedTeammate([
-                                  ...selectedTeammate,
-                                  person,
-                                ]);
+                                setDataToSend({
+                                  ...dataToSend,
+                                  selectedTeammate: [
+                                    ...dataToSend.selectedTeammate,
+                                    {
+                                      id: person.id,
+                                      name: person.name,
+                                      avator: person.avator,
+                                    },
+                                  ],
+                                });
 
                               !foundPerson && setSearchTeammate("");
-                              !foundPerson && setFilterSearchTeammate(group);
+                              !foundPerson && setFilterSearchTeammate(user);
                             }}
-                            className="w-full h-10 py-1.5 px-8 flex flex-row justify-start items-center gap-3 cursor-pointer hover:bg-blue-50"
+                            className="w-full h-12 py-1.5 px-8 flex flex-row justify-start items-center gap-4 cursor-pointer hover:bg-blue-50"
                           >
                             <img
-                              src={person.avator}
+                              src={
+                                person.avator
+                                  ? `${axios.defaults.baseURL}image/userAvator/${person?.avator}`
+                                  : { defultAvator }
+                              }
                               alt={person.avator}
                               className="h-full rounded-full"
                             />
-                            <h3 className="text-slate-600 text-sm font-normal tracking-wide capitalize">
+                            <h3 className="text-slate-600 text-sm font-bold tracking-wide capitalize">
                               {person.name}
                             </h3>
 
                             <h3 className="ml-14 text-slate-600 text-sm font-normal tracking-wide capitalize">
-                              Editor
+                              {person.jobPostion}
                             </h3>
                           </section>
                         ))}
@@ -286,10 +381,26 @@ export default function EditTask() {
                   calendarPosition="bottom-center"
                   numberOfMonths={2}
                   animations={[transition({ duration: 800, from: 35 })]}
+                  editable={false}
+                  placeholder="click to open"
+                  format="YYYY/MM/DD HH:mm"
+                  onChange={(date) =>
+                    setDataToSend({
+                      ...dataToSend,
+                      deadline: {
+                        year: date.year,
+                        month: date.month.number,
+                        day: date.day,
+                        hour: date.hour,
+                        min: date.minute,
+                      },
+                    })
+                  }
                 />
               </section>
             </section>
 
+            {/* upload image  */}
             <section className="w-full flex flex-col justify-start items-start gap-1.5">
               <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                 select Image
@@ -306,23 +417,26 @@ export default function EditTask() {
                   </label>
                 </section>
 
-                {UploadImagesList.map((image) => (
+                {dataToSend.image.map((image) => (
                   <section
-                    key={image.name}
-                    className="w-2h-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
+                    key={image.size + Math.random()}
+                    className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
                   >
                     <img
-                      src={image.img}
-                      alt={image.img}
+                      src={image && URL.createObjectURL(image)}
+                      alt={image.name}
                       className="w-full h-full object-contain"
                     />
                     <i
                       onClick={() => {
-                        setUploadImagesList(
-                          UploadImagesList.filter((x) => x.name !== image.name)
-                        );
+                        setDataToSend({
+                          ...dataToSend,
+                          image: dataToSend.image.filter(
+                            (x) => x.name !== image.name
+                          ),
+                        });
                       }}
-                      className="fas fa-times-circle absolute bottom-1 right-2 text-rose-300 hover:text-red-500 text-xl cursor-pointer"
+                      className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"
                     ></i>
                   </section>
                 ))}
@@ -331,16 +445,21 @@ export default function EditTask() {
                   id="inputFile"
                   className="absolute opacity-0 invisible w-0 h-0"
                   type="file"
+                  name="file[]"
+                  multiple
                   accept="image/*"
                   onChange={(event) => {
-                    // setDataToSend({ ...dataToSend, logo: event.target.files[0] });
-                    console.log(event.target.files);
+                    setDataToSend({
+                      ...dataToSend,
+                      image: [...dataToSend.image, event.target.files[0]],
+                    });
                   }}
                 />
               </section>
             </section>
           </div>
 
+          {/* edit history container */}
           <section className="w-1/4 h-full flex flex-col justify-start items-start gap-1.5 ">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               edit history
@@ -406,7 +525,22 @@ export default function EditTask() {
             </div>
           </section>
         </section>
+
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          limit={5}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </section>
+      {loader && <Loader />}
     </section>
   );
 }

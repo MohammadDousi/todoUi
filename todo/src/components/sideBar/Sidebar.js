@@ -1,13 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 import "./SidebarStyle.css";
 import avator from "../../assets/image/userAvator/profile(1).png";
 import avator4 from "../../assets/image/userAvator/profile(2).png";
 import avator5 from "../../assets/image/userAvator/profile(9).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";
+import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+
 import { Link, useLocation } from "react-router-dom";
 
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
+
 export default function Sidebar() {
+  const {userData} = useContext(UserContext);
+
   const [showSidebar, setShowSidebar] = useState("BIG");
 
   const circle_progres = useRef();
@@ -67,6 +75,11 @@ export default function Sidebar() {
       path: "/main/pushBox",
       path2: "/main/pushBox",
       icon: "fas fa-envelope-open",
+    },{
+      name: "Edit Task",
+      path: "/main/editTask",
+      path2: "/main/editTask",
+      icon: "fas fa-envelope-open",
     },
   ];
 
@@ -89,7 +102,11 @@ export default function Sidebar() {
           <div className="w-full h-auto flex flex-col justify-center items-center gap-2">
             <img
               className="w-12 h-20 z-0 object-cover rounded-full ring-2 ring-blue-400 ring-offset-2"
-              src={avator}
+              src={
+                userData?.avator
+                  ? `${axios.defaults.baseURL}image/userAvator/${userData?.avator}`
+                  : { defaultAvator }
+              }
               alt="profile pic"
             />
             <div className="w-6 h-6 text-white text-sm font-semibold flex justify-center items-center rounded-full bg-blue-600">
@@ -136,7 +153,11 @@ export default function Sidebar() {
             <div ref={circle_progres} className="progress-circle">
               <img
                 className="w-full h-full z-0 p-1.5 object-cover rounded-full"
-                src={avator}
+                src={
+                  userData?.avator
+                    ? `${axios.defaults.baseURL}image/userAvator/${userData?.avator}`
+                    : { defaultAvator }
+                }
                 alt="profile pic"
               />
               <div
@@ -155,10 +176,10 @@ export default function Sidebar() {
 
           <div className="w-full text-center">
             <h4 className="text-slate-500 font-black text-base capitalize tracking-tight">
-              Hello Alfred Bryant
+              Hello {userData?.name}
             </h4>
-            <h5 className="text-slate-400 font-normal text-sm">
-              adrain.nader@yahoo.com
+            <h5 className="text-slate-400 font-normal text-base">
+              {userData?.mail}
             </h5>
           </div>
         </section>

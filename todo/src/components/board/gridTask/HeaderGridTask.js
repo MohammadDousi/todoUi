@@ -11,12 +11,12 @@ export default function HeaderGridTask({ data }) {
       <hr className={`w-1 h-1/2 rounded-full ${data.color}`} />
 
       <div className="w-full py-2.5 px-3 flex flex-row justify-between items-center z-20">
-        <p className="text-[13px] font-black text-slate-600 uppercase">
+        <p className="text-sm font-black text-slate-400 uppercase">
           {data.title}
         </p>
 
         <div
-          className={`w-7 h-7 z-20 ${data.color} bg-opacity-30 text-xs font-bold text-slate-800/70 flex justify-center items-center rounded-xl`}
+          className={`w-7 h-7 z-20 ${data.color} bg-opacity-100 text-xs font-bold text-white flex justify-center items-center rounded-xl`}
         >
           {data.countTask}
         </div>
