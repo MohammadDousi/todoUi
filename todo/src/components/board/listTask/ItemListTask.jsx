@@ -1,6 +1,8 @@
 import React from "react";
 
 import axios from "axios";
+import defultAvator from "../../../assets/image/userAvator/defultAvatorMen.png";
+
 export default function ItemListTask(props) {
   const { data } = props;
 
@@ -9,7 +11,7 @@ export default function ItemListTask(props) {
 
   return (
     <tr className="w-full py-4 px-6 flex jtify-center items-center gap-5 cursor-pointer hover:bg-amber-50">
-      <th className="w-2/12 flex justify-start items-start">
+      <th className="w-1/12 flex justify-start items-start">
         <p
           className={
             data?.status === "todo"
@@ -29,9 +31,11 @@ export default function ItemListTask(props) {
           {data?.subject}
         </p>
       </th>
-      <th className="w-4/12 flex justify-start items-start">
+      <th className="w-5/12 flex justify-start items-start">
         <p className="w-full text-slate-500 text-sm font-normal tracking-wide text-left text-justify">
-          {data?.description}
+          {data?.description.length >= 50
+            ? `${data?.description.slice(0, 35)}...`
+            : data?.description}
         </p>
       </th>
       <th className="w-1/12 flex justify-center items-start">
@@ -54,14 +58,22 @@ export default function ItemListTask(props) {
           {`${date?.year}/${date?.month}/${date?.day}`}
         </p>
       </th>
-      <th className="w-2/12 flex justify-center items-start">
+      <th className="w-1/12 flex justify-center items-start">
         <section className="flex justify-center items-center -space-x-2 hover:space-x-1 duration-1000">
           {tag?.map((item) => (
             <img
               key={item.avator}
               className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
-              src={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
-              alt={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
+              src={
+                item.avator
+                  ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                  : defultAvator
+              }
+              alt={
+                item.avator
+                  ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                  : defultAvator
+              }
             />
           ))}
 
@@ -70,11 +82,11 @@ export default function ItemListTask(props) {
           </div>
         </section>
       </th>
-      {/* <th className="w-1/12 flex justify-start items-start">
-        <p className="w-full text-slate-400 font-normal text-left capitalize">
-          {data?.author}
+      <th className="w-1/12 flex justify-start items-start">
+        <p className="w-full text-slate-400 text-sm font-normal text-left capitalize">
+          {data?.name} {/* author name  */}
         </p>
-      </th> */}
+      </th>
 
       {/* <th className="w-1/12 flex justify-center items-center">
         <i className="fa fa-angle-right w-8 h-8 text-gray-400 text-sm bg-gray-200/50 rounded-xl flex justify-center items-center"></i>

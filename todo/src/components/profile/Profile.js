@@ -12,9 +12,13 @@ import avator4 from "../../assets/image/userAvator/profile(5).png";
 import avator5 from "../../assets/image/userAvator/profile(4).png";
 import avator6 from "../../assets/image/userAvator/profile(8).png";
 import { UserContext } from "../../App";
+import Toastiy from "../toastfiy/Toastfiy";
+import Loader from "../loader/Loader";
 
 export default function Profile() {
   const navigate = useNavigate();
+
+  const [loader, setLoader] = useState(false);
 
   const editName = useRef("");
   const editMail = useRef("");
@@ -31,7 +35,7 @@ export default function Profile() {
   }, [userData]);
 
   return (
-    <section className="w-full h-full relative overflow-x-hidden ">
+    <section className="w-full h-full relative overflow-x-hidden">
       <section className="w-full absolute pt-4 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="profile" />
@@ -42,6 +46,7 @@ export default function Profile() {
                 editMail.current.disabled = true;
                 editJobPostion.current.disabled = true;
                 setEditButton(!editButton);
+                Toastiy("Profile edit cancelled", "wa");
               }}
               className={
                 editButton
@@ -53,6 +58,7 @@ export default function Profile() {
             </button>
             <button
               onClick={() => {
+                setLoader(true);
                 editName.current.disabled = true;
                 editMail.current.disabled = true;
                 editJobPostion.current.disabled = true;
@@ -69,6 +75,9 @@ export default function Profile() {
                     console.log(response.data);
                     setUserData(response.data);
                     setEditButton(!editButton);
+                    setLoader(false);
+
+                    Toastiy("Edit profile successfully", "su");
                   })
                   .catch((e) => console.log(e));
 
@@ -98,13 +107,13 @@ export default function Profile() {
           </section>
         </section>
 
-        <section className="w-full flex flex-row justify-between items-stretch gap-8">
-          <section className="w-40 h-40 flex flex-col justify-start items-start gap-1.5">
+        <section className="w-full flex flex-row justify-start items-stretch gap-4">
+          <section className="w-2/12 h-40 flex flex-col justify-center items-center gap-1.5">
             <img
               src={
                 user?.avator
                   ? `${axios.defaults.baseURL}image/userAvator/${user?.avator}`
-                  : { defultAvator }
+                  : defultAvator
               }
               alt={user?.avator}
               className="w-36 h-36 ml-1 mt-4 rounded-xl ring-2 ring-amber-300 ring-offset-4 bg-white"
@@ -415,6 +424,8 @@ export default function Profile() {
             </table>
           </section>
         </section>
+
+        {loader && <Loader />}
       </section>
     </section>
   );

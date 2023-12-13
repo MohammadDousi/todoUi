@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import axios from "axios";
 
@@ -11,13 +11,11 @@ import weekends from "react-multi-date-picker/plugins/highlight_weekends";
 import TitlePage from "../titlePage/TitlePage";
 import Loader from "../loader/Loader";
 
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 import { UserContext } from "../../App";
-
 
 export default function CreateTask() {
   const { userData } = useContext(UserContext);
@@ -58,24 +56,22 @@ export default function CreateTask() {
 
   const sendData = () => {
     setLoader(true);
+
     if (
-      dataToSend.subject &&
-      dataToSend.description &&
-      dataToSend.deadline &&
-      dataToSend.priority
+      dataToSend.subject.trim() &&
+      dataToSend.description.trim() &&
+      dataToSend.priority.trim() &&
+      dataToSend.deadline
     ) {
       let formData = new FormData();
       formData.append("fun", "createNewTask");
-      formData.append("token", userData?.token);
       formData.append("subject", dataToSend.subject);
       formData.append("description", dataToSend.description);
       formData.append("priority", dataToSend.priority);
       formData.append("deadline", JSON.stringify(dataToSend.deadline));
+      formData.append("author", userData?.id);
 
-      formData.append(
-        "tagPartners",
-        JSON.stringify(dataToSend.tagPartners)
-      );
+      formData.append("tagPartners", JSON.stringify(dataToSend.tagPartners));
 
       for (let i = 0; i < dataToSend.image.length; i++) {
         formData.append("files[]", dataToSend.image[i]);
@@ -97,6 +93,8 @@ export default function CreateTask() {
         })
         .catch((e) => console.log(e));
     } else {
+      console.log(dataToSend);
+
       Toastiy("Enter the information task", "wa");
     }
   };
@@ -283,10 +281,9 @@ export default function CreateTask() {
                             onClick={() => {
                               setDataToSend({
                                 ...dataToSend,
-                                tagPartners:
-                                  dataToSend.tagPartners.filter(
-                                    (item) => item.id !== person.id
-                                  ),
+                                tagPartners: dataToSend.tagPartners.filter(
+                                  (item) => item.id !== person.id
+                                ),
                               });
                             }}
                             className="fa fa-times pt-0.5 !text-slate-400 hover:!text-red-500 cursor-pointer"
@@ -342,7 +339,7 @@ export default function CreateTask() {
                           src={
                             person.avator
                               ? `${axios.defaults.baseURL}image/userAvator/${person?.avator}`
-                              : { defultAvator }
+                              : defultAvator
                           }
                           alt={person.avator}
                           className="h-full rounded-full"
@@ -453,20 +450,6 @@ export default function CreateTask() {
             />
           </section>
         </section>
-
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          limit={5}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-        />
       </section>
       {loader && <Loader />}
     </section>

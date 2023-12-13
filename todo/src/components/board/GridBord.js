@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
 import HeaderGridTask from "./gridTask/HeaderGridTask.js";
 import ItemGridTask from "./gridTask/ItemGridTask.js";
+import noData from "../../assets/image/svg/noData.svg";
 
 export default function GridBord({ allTask }) {
   const todo = allTask.filter((item) => item.status === "todo");
@@ -24,6 +23,15 @@ export default function GridBord({ allTask }) {
           {todo?.map((item) => (
             <ItemGridTask key={item.id} data={item} />
           ))}
+
+          {todo.length === 0 && (
+            <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md">
+              <img src={noData} alt="no data" className="w-20" />
+              <h2 className="text-slate-600 text-lg font-black text-center capitalize">
+                No task has been registered
+              </h2>
+            </div>
+          )}
         </div>
       </div>
 

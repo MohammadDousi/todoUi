@@ -8,6 +8,8 @@ import Loader from "../loader/Loader";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 
+import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+
 export default function DetailTask() {
   const params = useParams(); // get param from nav address
 
@@ -139,8 +141,16 @@ export default function DetailTask() {
                     >
                       <img
                         className="w-8 h-8 ring-2 ring-white rounded-full justify-self-start"
-                        src={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
-                        alt={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
+                        src={
+                          item.avator
+                            ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                            : defultAvator
+                        }
+                        alt={
+                          item.avator
+                            ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                            : defultAvator
+                        }
                       />
                       <h2 className="text-slate-600 text-base font-normal capitalize">
                         {item.name}
@@ -198,7 +208,7 @@ export default function DetailTask() {
                 >
                   <div className="w-full flex flex-col justify-start items-center">
                     <h3 className="w-full text-slate-400 font-normal text-sm capitalize">
-                      {item.editor}
+                      {item.name}
                     </h3>
 
                     <div className="w-full flex flex-row justify-start items-center gap-1.5">

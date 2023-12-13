@@ -1,4 +1,5 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { useEffect, useState, createContext } from "react";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 //// components
@@ -11,13 +12,19 @@ import useToken from "./components/login/useToken";
 import pattern from "./assets/image/svg/pattern.svg";
 
 //// context
-import { useEffect, useState, createContext } from "react";
+
+import Toastiy from "./components/toastfiy/Toastfiy";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const UserContext = createContext();
 
 function App() {
   const { token, setToken } = useToken();
   const [userData, setUserData] = useState({});
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!token) {
       return () => {
@@ -32,7 +39,12 @@ function App() {
         .post("php/api.php", formData)
         .then((response) => {
           setUserData(response.data);
-          console.log(response.data);
+
+          if (response.data.name == "") {
+            console.log(response.data.name == "");
+            Toastiy("Please complete the profile information", "wa");
+            navigate("/main/profile");
+          }
         })
         .catch((e) => console.log(e));
 
@@ -40,7 +52,7 @@ function App() {
         formData.delete(key, value);
       }
     }
-  }, []);
+  }, [token]);
 
   return (
     <UserContext.Provider value={{ userData, setUserData, token, setToken }}>
@@ -56,6 +68,20 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        limit={5}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </UserContext.Provider>
   );
 }

@@ -1,10 +1,9 @@
-import React from "react";
-
 import { Route, Routes } from "react-router-dom";
 
+
+/// components
 import Header from "./components/header/Header";
 import Sidebar from "./components/sideBar/Sidebar";
-
 import BoardContainer from "./components/board/BoardContainer";
 import CreateTask from "./components/task/CreateTask";
 import NotFound from "./components/notFound/NotFound";
@@ -13,6 +12,8 @@ import Push from "./components/push/Push";
 import DetailTask from "./components/task/DetailTask";
 
 export default function Main() {
+  
+
   return (
     <>
       <Header />
@@ -29,6 +30,8 @@ export default function Main() {
           <Route path="/pushBox" element={<Push />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
+
+        
       </main>
     </>
   );

@@ -6,21 +6,27 @@ import ListBoard from "./ListBoard";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../loader/Loader";
 
 export default function BoardContainer() {
-
   const [board, setBoard] = useState("Grid");
+
+  const [loader, setLoader] = useState(true);
 
   const navigate = useNavigate();
 
   const [allTask, setAllTask] = useState([]);
+
   useEffect(() => {
     let formData = new FormData();
     formData.append("fun", "getAllTask");
 
     axios
       .post("php/api.php", formData)
-      .then((response) => setAllTask(response.data))
+      .then((response) => {
+        setAllTask(response.data);
+        setLoader(false);
+      })
       .catch((e) => console.log(e));
 
     for (let [key, value] of formData) {
@@ -64,6 +70,8 @@ export default function BoardContainer() {
       ) : (
         <ListBoard allTask={allTask} />
       )}
+
+      {loader && <Loader />}
     </section>
   );
 }

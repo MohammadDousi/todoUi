@@ -11,9 +11,8 @@ import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../App";
 
-
 export default function Sidebar() {
-  const {userData} = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   const [showSidebar, setShowSidebar] = useState("BIG");
 
@@ -74,7 +73,8 @@ export default function Sidebar() {
       path: "/main/pushBox",
       path2: "/main/pushBox",
       icon: "fas fa-envelope-open",
-    },{
+    },
+    {
       name: "Edit Task",
       path: "/main/editTask",
       path2: "/main/editTask",
@@ -104,7 +104,7 @@ export default function Sidebar() {
               src={
                 userData?.avator
                   ? `${axios.defaults.baseURL}image/userAvator/${userData?.avator}`
-                  : { defaultAvator }
+                  : defaultAvator
               }
               alt="profile pic"
             />
@@ -122,7 +122,7 @@ export default function Sidebar() {
                   className={
                     location.pathname === tab.path
                       ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                      : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                      : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-xl"
                   }
                 >
                   <i className={`${tab.icon} text-sm`}></i>
@@ -155,9 +155,9 @@ export default function Sidebar() {
                 src={
                   userData?.avator
                     ? `${axios.defaults.baseURL}image/userAvator/${userData?.avator}`
-                    : { defaultAvator }
+                    : defaultAvator
                 }
-                alt="profile pic"
+                alt={userData?.avator ? userData?.avator : defaultAvator}
               />
               <div
                 ref={circle_count}
@@ -192,7 +192,7 @@ export default function Sidebar() {
                     location.pathname === tab.path ||
                     location.pathname === tab.path2
                       ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
-                      : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:scale-105 hover:rounded-xl"
+                      : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:rounded-xl"
                   }
                 >
                   <i className={tab.icon}></i>

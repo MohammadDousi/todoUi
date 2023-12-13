@@ -1,6 +1,8 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import defultAvator from "../../../assets/image/userAvator/defultAvatorMen.png";
+
 export default function ItemGridTask(props) {
   const { data } = props;
 
@@ -42,21 +44,23 @@ export default function ItemGridTask(props) {
           </p>
         </section>
 
-        <section className="w-full mb-2 flex flex-col justify-start items-start gap-1.5">
+        <section className="w-full flex flex-col justify-start items-start gap-1.5">
           <p className="w-full text-sm font-bold text-left text-slate-600">
             {data?.subject}
           </p>
           <p className="w-full text-slate-500 text-sm font-normal tracking-wide text-left">
-            {data?.description}
+            {data?.description.length >= 110
+              ? `${data?.description.slice(0, 100)}...`
+              : data?.description}
           </p>
         </section>
       </section>
 
-      <section className="w-full flex flex-row justify-between items-center">
+      <section className="w-full flex flex-row justify-between items-end">
         <div className="w-full flex items-center justify-start gap-1.5">
           <i className="fas fa-pen-alt text-slate-300 text-xs"></i>
           <h5 className="text-sm font-normal text-left text-slate-400 capitalize">
-            {data?.author ? data?.author : "unknow"}
+            {data?.name ? data?.name : "unknow"} {/* author name  */}
           </h5>
         </div>
 
@@ -65,14 +69,22 @@ export default function ItemGridTask(props) {
             <img
               key={item.avator}
               className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
-              src={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
-              alt={`${axios.defaults.baseURL}image/userAvator/${item.avator}`}
+              src={
+                item.avator
+                  ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                  : defultAvator
+              }
+              alt={
+                item.avator
+                  ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                  : defultAvator
+              }
             />
           ))}
 
-          <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
+          {/* <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
             +2
-          </div>
+          </div> */}
         </section>
       </section>
     </Link>
