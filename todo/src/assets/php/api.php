@@ -26,6 +26,9 @@ if (isset($_POST['fun'])) {
         case 'getSingleTask':
             getSingleTask();
             break;
+        case 'getAllTaskForSingleUser':
+            getAllTaskForSingleUser();
+            break;
         case 'getAllUser':
             getAllUser();
             break;
@@ -123,7 +126,7 @@ function verifyOtpCode()
 
                 if (!$result) {
 
-                    $gentoken = sha1($mobile) . $otpCode;
+                    $gentoken = md5(sha1($mobile)) . $otpCode;
 
                     $query = 'INSERT INTO `TBUser` VALUES (?,?,?,?,?,?,?,?,?,?)';
                     $query  = str_replace(";", "", $query);
@@ -224,6 +227,34 @@ function getSingleTask()
 
     $con = null;
 }
+
+function getAllTaskForSingleUser()
+{
+
+    global $con;
+
+    if (isset($_POST['id'])) {
+
+        $id = $_POST['id'];
+
+        $query = 'SELECT * FROM `TBTask` WHERE author = :id ORDER BY `id` DESC';
+        $query = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindparam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt) {
+            echo json_encode($stmt->fetchAll(PDO::FETCH_OBJ));
+        } else {
+            echo json_encode("idNotFound");
+        }
+    } else {
+        echo "noData";
+    }
+
+    $con = null;
+}
+
 function getAllTask()
 {
 

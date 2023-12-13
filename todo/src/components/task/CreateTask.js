@@ -31,7 +31,13 @@ export default function CreateTask() {
     description: "",
     priority: "",
     deadline: new DateObject("YYYY/MM/DD HH:mm"),
-    tagPartners: [],
+    tagPartners: [
+      {
+        id: userData.id,
+        name: userData.name,
+        avator: userData.avator,
+      },
+    ],
     image: [],
   });
 
@@ -245,8 +251,8 @@ export default function CreateTask() {
                   <div
                     className={
                       dataToSend.tagPartners.length === 0
-                        ? "w-full py-2 h-12 flex flex-row flex-wrap gap-2"
-                        : "w-full py-2 flex flex-row flex-wrap gap-2"
+                        ? "w-full h-12 flex flex-row flex-wrap gap-2"
+                        : "w-full py-2.5 flex flex-row flex-wrap gap-2"
                     }
                   >
                     <input

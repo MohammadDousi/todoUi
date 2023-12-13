@@ -43,7 +43,7 @@ function App() {
           if (response.data.name == "") {
             console.log(response.data.name == "");
             Toastiy("Please complete the profile information", "wa");
-            navigate("/main/profile");
+            navigate(`/main/profile/${response.data.token}`);
           }
         })
         .catch((e) => console.log(e));

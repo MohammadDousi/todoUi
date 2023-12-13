@@ -23,7 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 
-
 ## manual config in host
 config.php
 function.php

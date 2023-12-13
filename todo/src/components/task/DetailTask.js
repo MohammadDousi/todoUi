@@ -11,9 +11,8 @@ import { UserContext } from "../../App";
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
 export default function DetailTask() {
-  const params = useParams(); // get param from nav address
 
-  const { userData } = useContext(UserContext); //get data user
+  const params = useParams(); // get param from nav address
 
   const [loader, setLoader] = useState(true);
 

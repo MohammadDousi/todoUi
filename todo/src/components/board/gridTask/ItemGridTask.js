@@ -11,8 +11,8 @@ export default function ItemGridTask(props) {
 
   return (
     <Link
-      to={`/main/editTask/${data?.id}`}
-      className="w-full p-5 bg-white flex flex-col justify-between items-center gap-4 shadow-md cursor-pointer rounded-xl"
+      to={`/main/detailTask/${data?.id}`}
+      className="w-full p-5 bg-white flex flex-col justify-between items-center gap-4 shadow-md cursor-pointer duration-300 rounded-xl"
     >
       {/* <img
         className="w-full max-h-32 rounded-xl object-cover shadow-md shadow-slate-200"

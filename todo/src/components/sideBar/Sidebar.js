@@ -64,8 +64,8 @@ export default function Sidebar() {
     },
     {
       name: "Profile",
-      path: "/main/profile",
-      path2: "/main/profile",
+      path: `/main/profile/${userData.token}`,
+      path2: `/main/profile/${userData.token}`,
       icon: "fas fa-user",
     },
     {
