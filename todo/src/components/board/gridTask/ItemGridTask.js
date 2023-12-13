@@ -5,11 +5,13 @@ export default function ItemGridTask(props) {
   const { data } = props;
 
   let date = JSON.parse(data?.date); // get data from data
-  let tag = JSON.parse(data.tagTeam);
+  let tag = JSON.parse(data.tagPartners);
 
   return (
-    // <Link to={}></Link>
-    <section className="w-full p-5 bg-white flex flex-col justify-between items-center gap-4 shadow-md cursor-pointer rounded-xl">
+    <Link
+      to={`/main/editTask/${data?.id}`}
+      className="w-full p-5 bg-white flex flex-col justify-between items-center gap-4 shadow-md cursor-pointer rounded-xl"
+    >
       {/* <img
         className="w-full max-h-32 rounded-xl object-cover shadow-md shadow-slate-200"
         src={data}
@@ -44,7 +46,7 @@ export default function ItemGridTask(props) {
           <p className="w-full text-sm font-bold text-left text-slate-600">
             {data?.subject}
           </p>
-          <p className="w-full text-slate-500 text-sm font-normal tracking-wide text-left text-justify">
+          <p className="w-full text-slate-500 text-sm font-normal tracking-wide text-left">
             {data?.description}
           </p>
         </section>
@@ -73,6 +75,6 @@ export default function ItemGridTask(props) {
           </div>
         </section>
       </section>
-    </section>
+    </Link>
   );
 }

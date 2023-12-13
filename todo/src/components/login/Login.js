@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
@@ -11,8 +11,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 import Loader from "../loader/Loader";
+import { UserContext } from "../../App";
 
-export default function Login({ setToken }) {
+export default function Login() {
+  
+  const {setToken} = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const [loader, setLoader] = useState(false);
@@ -115,7 +119,7 @@ export default function Login({ setToken }) {
   };
 
   const timer = () => {
-    let count = 0.1;
+    let count = 1.5;
     count = count * 60;
     let min = Math.floor(count / 60);
     let second = Math.floor(count - min * 60);
@@ -149,8 +153,6 @@ export default function Login({ setToken }) {
 
     // };
   };
-
-  useEffect(() => {}, []);
 
   // const reSendCodeOtp = () => {
   //   clearInterval(intervalTimer.current);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext } from "react";
 
 import axios from "axios";
 
@@ -16,9 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+import { UserContext } from "../../App";
 
-import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
 
 export default function CreateTask() {
   const { userData } = useContext(UserContext);
@@ -34,7 +33,7 @@ export default function CreateTask() {
     description: "",
     priority: "",
     deadline: new DateObject("YYYY/MM/DD HH:mm"),
-    selectedTeammate: [],
+    tagPartners: [],
     image: [],
   });
 
@@ -74,8 +73,8 @@ export default function CreateTask() {
       formData.append("deadline", JSON.stringify(dataToSend.deadline));
 
       formData.append(
-        "selectedTeammate",
-        JSON.stringify(dataToSend.selectedTeammate)
+        "tagPartners",
+        JSON.stringify(dataToSend.tagPartners)
       );
 
       for (let i = 0; i < dataToSend.image.length; i++) {
@@ -104,7 +103,7 @@ export default function CreateTask() {
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="create new task" />
@@ -152,7 +151,7 @@ export default function CreateTask() {
                 />
                 <label
                   htmlFor="force"
-                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize hover:bg-rose-100 hover:text-rose-600 cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-rose-300 peer-checked:bg-rose-100 peer-checked:font-bold peer-checked:text-rose-600"
+                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize hover:bg-red-100 hover:text-red-600 cursor-pointer select-none rounded-full peer-checked:border peer-checked:border-red-300 peer-checked:bg-red-100 peer-checked:font-bold peer-checked:text-red-600"
                 >
                   force
                 </label>
@@ -209,7 +208,7 @@ export default function CreateTask() {
                 />
                 <label
                   htmlFor="low"
-                  className="w-full py-1 text-slate-500 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-sky-100 hover:text-sky-600 peer-checked:border peer-checked:border-sky-300 peer-checked:bg-sky-100 peer-checked:font-bold peer-checked:text-sky-600"
+                  className="w-full py-1 text-slate-600 font-normal text-sm text-center capitalize cursor-pointer select-none rounded-full hover:bg-teal-100 hover:text-teal-600 peer-checked:border peer-checked:border-teal-300 peer-checked:bg-teal-100 peer-checked:font-bold peer-checked:text-teal-600"
                 >
                   low
                 </label>
@@ -237,9 +236,9 @@ export default function CreateTask() {
 
         {/* tag teammate and deadline */}
         <section className="w-full flex flex-row justify-start items-start gap-4">
-          <section className="w-full flex flex-col justify-start items-start gap-1.5">
+          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
-              tag teammate
+              tag Partners
             </h4>
 
             <section className="w-full flex flex-col items-center">
@@ -247,7 +246,7 @@ export default function CreateTask() {
                 <section className="w-full min-h-fit h-auto flex justify-between gap-2 pl-8 pr-3 bg-white border border-slate-300 rounded-xl">
                   <div
                     className={
-                      dataToSend.selectedTeammate.length === 0
+                      dataToSend.tagPartners.length === 0
                         ? "w-full py-2 h-12 flex flex-row flex-wrap gap-2"
                         : "w-full py-2 flex flex-row flex-wrap gap-2"
                     }
@@ -273,8 +272,8 @@ export default function CreateTask() {
                       value={searchTeammate}
                     />
 
-                    {dataToSend.selectedTeammate &&
-                      dataToSend.selectedTeammate.map((person) => (
+                    {dataToSend.tagPartners &&
+                      dataToSend.tagPartners.map((person) => (
                         <div
                           key={person.id}
                           className="px-3 py-0.5 text-slate-600 text-sm font-normal capitalize bg-amber-100 border border-amber-300 flex flex-row justify-center items-center gap-3 rounded-full"
@@ -284,8 +283,8 @@ export default function CreateTask() {
                             onClick={() => {
                               setDataToSend({
                                 ...dataToSend,
-                                selectedTeammate:
-                                  dataToSend.selectedTeammate.filter(
+                                tagPartners:
+                                  dataToSend.tagPartners.filter(
                                     (item) => item.id !== person.id
                                   ),
                               });
@@ -317,15 +316,15 @@ export default function CreateTask() {
                       <section
                         key={person.id}
                         onClick={() => {
-                          const foundPerson = dataToSend.selectedTeammate.find(
+                          const foundPerson = dataToSend.tagPartners.find(
                             (x) => x.id === person.id
                           );
 
                           !foundPerson &&
                             setDataToSend({
                               ...dataToSend,
-                              selectedTeammate: [
-                                ...dataToSend.selectedTeammate,
+                              tagPartners: [
+                                ...dataToSend.tagPartners,
                                 {
                                   id: person.id,
                                   name: person.name,
@@ -362,7 +361,7 @@ export default function CreateTask() {
             </section>
           </section>
 
-          <section className="w-full relative flex flex-col justify-start items-start gap-1.5">
+          <section className="w-1/2 relative flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               deadline
             </h4>
@@ -380,7 +379,7 @@ export default function CreateTask() {
               animations={[transition({ duration: 800, from: 35 })]}
               editable={false}
               placeholder="click to open"
-              format="YYYY/MM/DD HH:mm"
+              format="YYYY/MM/DD - HH:mm"
               onChange={(date) =>
                 setDataToSend({
                   ...dataToSend,

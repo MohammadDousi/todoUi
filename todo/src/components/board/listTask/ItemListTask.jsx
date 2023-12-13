@@ -5,7 +5,7 @@ export default function ItemListTask(props) {
   const { data } = props;
 
   let date = JSON.parse(data?.date); // get data from data
-  let tag = JSON.parse(data?.tagTeam);
+  let tag = JSON.parse(data?.tagPartners);
 
   return (
     <tr className="w-full py-4 px-6 flex jtify-center items-center gap-5 cursor-pointer hover:bg-amber-50">

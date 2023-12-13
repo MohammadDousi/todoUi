@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import "./SidebarStyle.css";
@@ -9,9 +9,8 @@ import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
 import { Link, useLocation } from "react-router-dom";
+import { UserContext } from "../../App";
 
-import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
 
 export default function Sidebar() {
   const {userData} = useContext(UserContext);

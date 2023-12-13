@@ -19,9 +19,12 @@ import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import { useParams } from "react-router-dom";
 
-export default function EditTask2() {
-  const { userData } = useContext(UserContext);
+export default function EditTask() {
+  const params = useParams(); // get param from nav address
+
+  const { userData } = useContext(UserContext); //get data user
 
   const [loader, setLoader] = useState(false);
 
@@ -107,12 +110,12 @@ export default function EditTask2() {
       <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
-          <TitlePage title="edit task 2" />
+          <TitlePage title="edit task" />
           <button
-            onClick={() => sendData()}
-            className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
+            // onClick={() => sendData()}
+            className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
           >
-            add to list
+            accept & update
           </button>
         </section>
 
@@ -256,8 +259,8 @@ export default function EditTask2() {
                       >
                         <input
                           type="search"
-                          placeholder="Search Person"
-                          className="w-1/3 text-slate-600 font-normal text-base tracking-wide placeholder:text-slate-300"
+                          placeholder="Search User"
+                          className="w-full text-slate-600 font-normal text-base tracking-wide placeholder:text-slate-300"
                           onClick={() =>
                             setShowHoverTagTeammate(!showHoverTagTeammate)
                           }

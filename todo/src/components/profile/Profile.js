@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
-import { UserContext } from "../../context/UserContext";
 
 import TitlePage from "../titlePage/TitlePage";
 
@@ -12,6 +11,7 @@ import avator3 from "../../assets/image/userAvator/profile(1).png";
 import avator4 from "../../assets/image/userAvator/profile(5).png";
 import avator5 from "../../assets/image/userAvator/profile(4).png";
 import avator6 from "../../assets/image/userAvator/profile(8).png";
+import { UserContext } from "../../App";
 
 export default function Profile() {
   const navigate = useNavigate();
