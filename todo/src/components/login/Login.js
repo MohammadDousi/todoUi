@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import pic from "../../assets/image/svg/standOut.svg";
 
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 import Loader from "../loader/Loader";
@@ -141,7 +140,7 @@ export default function Login() {
 
       countTimer.current.innerText = "0" + min + ":" + second;
 
-      if (second == 0 && min == 0) {
+      if (second === 0 && min === 0) {
         agianCode.current.style.opacity = "1";
       }
     }, 1000);

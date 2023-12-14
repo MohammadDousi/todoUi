@@ -559,8 +559,6 @@ function updateTask()
                     echo json_encode($errors[] = "No File Selected");
                 }
             }
-
-
         } else {
             echo json_encode("errUpdate");
         }
@@ -569,7 +567,6 @@ function updateTask()
         $query  = str_replace(";", "", $query);
         $stmt = $con->prepare($query);
         $stmt->execute([0, $id, $author, "descripation is not set yet", jdate('Y/m/j H:m')]);
-
     } else {
         echo json_encode("NoData");
     }
@@ -591,14 +588,16 @@ function deleteTask()
         $stmt = $con->prepare($query);
         $stmt->bindparam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($result) {
             foreach ($result as $item) {
 
                 $file = $item['file'];
                 $deleteDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/file/" . $file;
-                unlink($deleteDir);
+                if (file_exists($deleteDir)) {
+                    unlink($deleteDir);
+                }
             }
         }
 

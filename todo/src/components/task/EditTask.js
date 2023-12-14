@@ -15,11 +15,15 @@ import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 export default function EditTask() {
   const params = useParams();
+  const navigate = useNavigate();
 
   const { userData } = useContext(UserContext);
 
@@ -150,6 +154,7 @@ export default function EditTask() {
         switch (response.data) {
           case "isDelete":
             Toastiy("Delete is successful", "su");
+            navigate("/main/board");
             break;
           case "errDelete":
             Toastiy("Delete failed", "er");
@@ -162,6 +167,7 @@ export default function EditTask() {
             break;
         }
         setLoader(false);
+        console.log(response);
       })
       .catch((e) => console.log(e));
   };
@@ -174,12 +180,48 @@ export default function EditTask() {
           <TitlePage title="detail task > edit" />
 
           <section className="flex flex-row justify-end items-center gap-4">
-            <button
-              onClick={() => deleteTask()}
-              className="h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+            <Popup
+              modal
+              nested
+              trigger={
+                <button className="h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500">
+                  delete task
+                </button>
+              }
+              position="right center"
             >
-              delete task
-            </button>
+              {(close) => (
+                <div className="p-10 flex flex-col justify-center items-center gap-8">
+                  <section className="w-full space-y-1">
+                    <p className="w-full text-left text-red-600 font-black text-xl capitalize">
+                      Delete Task ?
+                    </p>
+                    <p className="w-full text-left text-slate-600 font-normal text-base">
+                      Are you sure you want to delete ?
+                    </p>
+                  </section>
+                  <section className="flex flex-row justify-center items-center gap-4">
+                    <button
+                      onClick={() => {
+                        deleteTask();
+                        close();
+                      }}
+                      className="h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      delete task
+                    </button>
+
+                    <button
+                      onClick={() => close()}
+                      className="h-8 px-8 hover:px-10 bg-slate-200 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      no care !
+                    </button>
+                  </section>
+                </div>
+              )}
+            </Popup>
+
             <button
               onClick={() => updateTask()}
               className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"

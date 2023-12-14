@@ -14,6 +14,13 @@
     outline-0 no-underline list-none border-0 border-transparent;
   }
 
+  :root {
+    /* modal confirm style */
+    .popup-content {
+      @apply !rounded-xl w-auto;
+    }
+  }
+
   body {
     @apply w-screen h-screen flex flex-col justify-start items-start overflow-hidden;
   }

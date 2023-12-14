@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 /// components
 import Header from "./components/header/Header";
@@ -9,9 +9,7 @@ import NotFound from "./components/notFound/NotFound";
 import Profile from "./components/profile/Profile";
 import Push from "./components/push/Push";
 import DetailTask from "./components/task/DetailTask";
-import { useContext, useEffect } from "react";
-import { UserContext } from "./App";
-import Toastiy from "./components/toastfiy/Toastfiy";
+
 import EditTask from "./components/task/EditTask";
 
 export default function Main() {

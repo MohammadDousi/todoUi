@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import "./SidebarStyle.css";
-import avator from "../../assets/image/userAvator/profile(1).png";
 import avator4 from "../../assets/image/userAvator/profile(2).png";
 import avator5 from "../../assets/image/userAvator/profile(9).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";

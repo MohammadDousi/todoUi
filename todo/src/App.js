@@ -1,24 +1,19 @@
-import { useEffect, useState, createContext } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 //// components
 import Main from "./Main";
 import Login from "./components/login/Login";
 import NotFound from "./components/notFound/NotFound";
-import useToken from "./components/login/useToken";
 
 //// image background
 import pattern from "./assets/image/svg/pattern.svg";
 
 //// context
 
-import Toastiy from "./components/toastfiy/Toastfiy";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProvider from "./context/UserContext";
 
-// export const UserContext = createContext();
 
 function App() {
   // const { token, setToken } = useToken();

@@ -8,7 +8,6 @@ import Toastiy from "../components/toastfiy/Toastfiy";
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-
   const { token, setToken } = useToken();
   const [userData, setUserData] = useState({});
 
@@ -16,9 +15,11 @@ export default function UserProvider({ children }) {
 
   useEffect(() => {
     if (!token) {
-      return () => {
-        <Navigate to="/login" replace />;
-      };
+      navigate("/login");
+
+      // return () => {
+      //   <Navigate to="/login" replace />;
+      // };
     } else {
       let formData = new FormData();
       formData.append("fun", "getSingleUser");
@@ -30,7 +31,7 @@ export default function UserProvider({ children }) {
           setUserData(response.data);
 
           if (response.data) {
-            if (response.data.name == "") {
+            if (response.data.name === "") {
               Toastiy("Please complete the profile information", "wa");
               navigate(`/main/profile/${response.data.token}`);
             }
@@ -49,7 +50,6 @@ export default function UserProvider({ children }) {
       }
     }
   }, [token]);
-
 
   return (
     <UserContext.Provider value={{ userData, setUserData, token, setToken }}>
