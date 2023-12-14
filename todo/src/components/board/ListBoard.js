@@ -38,13 +38,15 @@ export default function ListBoard({ allTask }) {
           </thead>
 
           <tbody className="w-full max-h-full flex flex-col justify-start items-center bg-white divide-y divide-slate-200/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
-            {allTask.length === 0 && (
-              <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md">
-                <img src={noData} alt="no data" className="w-20" />
-                <h2 className="text-slate-600 text-lg font-black text-center capitalize">
-                  No task has been registered
-                </h2>
-              </div>
+            {allTask?.length === 0 && (
+              <tr className="w-full">
+                <th className="w-full px-5 py-10 flex flex-col justify-center items-center gap-5">
+                  <img src={noData} alt="no data" className="w-20" />
+                  <h2 className="text-slate-600 text-lg font-black text-center capitalize">
+                    You are not tagged in Tesk yet.
+                  </h2>
+                </th>
+              </tr>
             )}
 
             {allTask?.map((item) => (

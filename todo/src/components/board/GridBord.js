@@ -3,10 +3,11 @@ import ItemGridTask from "./gridTask/ItemGridTask.js";
 import noData from "../../assets/image/svg/noData.svg";
 
 export default function GridBord({ allTask }) {
+  
   const todo = allTask.filter((item) => item.status === "todo");
   const done = allTask.filter((item) => item.status === "done");
   const review = allTask.filter((item) => item.status === "review");
-  const InProgres = allTask.filter((item) => item.status === "InProgres");
+  const inProgres = allTask.filter((item) => item.status === "inProgres");
 
   return (
     <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-row justify-start items-start gap-6">
@@ -24,7 +25,7 @@ export default function GridBord({ allTask }) {
             <ItemGridTask key={item.id} data={item} />
           ))}
 
-          {todo.length === 0 && (
+          {!done && !review && !inProgres && todo.length === 0 && (
             <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md">
               <img src={noData} alt="no data" className="w-20" />
               <h2 className="text-slate-600 text-lg font-black text-center capitalize">
@@ -39,13 +40,13 @@ export default function GridBord({ allTask }) {
         <HeaderGridTask
           data={{
             title: "in progres",
-            countTask: InProgres.length,
+            countTask: inProgres.length,
             color: "bg-blue-500",
           }}
         />
 
         <div className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
-          {InProgres?.map((item) => (
+          {inProgres?.map((item) => (
             <ItemGridTask key={item.id} data={item} />
           ))}
         </div>

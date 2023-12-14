@@ -2,41 +2,58 @@ import { createContext, useEffect, useState } from "react";
 
 import axios from "axios";
 import useToken from "../components/login/useToken";
+import { Navigate, useNavigate } from "react-router-dom";
+import Toastiy from "../components/toastfiy/Toastfiy";
 
-import Login from "../components/login/Login";
+export const UserContext = createContext();
 
-// export const UserContext = createContext();
+export default function UserProvider({ children }) {
 
-// export default function UserProvider({ children }) {
+  const { token, setToken } = useToken();
+  const [userData, setUserData] = useState({});
 
-  // const { token, setToken } = useToken();
-  // const [userData, setUserData] = useState({name : "ali"});
+  const navigate = useNavigate();
 
-  // // useEffect(() => {
-  // if (!token) {
-  //   return <Login/>;
-  // } else {
-  //   let formData = new FormData();
-  //   formData.append("fun", "getSingleUser");
-  //   formData.append("token", token);
+  useEffect(() => {
+    if (!token) {
+      return () => {
+        <Navigate to="/login" replace />;
+      };
+    } else {
+      let formData = new FormData();
+      formData.append("fun", "getSingleUser");
+      formData.append("token", token);
 
-  //   axios
-  //     .post("php/api.php", formData)
-  //     .then((response) => {
-  //       // setUserData(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((e) => console.log(e));
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          setUserData(response.data);
 
-  //   for (let [key, value] of formData) {
-  //     formData.delete(key, value);
-  //   }
-  // }
-  // // }, []);
+          if (response.data) {
+            if (response.data.name == "") {
+              Toastiy("Please complete the profile information", "wa");
+              navigate(`/main/profile/${response.data.token}`);
+            }
+          } else {
+            Toastiy("Please enter the user panel", "in");
+            sessionStorage.clear();
+            localStorage.clear();
+            navigate("/login");
+            setUserData({});
+          }
+        })
+        .catch((e) => console.log(e));
 
-//   return (
-//     <UserContext.Provider value={{ userData, setUserData , setToken }}>
-//       {children}
-//     </UserContext.Provider>
-//   );
-// }
+      for (let [key, value] of formData) {
+        formData.delete(key, value);
+      }
+    }
+  }, [token]);
+
+
+  return (
+    <UserContext.Provider value={{ userData, setUserData, token, setToken }}>
+      {children}
+    </UserContext.Provider>
+  );
+}

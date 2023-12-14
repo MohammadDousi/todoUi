@@ -9,8 +9,8 @@ import ItemListTask from "../board/listTask/ItemListTask";
 import Toastiy from "../toastfiy/Toastfiy";
 import Loader from "../loader/Loader";
 
-import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
 
 export default function Profile() {
   const [loader, setLoader] = useState(true);
@@ -43,7 +43,6 @@ export default function Profile() {
       .then((response) => {
         setAllTask(response.data);
         setLoader(false);
-        console.log(response.data);
       })
       .catch((e) => console.log(e));
 
@@ -68,7 +67,7 @@ export default function Profile() {
               }}
               className={
                 editButton
-                  ? "h-8 px-8 hover:px-10 bg-rose-200 hover:bg-rose-500 text-rose-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                  ? "h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
                   : "hidden"
               }
             >
@@ -239,7 +238,7 @@ export default function Profile() {
                     user?.status === "active"
                       ? "w-full h-12 px-8 bg-green-100 text-green-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-green-300"
                       : user?.status === "deactive"
-                      ? "w-full h-12 px-8 bg-rose-100 text-rose-600 font-black text-base capitalize rounded-xl placeholder:text-rose-300 border border-rose-300"
+                      ? "w-full h-12 px-8 bg-red-100 text-red-600 font-black text-base capitalize rounded-xl placeholder:text-red-300 border border-red-300"
                       : user?.status === "ban"
                       ? "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
                       : "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
@@ -286,17 +285,18 @@ export default function Profile() {
               </thead>
 
               <tbody className="w-full h-fit max-h-96 flex flex-col justify-start items-start bg-white divide-y divide-slate-200/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
-                {allTask &&
-                  allTask?.map((item) => (
-                    <ItemListTask key={item.id + Math.random()} data={item} />
-                  ))}
-                {allTask && allTask?.length === 0 && (
-                  <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md">
-                    <img src={noData} alt="no data" className="w-20" />
-                    <h2 className="text-slate-600 text-lg font-black text-center capitalize">
-                      You are not tagged in Tesk yet.
-                    </h2>
-                  </div>
+                {allTask?.map((item) => (
+                  <ItemListTask key={item.id + Math.random()} data={item} />
+                ))}
+                {allTask?.length === 0 && (
+                  <tr className="w-full">
+                    <th className="w-full px-5 py-10 flex flex-col justify-center items-center gap-5">
+                      <img src={noData} alt="no data" className="w-20" />
+                      <h2 className="text-slate-600 text-lg font-black text-center capitalize">
+                        You are not tagged in Tesk yet.
+                      </h2>
+                    </th>
+                  </tr>
                 )}
               </tbody>
             </table>

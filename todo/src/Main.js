@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 /// components
 import Header from "./components/header/Header";
@@ -9,8 +9,25 @@ import NotFound from "./components/notFound/NotFound";
 import Profile from "./components/profile/Profile";
 import Push from "./components/push/Push";
 import DetailTask from "./components/task/DetailTask";
+import { useContext, useEffect } from "react";
+import { UserContext } from "./App";
+import Toastiy from "./components/toastfiy/Toastfiy";
+import EditTask from "./components/task/EditTask";
 
 export default function Main() {
+  // const userData = useContext(UserContext);
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!userData.name) {
+  //     console.log("hi");
+  //     Toastiy("Please complete the profile information", "wa");
+  //     navigate(`/main/profile/${userData.token}`);
+  //   } else {
+  //     console.log(userData.name === "");
+  //   }
+  // }, []);
+
   return (
     <>
       <Header />
@@ -23,6 +40,7 @@ export default function Main() {
           <Route path="/board" element={<BoardContainer />} />
           <Route path="/createTask" element={<CreateTask />} />
           <Route path="/detailTask/:id" element={<DetailTask />} />
+          <Route path="/editTask/:id" element={<EditTask />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/pushBox" element={<Push />} />
           <Route path="/*" element={<NotFound />} />

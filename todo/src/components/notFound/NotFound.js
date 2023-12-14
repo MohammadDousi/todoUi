@@ -11,11 +11,10 @@ export default function NotFound() {
         <img src={pic} alt="not found" className="w-52 mb-6" />
         {/* <i className="fas fa-exclamation-circle text-8xl text-slate-400 mb-6"></i> */}
         <h2 className="text-slate-600 text-3xl font-black capitalize">
-          No result found
+          page Not found
         </h2>
         <p className="text-slate-600 text-base text-center">
-          No page or item found for this section. Maybe an error has occurred.
-          Try again later.
+          Maybe an error has occurred. Try again later.
         </p>
         <Link
           to="/"

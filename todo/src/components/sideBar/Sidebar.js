@@ -9,7 +9,7 @@ import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
 import { Link, useLocation } from "react-router-dom";
-import { UserContext } from "../../App";
+import { UserContext } from "../../context/UserContext";
 
 export default function Sidebar() {
   const { userData } = useContext(UserContext);
@@ -47,37 +47,33 @@ export default function Sidebar() {
     }, speed);
   }, []);
 
-  let location = useLocation();
+  const location = useLocation();
 
   const sideTab = [
     {
       name: "Dashboard",
       path: "/main/board",
-      path2: "/main",
+      path1: "/main",
       icon: "fas fa-map",
     },
     {
       name: "Create Task",
       path: "/main/createTask",
-      path2: "/main/createTask",
       icon: "fas fa-plus",
     },
     {
       name: "Profile",
       path: `/main/profile/${userData.token}`,
-      path2: `/main/profile/${userData.token}`,
       icon: "fas fa-user",
     },
     {
       name: "Push",
       path: "/main/pushBox",
-      path2: "/main/pushBox",
       icon: "fas fa-envelope-open",
     },
     {
       name: "Edit Task",
       path: "/main/editTask",
-      path2: "/main/editTask",
       icon: "fas fa-envelope-open",
     },
   ];
@@ -190,7 +186,7 @@ export default function Sidebar() {
                 <section
                   className={
                     location.pathname === tab.path ||
-                    location.pathname === tab.path2
+                    location.pathname === tab.path1 
                       ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
                       : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:rounded-xl"
                   }

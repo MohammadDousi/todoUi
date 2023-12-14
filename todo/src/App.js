@@ -16,46 +16,54 @@ import pattern from "./assets/image/svg/pattern.svg";
 import Toastiy from "./components/toastfiy/Toastfiy";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UserProvider from "./context/UserContext";
 
-export const UserContext = createContext();
+// export const UserContext = createContext();
 
 function App() {
-  const { token, setToken } = useToken();
-  const [userData, setUserData] = useState({});
+  // const { token, setToken } = useToken();
+  // const [userData, setUserData] = useState({});
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      return () => {
-        <Navigate to="/login" replace />;
-      };
-    } else {
-      let formData = new FormData();
-      formData.append("fun", "getSingleUser");
-      formData.append("token", token);
+  // useEffect(() => {
+  //   if (!token) {
+  //     return () => {
+  //       <Navigate to="/login" replace />;
+  //     };
+  //   } else {
+  //     let formData = new FormData();
+  //     formData.append("fun", "getSingleUser");
+  //     formData.append("token", token);
 
-      axios
-        .post("php/api.php", formData)
-        .then((response) => {
-          setUserData(response.data);
+  //     axios
+  //       .post("php/api.php", formData)
+  //       .then((response) => {
+  //         setUserData(response.data);
 
-          if (response.data.name == "") {
-            console.log(response.data.name == "");
-            Toastiy("Please complete the profile information", "wa");
-            navigate(`/main/profile/${response.data.token}`);
-          }
-        })
-        .catch((e) => console.log(e));
+  //         if (response.data) {
+  //           if (response.data.name == "") {
+  //             Toastiy("Please complete the profile information", "wa");
+  //             navigate(`/main/profile/${response.data.token}`);
+  //           }
+  //         } else {
+  //           Toastiy("Please enter the user panel", "in");
+  //           sessionStorage.clear();
+  //           localStorage.clear();
+  //           navigate("/login");
+  //           setUserData({});
+  //         }
+  //       })
+  //       .catch((e) => console.log(e));
 
-      for (let [key, value] of formData) {
-        formData.delete(key, value);
-      }
-    }
-  }, [token]);
+  //     for (let [key, value] of formData) {
+  //       formData.delete(key, value);
+  //     }
+  //   }
+  // }, [token]);
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, token, setToken }}>
+    <UserProvider>
       <img
         src={pattern}
         alt="pattern background"
@@ -82,7 +90,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-    </UserContext.Provider>
+    </UserProvider>
   );
 }
 

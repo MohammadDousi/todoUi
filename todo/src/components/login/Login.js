@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 import Loader from "../loader/Loader";
-import { UserContext } from "../../App";
+import { UserContext } from "../../context/UserContext";
 
 export default function Login() {
   
@@ -78,14 +78,13 @@ export default function Login() {
       axios
         .post("php/api.php", formData)
         .then((response) => {
-          // console.log(response.data);
 
           response.data?.map((item) => {
             switch (item.msg) {
               case "insertOk":
                 const token = item.token;
                 setToken(token);
-                Toastiy("Welcome o Todo Application", "in");
+                Toastiy("Welcome to Todo Application", "in");
                 setLoader(false);
                 clearInterval(intervalTimer.current);
                 navigate("/main");
@@ -112,7 +111,6 @@ export default function Login() {
             // });
           });
 
-          // console.log(response.data);
         })
         .catch((e) => console.log(e));
     }
@@ -153,14 +151,6 @@ export default function Login() {
 
     // };
   };
-
-  // const reSendCodeOtp = () => {
-  //   clearInterval(intervalTimer.current);
-  //   intervalTimer.current = setInterval(startTimer, 1000);
-
-  //   agianCode.current.style.display = "none";
-  //   countTimer.current.style.display = "block";
-  // };
 
   useEffect(() => {
     /^09[0-9]{9}$/g.test(data.mobileNumber.trim())
@@ -308,20 +298,6 @@ export default function Login() {
           develop and design by mohammad dosi
         </h3>
       </main>
-
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        limit={5}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 }

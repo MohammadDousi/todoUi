@@ -79,9 +79,9 @@ export default function ItemListTask(props) {
               />
             ))}
 
-            <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
+            {/* <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
               +2
-            </div>
+            </div> */}
           </section>
         </th>
         <th className="w-2/12 flex justify-start items-start">

@@ -1,19 +1,18 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 
 import TitlePage from "../titlePage/TitlePage";
 import Loader from "../loader/Loader";
 
-import { useParams } from "react-router-dom";
-import { UserContext } from "../../App";
+import { useNavigate, useParams } from "react-router-dom";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
 export default function DetailTask() {
-
   const params = useParams(); // get param from nav address
 
+  const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
 
   const [dataTask, setDataTask] = useState([]); // get user from server and show for teammate
@@ -65,11 +64,12 @@ export default function DetailTask() {
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail & description task" />
+
           <button
-            // onClick={() => a()}
+            onClick={() => navigate(`/main/editTask/${dataTask.id}`)}
             className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
           >
-            accept & update
+            Go to edit
           </button>
         </section>
 
@@ -179,7 +179,7 @@ export default function DetailTask() {
               <section className="w-full flex flex-row justify-start items-start gap-4">
                 {files?.map((item) => (
                   <section
-                    key={item.size + Math.random()}
+                    key={item.file + Math.random()}
                     className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
                   >
                     <img
@@ -199,15 +199,17 @@ export default function DetailTask() {
               edit history
             </h4>
 
-            <div className="w-full max-h-screen px-3 bg-gray-200/50 border border-slate-300 divide-y divide-slate-300 flex flex-col justify-start items-start rounded-xl">
-              {history?.map((item) => (
+            <div className="w-full max-h-screen px-3 bg-gray-200/50 border border-slate-300 divide-y divide-slate-300 flex flex-col-reverse justify-start items-start rounded-xl">
+              {history?.map((item, index) => (
                 <section
                   key={item.id + Math.random()}
                   className="w-full py-3 flex flex-col justify-start items-start gap-1"
                 >
                   <div className="w-full flex flex-col justify-start items-center">
                     <h3 className="w-full text-slate-400 font-normal text-sm capitalize">
-                      {item.name}
+                      {index == 0
+                        ? "Create by " + item.name
+                        : "Edit by " + item.name}
                     </h3>
 
                     <div className="w-full flex flex-row justify-start items-center gap-1.5">

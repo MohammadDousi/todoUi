@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Toastiy from "../toastfiy/Toastfiy";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
-import { UserContext } from "../../App";
+import { UserContext } from "../../context/UserContext";
 
 export default function CreateTask() {
   const { userData } = useContext(UserContext);
@@ -30,7 +30,7 @@ export default function CreateTask() {
     subject: "",
     description: "",
     priority: "",
-    deadline: new DateObject("YYYY/MM/DD HH:mm"),
+    deadline: [],
     tagPartners: [
       {
         id: userData.id,
@@ -128,7 +128,7 @@ export default function CreateTask() {
             <input
               type="text"
               placeholder="Description of the subject"
-              className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+              className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 duration-500"
               value={dataToSend.subject}
               onChange={(e) =>
                 setDataToSend({ ...dataToSend, subject: e.target.value })
@@ -377,9 +377,10 @@ export default function CreateTask() {
               containerStyle={{
                 width: "100%",
               }}
+              minDate={new DateObject({ calendar: persian })}
               calendarPosition="bottom-center"
               numberOfMonths={2}
-              animations={[transition({ duration: 800, from: 35 })]}
+              animations={[transition({ duration: 500, from: 35 })]}
               editable={false}
               placeholder="click to open"
               format="YYYY/MM/DD - HH:mm"

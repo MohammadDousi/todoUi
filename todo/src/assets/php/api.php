@@ -20,6 +20,12 @@ if (isset($_POST['fun'])) {
         case 'createNewTask':
             createNewTask();
             break;
+        case 'updateTask':
+            updateTask();
+            break;
+        case 'deleteTask':
+            deleteTask();
+            break;
         case 'getSingleUser':
             getSingleUser();
             break;
@@ -35,6 +41,9 @@ if (isset($_POST['fun'])) {
 
         case 'getAllFilesTask':
             getAllFilesTask();
+            break;
+        case 'deleteFile':
+            deleteFile();
             break;
         case 'getAllEditHistoryTask':
             getAllEditHistoryTask();
@@ -300,6 +309,52 @@ function getAllFilesTask()
 
     $con = null;
 }
+
+function deleteFile()
+{
+    global $con;
+
+    if (isset($_POST['id']) && isset($_POST['idTask'])) {
+
+        $id = $_POST['id'];
+        $idTask = $_POST['idTask'];
+
+        $query = 'SELECT `file` FROM TBFile WHERE id = :id AND idTask = :idTask LIMIT 1';
+        $query  = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindparam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindparam(':idTask', $idTask, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+
+            $file = $result['file'];
+            $deleteDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/file/" . $file;
+            unlink($deleteDir);
+
+            $query = 'DELETE FROM `TBFile` WHERE id = :id AND idTask = :idTask LIMIT 1';
+            $query = str_replace(";", "", $query);
+            $stmt = $con->prepare($query);
+            $stmt->bindparam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindparam(':idTask', $idTask, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt) {
+                echo "isDelete";
+            } else {
+                echo "errDelete";
+            }
+        } else {
+            echo "errNoSuchFile";
+        }
+    } else {
+        echo "noData";
+    }
+
+    $con = null;
+}
+
 function getAllEditHistoryTask()
 {
     global $con;
@@ -307,7 +362,7 @@ function getAllEditHistoryTask()
     if (isset($_POST['id'])) {
 
 
-        $query = 'SELECT TBHistoryTask.* , TBUser.name FROM TBHistoryTask, TBUser WHERE TBHistoryTask.idTask = :id AND TBHistoryTask.editor = TBUser.id ORDER BY `id` DESC';
+        $query = 'SELECT TBHistoryTask.* , TBUser.name FROM TBHistoryTask, TBUser WHERE TBHistoryTask.idTask = :id AND TBHistoryTask.editor = TBUser.id ORDER BY `id`';
 
         // $query = 'SELECT * FROM `TBHistoryTask` WHERE idTask = :id ORDER BY `id` DESC';
         $query = str_replace(";", "", $query);
@@ -417,6 +472,158 @@ function createNewTask()
 
     $con = null;
 }
+
+function updateTask()
+{
+
+    global $con;
+
+    if (
+        isset($_POST['id']) && isset($_POST['status']) && isset($_POST['subject']) && isset($_POST['description']) &&
+        isset($_POST['priority']) && isset($_POST['deadline']) && isset($_POST['author'])
+    ) {
+
+        $id = $_POST['id'];
+        $status = $_POST['status'];
+        $subject = $_POST['subject'];
+        $description = $_POST['description'];
+        $priority = $_POST['priority'];
+        $tagPartners = $_POST['tagPartners'];
+        $deadline = $_POST['deadline'];
+        $author = $_POST['author'];
+
+        $query = 'UPDATE `TBTask` SET `status` = :status , `subject` = :subject , `description` = :description , `priority` = :priority ,
+                        `tagPartners` = :tagPartners , `date` = :deadline , `author` = :author WHERE id = :id';
+
+        $query  = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindparam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindparam(':subject', $subject, PDO::PARAM_STR);
+        $stmt->bindparam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindparam(':priority', $priority, PDO::PARAM_STR);
+        $stmt->bindparam(':tagPartners', $tagPartners, PDO::PARAM_STR);
+        $stmt->bindparam(':deadline', $deadline, PDO::PARAM_STR);
+        $stmt->bindparam(':author', $author, PDO::PARAM_STR);
+        $stmt->bindparam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+
+            $errors = array();
+            $success = array();
+
+            if (isset($_FILES['files'])) {
+
+                $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/file/" .  jdate('Ymj') . "/";
+
+                if (!empty(array_filter($_FILES['files']['name']))) {
+
+                    foreach ($_FILES['files']['name'] as $key => $val) {
+                        $type = $_FILES['files']['type'][$key];
+                        if ($type == 'jpg' || 'png' || 'jpeg' || 'gif') {
+
+                            $filename = basename($_FILES['files']['name'][$key]);
+                            $filename = str_replace(' ', '_', $filename);
+
+                            $targetFile = $uploadDir . jdate('YmjHms') . $filename;
+
+                            if (file_exists($uploadDir)) {
+
+                                if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFile)) {
+
+                                    $query = 'INSERT INTO `TBFile` VALUES (?,?,?)';
+                                    $query  = str_replace(";", "", $query);
+                                    $stmt = $con->prepare($query);
+                                    $stmt->execute([0, $id, jdate('Ymj') . "/" . jdate('YmjHms') . $filename]);
+                                } else {
+                                    echo json_encode($errors[] = "Something went wrong- File - $filename");
+                                }
+                            } else {
+
+                                mkdir($uploadDir, 0777, true);
+                                if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFile)) {
+                                    $query = 'INSERT INTO `TBFile` VALUES (?,?,?)';
+                                    $query  = str_replace(";", "", $query);
+                                    $stmt = $con->prepare($query);
+                                    $stmt->execute([0, $id, jdate('Ymj') . "/" . jdate('YmjHms') . $filename]);
+                                } else {
+                                    echo json_encode($errors[] = "Something went wrong- File - $filename");
+                                }
+                            }
+                        } else {
+                            echo json_encode($errors[] = "type file is not support.");
+                        }
+                    }
+                } else {
+                    echo json_encode($errors[] = "No File Selected");
+                }
+            }
+
+
+        } else {
+            echo json_encode("errUpdate");
+        }
+
+        $query = 'INSERT INTO `TBHistoryTask` VALUES (?,?,?,?,?)';
+        $query  = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->execute([0, $id, $author, "descripation is not set yet", jdate('Y/m/j H:m')]);
+
+    } else {
+        echo json_encode("NoData");
+    }
+
+    $con = null;
+}
+
+function deleteTask()
+{
+
+    global $con;
+
+    if (isset($_POST['id'])) {
+
+        $id = $_POST['id'];
+
+        $query = 'SELECT `file` FROM TBFile WHERE idTask = :id';
+        $query  = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindparam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            foreach ($result as $item) {
+
+                $file = $item['file'];
+                $deleteDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/file/" . $file;
+                unlink($deleteDir);
+            }
+        }
+
+        $query = 'DELETE FROM `TBTask` WHERE id = :id';
+        $query = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindparam(':id', $id, PDO::PARAM_INT);
+        $status = $stmt->execute();
+
+        if ($status) {
+            echo "isDelete";
+        } else {
+            echo "errDelete";
+        }
+    } else {
+        echo "noData";
+    }
+
+    $con = null;
+}
+
+
+
+
+
 
 function getAllUser()
 {
