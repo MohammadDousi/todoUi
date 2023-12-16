@@ -18,7 +18,6 @@ module.exports = {
       animation: {
         newBtnAnim: "animNewBtn 3s infinite forwards",
       },
-
     },
   },
   plugins: [],

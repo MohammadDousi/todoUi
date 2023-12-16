@@ -23,6 +23,7 @@ import "reactjs-popup/dist/index.css";
 
 export default function EditTask() {
   const params = useParams();
+
   const navigate = useNavigate();
 
   const { userData } = useContext(UserContext);
@@ -143,6 +144,7 @@ export default function EditTask() {
               setLoader(false);
               break;
           }
+          console.log(response.log);
           setLoader(false);
         })
         .catch((e) => console.log(e));
@@ -355,7 +357,7 @@ export default function EditTask() {
           <textarea
             type="text"
             placeholder="Write a few lines about what needs to be done"
-            className="w-full h-32 px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
+            className="w-full minHeight h-auto px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
             value={dataToSend?.description}
             onChange={(e) =>
               setDataToSend({ ...dataToSend, description: e.target.value })
@@ -625,7 +627,13 @@ export default function EditTask() {
 
         <section className="w-full flex flex-col justify-start items-start gap-1.5">
           <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
-            select Image
+            <h2 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+              select Image
+              <span className="font-normal normal-case">
+                {" "}
+                - ( The size of the image should not be more than 500 KB )
+              </span>
+            </h2>
           </h4>
 
           <section className="w-full flex flex-row justify-start items-start gap-4">

@@ -202,7 +202,6 @@ export default function Profile() {
               className="w-36 h-36 ml-1 mt-4 rounded-xl ring-2 ring-amber-300 ring-offset-4 bg-white"
             />
 
-            {console.log(editButton)}
             <input
               id="inputFile"
               className="absolute opacity-0 invisible w-0 h-0"

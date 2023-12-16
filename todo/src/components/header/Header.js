@@ -11,24 +11,24 @@ export default function Header() {
 
       <div className="flex justify-center items-center gap-14">
         <ul className="flex justify-start items-center gap-6">
-          <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
             Dashboard
           </li>
           <li
             onClick={() =>
               window.location.replace("https://private-site-next.vercel.app/")
             }
-            className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer"
+            className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer"
           >
             About Us
           </li>
-          <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
             News
           </li>
-          <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
             User Policy
           </li>
-          <li className="text-textColor font-bold hover:font-black text-[13px] hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
             Contacts
           </li>
         </ul>

@@ -31,19 +31,28 @@ export default function CreateTask() {
     description: "",
     priority: "",
     deadline: [],
-    tagPartners: [
-      {
-        id: userData.id,
-        name: userData.name,
-        avator: userData.avator,
-      },
-    ],
+    tagPartners: [],
     image: [],
   });
 
   const [user, setUser] = useState([]); // get user from server and show for teammate
 
   useEffect(() => {
+    setDataToSend({
+      ...dataToSend,
+      tagPartners: [
+        {
+          id: userData.id,
+          name: userData.name,
+          avator: userData.avator,
+        },
+      ],
+    });
+  }, [user]);
+
+  useEffect(() => {
+    console.log(userData);
+
     let formData = new FormData();
     formData.append("fun", "getAllUser");
 
@@ -229,7 +238,7 @@ export default function CreateTask() {
           <textarea
             type="text"
             placeholder="Write a few lines about what needs to be done"
-            className="w-full h-32 px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
+            className="w-full minHeight h-auto px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
             value={dataToSend.description}
             onChange={(e) =>
               setDataToSend({ ...dataToSend, description: e.target.value })
@@ -249,7 +258,7 @@ export default function CreateTask() {
                 <section className="w-full min-h-fit h-auto flex justify-between gap-2 pl-8 pr-3 bg-white border border-slate-300 rounded-xl">
                   <div
                     className={
-                      dataToSend.tagPartners.length === 0
+                      dataToSend?.tagPartners.length === 0
                         ? "w-full h-12 flex flex-row flex-wrap gap-2"
                         : "w-full py-2.5 flex flex-row flex-wrap gap-2"
                     }
@@ -265,7 +274,7 @@ export default function CreateTask() {
                         setSearchTeammate(e.target.value);
 
                         setFilterSearchTeammate(
-                          user.filter((person) =>
+                          user?.filter((person) =>
                             person.name
                               .toLowerCase()
                               .includes(e.target.value.toLocaleLowerCase())
@@ -275,10 +284,11 @@ export default function CreateTask() {
                       value={searchTeammate}
                     />
 
-                    {dataToSend.tagPartners &&
-                      dataToSend.tagPartners.map((person) => (
+                    {console.log(dataToSend?.tagPartners)}
+                    {dataToSend?.tagPartners.length != 0 &&
+                      dataToSend?.tagPartners?.map((person, index) => (
                         <div
-                          key={person.id}
+                          key={index}
                           className="px-3 py-0.5 text-slate-600 text-sm font-normal capitalize bg-amber-100 border border-amber-300 flex flex-row justify-center items-center gap-3 rounded-full"
                         >
                           {person.name}
@@ -314,7 +324,7 @@ export default function CreateTask() {
                   }
                 >
                   {filterSearchTeammate &&
-                    filterSearchTeammate.map((person) => (
+                    filterSearchTeammate?.map((person) => (
                       <section
                         key={person.id}
                         onClick={() => {
@@ -401,9 +411,13 @@ export default function CreateTask() {
 
         {/* upload image  */}
         <section className="w-full flex flex-col justify-start items-start gap-1.5">
-          <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+          <h2 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
             select Image
-          </h4>
+            <span className="font-normal normal-case">
+              {" "}
+              - ( The size of the image should not be more than 500 KB )
+            </span>
+          </h2>
 
           <section className="w-full flex flex-row justify-start items-start gap-4">
             <section className="w-24 h-24 bg-white border-dotted border-2 border-slate-300 rounded-xl">
@@ -419,24 +433,48 @@ export default function CreateTask() {
             {dataToSend.image.map((image) => (
               <section
                 key={image.size + Math.random()}
-                className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
+                className="flex flex-col justify-start items-start gap-1"
               >
-                <img
-                  src={image && URL.createObjectURL(image)}
-                  alt={image.name}
-                  className="w-full h-full object-contain"
-                />
-                <i
-                  onClick={() => {
-                    setDataToSend({
-                      ...dataToSend,
-                      image: dataToSend.image.filter(
-                        (x) => x.name !== image.name
-                      ),
-                    });
-                  }}
-                  className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"
-                ></i>
+                <section className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden">
+                  <img
+                    src={image && URL.createObjectURL(image)}
+                    alt={image.name}
+                    className="w-full h-full object-contain"
+                  />
+                  <i
+                    onClick={() => {
+                      setDataToSend({
+                        ...dataToSend,
+                        image: dataToSend.image.filter(
+                          (x) => x.name !== image.name
+                        ),
+                      });
+                    }}
+                    className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"
+                  ></i>
+                </section>
+
+                <h3 className="pl-2 font-normal text-xs">
+                  {image.name.length >= 10
+                    ? image.name.slice(0, 10)
+                    : image.name}
+                </h3>
+                <h3
+                  className={
+                    image.size < 2000000
+                      ? "pl-2 font-normal text-xs"
+                      : "pl-2 font-bold text-sm text-red-500"
+                  }
+                >
+                  {/* {image.size > 2000000 &&
+                    Toastiy(
+                      "The size of the image should not be more than 500 KB",
+                      "wa"
+                    )} */}
+
+                  {Number(Math.floor(image.size / 1024)).toLocaleString() +
+                    " KB"}
+                </h3>
               </section>
             ))}
 

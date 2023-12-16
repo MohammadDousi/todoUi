@@ -12,6 +12,7 @@ import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 export default function DetailTask() {
   const params = useParams(); // get param from nav address
 
+
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
 
@@ -114,7 +115,7 @@ export default function DetailTask() {
                 description
               </h4>
 
-              <p className="w-full px-8 py-3 bg-white text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 flex justify-start items-center">
+              <p className="w-full minHeight h-auto px-8 py-3 bg-white text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 flex justify-start items-start">
                 {dataTask?.description}
               </p>
             </section>

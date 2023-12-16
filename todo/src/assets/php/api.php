@@ -557,7 +557,7 @@ function updateTask()
         $status = $stmt->execute();
 
         if ($status) {
-            echo "updateOK";
+            echo "updateOk";
         } else {
             echo "errUpdate";
         }

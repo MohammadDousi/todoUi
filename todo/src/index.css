@@ -19,6 +19,10 @@
     .popup-content {
       @apply !rounded-xl w-auto;
     }
+
+    .minHeight {
+      min-height: 9rem;
+    }
   }
 
   body {

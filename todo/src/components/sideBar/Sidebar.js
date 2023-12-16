@@ -7,7 +7,7 @@ import avator5 from "../../assets/image/userAvator/profile(9).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 export default function Sidebar() {
@@ -52,7 +52,7 @@ export default function Sidebar() {
     {
       name: "Dashboard",
       path: "/main/board",
-      path1: "/main",
+      path2: "/main",
       icon: "fas fa-map",
     },
     {
