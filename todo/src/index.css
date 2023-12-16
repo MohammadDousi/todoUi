@@ -22,11 +22,11 @@
   }
 
   body {
-    @apply w-screen h-screen flex flex-col justify-start items-start overflow-hidden;
+    @apply w-full h-screen flex flex-col justify-start items-start overflow-hidden;
   }
 
   #root {
-    @apply w-screen h-screen flex flex-col justify-start items-center bg-gray-200/30;
+    @apply w-full h-screen flex flex-col justify-start items-center bg-gray-200/30;
   }
 
   .iconContainer {

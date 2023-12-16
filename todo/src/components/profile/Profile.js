@@ -11,6 +11,7 @@ import Loader from "../loader/Loader";
 
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import Popup from "reactjs-popup";
 
 export default function Profile() {
   const [loader, setLoader] = useState(true);
@@ -24,6 +25,7 @@ export default function Profile() {
   const { setUserData } = useContext(UserContext); // change userData from token
   const [user, setUser] = useState(userData); // get data from userData and user for edit profile
   const [editButton, setEditButton] = useState(false); // show or hide button cancel & update
+  const [changeAvator, setChangeAvator] = useState(false);
 
   const [allTask, setAllTask] = useState([]); // show all task for user private
 
@@ -49,11 +51,55 @@ export default function Profile() {
     for (let [key, value] of formData) {
       formData.delete(key, value);
     }
-  }, [params]);
+  }, [params , userData]);
+
+  const updateProfile = () => {
+    setLoader(true);
+    editName.current.disabled = true;
+    editMail.current.disabled = true;
+    editJobPostion.current.disabled = true;
+
+    formData.append("fun", "updateUser");
+    formData.append("name", user?.name);
+    formData.append("mail", user?.mail);
+    formData.append("jobPostion", user?.jobPostion);
+    formData.append("avator", user?.avator);
+    formData.append("token", user?.token);
+
+    axios
+      .post("php/api.php", formData)
+      .then((response) => {
+        console.log(response.data);
+        setUserData(response.data);
+        setEditButton(!editButton);
+        setChangeAvator(false);
+        setLoader(false);
+
+        switch (response.data) {
+          case "typeFileNotSupport":
+            Toastiy("The image format is not correct", "er");
+            break;
+          case "noData":
+            Toastiy("Error in receiving information", "er");
+            break;
+          default:
+            break;
+        }
+
+        console.log(response.data);
+
+        // Toastiy("Edit profile successfully", "su");
+      })
+      .catch((e) => console.log(e));
+
+    for (let [key, value] of formData) {
+      formData.delete(key, value);
+    }
+  };
 
   return (
     <section className="w-full h-full relative overflow-x-hidden">
-      <section className="w-full absolute pt-4 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full absolute pt-3.5 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="profile" />
           <section className="flex flex-row justify-end items-center gap-4">
@@ -67,57 +113,75 @@ export default function Profile() {
               }}
               className={
                 editButton
-                  ? "h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                  ? "h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
                   : "hidden"
               }
             >
               cancel
             </button>
+
+            <Popup
+              modal
+              nested
+              trigger={
+                <button
+                  className={
+                    editButton
+                      ? "h-10 px-8 hover:px-10 bg-green-200 hover:bg-green-500 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                      : "hidden"
+                  }
+                >
+                  update
+                </button>
+              }
+              position="right center"
+            >
+              {(close) => (
+                <div className="p-10 flex flex-col justify-center items-center gap-8">
+                  <section className="w-full space-y-2">
+                    <p className="w-full text-left text-green-600 font-black text-xl capitalize">
+                      update Profile
+                    </p>
+                    <p className="w-full text-left text-slate-600 font-normal text-base">
+                      Are you sure you want to update your profile ?
+                    </p>
+                  </section>
+                  <section className="flex flex-row justify-center items-center gap-4">
+                    <button
+                      onClick={() => close()}
+                      className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-300"
+                    >
+                      no care !
+                    </button>
+                    <button
+                      onClick={() => {
+                        updateProfile();
+                        close();
+                      }}
+                      className="h-10 px-8 hover:px-10 bg-green-200 hover:bg-green-600 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-300"
+                    >
+                      yes, update
+                    </button>
+                  </section>
+                </div>
+              )}
+            </Popup>
+
             <button
               onClick={() => {
-                setLoader(true);
-                editName.current.disabled = true;
-                editMail.current.disabled = true;
-                editJobPostion.current.disabled = true;
-
-                formData.append("fun", "updateUser");
-                formData.append("name", user?.name);
-                formData.append("mail", user?.mail);
-                formData.append("jobPostion", user?.jobPostion);
-                formData.append("token", user?.token);
-
-                axios
-                  .post("php/api.php", formData)
-                  .then((response) => {
-                    console.log(response.data);
-                    setUserData(response.data);
-                    setEditButton(!editButton);
-                    setLoader(false);
-
-                    Toastiy("Edit profile successfully", "su");
-                  })
-                  .catch((e) => console.log(e));
-
-                for (let [key, value] of formData) {
-                  formData.delete(key, value);
+                if (editButton) {
+                  editName.current.disabled = true;
+                  editMail.current.disabled = true;
+                  editJobPostion.current.disabled = true;
+                  setEditButton(!editButton);
+                } else {
+                  editName.current.disabled = false;
+                  editMail.current.disabled = false;
+                  editJobPostion.current.disabled = false;
+                  setEditButton(!editButton);
                 }
               }}
-              className={
-                editButton
-                  ? "h-8 px-8 hover:px-10 bg-green-200 hover:bg-green-500 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
-                  : "hidden"
-              }
-            >
-              update
-            </button>
-            <button
-              onClick={() => {
-                editName.current.disabled = false;
-                editMail.current.disabled = false;
-                editJobPostion.current.disabled = false;
-                setEditButton(!editButton);
-              }}
-              className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+              className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
             >
               edit profile
             </button>
@@ -125,16 +189,46 @@ export default function Profile() {
         </section>
 
         <section className="w-full flex flex-row justify-start items-stretch gap-4">
-          <section className="w-2/12 h-40 flex flex-col justify-center items-center gap-1.5">
+          <section className="w-2/12 h-40 relative flex flex-col justify-start items-center gap-3">
             <img
               src={
-                user?.avator
+                user.avator && changeAvator
+                  ? URL.createObjectURL(user.avator)
+                  : user.avator
                   ? `${axios.defaults.baseURL}image/userAvator/${user?.avator}`
                   : defultAvator
               }
               alt={user?.avator}
               className="w-36 h-36 ml-1 mt-4 rounded-xl ring-2 ring-amber-300 ring-offset-4 bg-white"
             />
+
+            {console.log(editButton)}
+            <input
+              id="inputFile"
+              className="absolute opacity-0 invisible w-0 h-0"
+              type="file"
+              name="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => {
+                setChangeAvator(true);
+                !e.currentTarget.disabled &&
+                  setUser({ ...user, avator: e.target.files[0] });
+              }}
+            />
+
+            <label
+              htmlFor="inputFile"
+              className={
+                editButton
+                  ? "absolute -bottom-8 pl-2 text-red-500 text-sm font-bold capitalize cursor-pointer"
+                  : "hidden"
+              }
+            >
+              change avator
+            </label>
+
+            {/* <i className="fa fa-image iconContainer absolute bottom-1 right-2 text-white text-sm bg-red-500 shadow-lg"></i> */}
           </section>
 
           <section className="w-full flex flex-col justify-start items-start gap-4">
@@ -207,7 +301,7 @@ export default function Profile() {
                       setUser({ ...user, mail: e.target.value });
                   }}
                   placeholder="ex: editor , designer or admin , ..."
-                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
+                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
                 />
               </section>
 

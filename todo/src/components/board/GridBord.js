@@ -3,7 +3,6 @@ import ItemGridTask from "./gridTask/ItemGridTask.js";
 import noData from "../../assets/image/svg/noData.svg";
 
 export default function GridBord({ allTask }) {
-  
   const todo = allTask.filter((item) => item.status === "todo");
   const done = allTask.filter((item) => item.status === "done");
   const review = allTask.filter((item) => item.status === "review");
@@ -25,14 +24,17 @@ export default function GridBord({ allTask }) {
             <ItemGridTask key={item.id} data={item} />
           ))}
 
-          {!done && !review && !inProgres && todo.length === 0 && (
-            <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md">
-              <img src={noData} alt="no data" className="w-20" />
-              <h2 className="text-slate-600 text-lg font-black text-center capitalize">
-                No task has been registered
-              </h2>
-            </div>
-          )}
+          {done.length === 0 &&
+            review.length === 0 &&
+            inProgres.length === 0 &&
+            todo.length === 0 && (
+              <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md duration-500">
+                <img src={noData} alt="no data" className="w-20" />
+                <h2 className="text-slate-600 text-lg font-black text-center capitalize">
+                  No task has been registered
+                </h2>
+              </div>
+            )}
         </div>
       </div>
 

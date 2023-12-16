@@ -30,7 +30,7 @@ export default function Main() {
     <>
       <Header />
 
-      <main className="w-screen h-full flex flex-row justify-start items-start">
+      <main className="w-full h-full flex flex-row justify-start items-start">
         <Sidebar />
 
         <Routes>

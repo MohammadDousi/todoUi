@@ -99,21 +99,20 @@ export default function CreateTask() {
         })
         .catch((e) => console.log(e));
     } else {
-      console.log(dataToSend);
-
+      setLoader(false);
       Toastiy("Enter the information task", "wa");
     }
   };
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
+      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="create new task" />
           <button
             onClick={() => sendData()}
-            className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
+            className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
           >
             add to list
           </button>

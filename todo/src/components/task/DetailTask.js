@@ -60,14 +60,14 @@ export default function DetailTask() {
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail & description task" />
 
           <button
             onClick={() => navigate(`/main/editTask/${dataTask.id}`)}
-            className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+            className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
           >
             Go to edit
           </button>
@@ -207,7 +207,7 @@ export default function DetailTask() {
                 >
                   <div className="w-full flex flex-col justify-start items-center">
                     <h3 className="w-full text-slate-400 font-normal text-sm capitalize">
-                      {index == 0
+                      {index === 0
                         ? "Create by " + item.name
                         : "Edit by " + item.name}
                     </h3>

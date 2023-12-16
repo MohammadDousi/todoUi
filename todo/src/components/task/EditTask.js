@@ -123,17 +123,27 @@ export default function EditTask() {
       axios
         .post("php/api.php", formData)
         .then((response) => {
-          console.log(response);
-          // switch (response.data) {
-          //   case "insertOk":
-          //     Toastiy("edit task is successful", "su");
-          //     setLoader(false);
-          //     break;
-          //   default:
-          //     Toastiy("Error, Please contact support", "wa");
-          //     setLoader(false);
-          //     break;
-          // }
+          console.log(response.data);
+          switch (response.data) {
+            case "updateOk":
+              Toastiy("edit task is successful", "su");
+              break;
+            case "errUpdate":
+              Toastiy("The update was unsuccessful", "er");
+              break;
+            case "typeFileNotSupport":
+            case "NoFileSelected":
+              Toastiy("Error uploading images", "er");
+              break;
+            case "noData":
+              Toastiy("Server error", "er");
+              break;
+            default:
+              Toastiy("Error, Please contact support", "in");
+              setLoader(false);
+              break;
+          }
+          setLoader(false);
         })
         .catch((e) => console.log(e));
     } else {
@@ -174,7 +184,7 @@ export default function EditTask() {
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-4 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
+      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail task > edit" />
@@ -184,7 +194,7 @@ export default function EditTask() {
               modal
               nested
               trigger={
-                <button className="h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500">
+                <button className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500">
                   delete task
                 </button>
               }
@@ -194,7 +204,7 @@ export default function EditTask() {
                 <div className="p-10 flex flex-col justify-center items-center gap-8">
                   <section className="w-full space-y-1">
                     <p className="w-full text-left text-red-600 font-black text-xl capitalize">
-                      Delete Task ?
+                      Delete Task
                     </p>
                     <p className="w-full text-left text-slate-600 font-normal text-base">
                       Are you sure you want to delete ?
@@ -202,20 +212,19 @@ export default function EditTask() {
                   </section>
                   <section className="flex flex-row justify-center items-center gap-4">
                     <button
+                      onClick={() => close()}
+                      className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      no care !
+                    </button>
+                    <button
                       onClick={() => {
                         deleteTask();
                         close();
                       }}
-                      className="h-8 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                      className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
                     >
                       delete task
-                    </button>
-
-                    <button
-                      onClick={() => close()}
-                      className="h-8 px-8 hover:px-10 bg-slate-200 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
-                    >
-                      no care !
                     </button>
                   </section>
                 </div>
@@ -224,7 +233,7 @@ export default function EditTask() {
 
             <button
               onClick={() => updateTask()}
-              className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+              className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
             >
               accept & edit
             </button>
@@ -630,9 +639,9 @@ export default function EditTask() {
               </label>
             </section>
 
-            {dataToSend?.image?.map((image) => (
+            {dataToSend?.image.map((image, index) => (
               <section
-                key={image.file + Math.random()}
+                key={index + Math.random()}
                 className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
               >
                 <img
@@ -644,28 +653,79 @@ export default function EditTask() {
                   alt={image.file}
                   className="w-full h-full object-contain"
                 />
-                <i
-                  onClick={() => {
-                    setDataToSend({
-                      ...dataToSend,
-                      image: dataToSend.image.filter(
-                        (x) => x.file !== image.file
-                      ),
-                    });
 
-                    formData.append("fun", "deleteFile");
-                    formData.append("id", image.id);
-                    formData.append("idTask", params.id);
+                <Popup
+                  modal
+                  nested
+                  trigger={
+                    <i className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"></i>
+                  }
+                  position="right center"
+                >
+                  {(close) => (
+                    <div className="p-10 flex flex-col justify-center items-center gap-8">
+                      <section className="w-full space-y-1">
+                        <p className="w-full text-left text-red-600 font-black text-xl capitalize">
+                          Attached Files delete
+                        </p>
+                        <p className="w-full text-left text-slate-600 font-normal text-base">
+                          Are you sure you want to delete file ?
+                        </p>
+                      </section>
+                      <section className="flex flex-row justify-center items-center gap-4">
+                        <button
+                          onClick={() => close()}
+                          className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                        >
+                          no care !
+                        </button>
+                        <button
+                          onClick={() => {
+                            setDataToSend({
+                              ...dataToSend,
+                              image: dataToSend.image.filter(
+                                (x) => x.file !== image.file
+                              ),
+                            });
 
-                    axios
-                      .post("php/api.php", formData)
-                      .then((response) => {
-                        console.log(response.data);
-                      })
-                      .catch((e) => console.log(e));
-                  }}
-                  className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"
-                ></i>
+                            formData.append("fun", "deleteFile");
+                            formData.append("id", image.id);
+                            formData.append("idTask", params.id);
+
+                            axios
+                              .post("php/api.php", formData)
+                              .then((response) => {
+                                switch (response.data) {
+                                  case "isDelete":
+                                    Toastiy(
+                                      "Delete file is successfully",
+                                      "su"
+                                    );
+                                    break;
+                                  case "errDelete":
+                                    Toastiy("Error deleting file", "er");
+                                    break;
+                                  case "errNoSuchFile":
+                                    Toastiy("File was not found", "er");
+                                    break;
+                                  case "noData":
+                                    Toastiy("Server error", "er");
+                                    break;
+                                  default:
+                                    break;
+                                }
+                              })
+                              .catch((e) => console.log(e));
+                            close();
+                          }}
+                          className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                        >
+                          delete file
+                        </button>
+                      </section>
+                    </div>
+                  )}
+                </Popup>
               </section>
             ))}
 

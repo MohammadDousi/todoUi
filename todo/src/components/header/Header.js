@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -47,14 +48,48 @@ export default function Header() {
         <i className="fa fa-bell iconContainer bg-amber-100 text-amber-600 text-sm"></i>
         <i className="fas fa-exclamation-triangle	iconContainer bg-slate-100 text-slate-400 hover:bg-rose-100 hover:text-rose-600 text-sm"></i>
 
-        <i
-          onClick={() => {
-            sessionStorage.clear();
-            localStorage.clear();
-            navigate("/login");
-          }}
-          className="fas fa-times iconContainer bg-rose-100 text-rose-600 text-sm"
-        ></i>
+        <Popup
+          modal
+          nested
+          trigger={
+            <i className="fas fa-times iconContainer bg-rose-100 text-rose-600 text-sm"></i>
+          }
+          position="right center"
+        >
+          {(close) => (
+            <div className="p-10 flex flex-col justify-center items-center gap-8">
+              <section className="w-full space-y-1">
+                <p className="w-full text-left text-red-600 font-black text-xl capitalize">
+                  exit
+                </p>
+                <p className="w-full text-left text-slate-600 font-normal text-base">
+                  Do you want to exit ?
+                </p>
+              </section>
+              <section className="flex flex-row justify-center items-center gap-4">
+
+                <button
+                  onClick={() => close()}
+                  className="h-10 px-8 hover:px-10 bg-slate-200 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                >
+                  no care !
+                </button>
+
+                <button
+                  onClick={() => {
+                    sessionStorage.clear();
+                    localStorage.clear();
+                    navigate("/login");
+                    close();
+                  }}
+                  className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                >
+                  yes , exit
+                </button>
+              </section>
+            </div>
+          )}
+        </Popup>
       </div>
     </header>
   );

@@ -137,10 +137,10 @@ function verifyOtpCode()
 
                     $gentoken = md5(sha1($mobile)) . $otpCode;
 
-                    $query = 'INSERT INTO `TBUser` VALUES (?,?,?,?,?,?,?,?,?,?)';
+                    $query = 'INSERT INTO `TBUser` VALUES (?,?,?,?,?,?,?,?,?)';
                     $query  = str_replace(";", "", $query);
                     $stmt = $con->prepare($query);
-                    $stmt->execute([0, $gentoken, "", "", $mobile, "", "", "", jdate('Y/n/j H:m'), "active"]);
+                    $stmt->execute([0, $gentoken, "", $mobile, "", "", "", jdate('Y/n/j H:m'), "active"]);
 
                     if ($stmt) {
                         $arr[] = ['token' => $gentoken, 'msg' => 'insertOk'];
@@ -492,8 +492,57 @@ function updateTask()
         $deadline = $_POST['deadline'];
         $author = $_POST['author'];
 
+        if (isset($_FILES['files'])) {
+
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/file/" .  jdate('Ymj') . "/";
+
+            if (!empty(array_filter($_FILES['files']['name']))) {
+
+                foreach ($_FILES['files']['name'] as $key => $val) {
+
+                    $type = $_FILES['files']['type'][$key];
+
+                    if ($type == 'jpg' || 'png' || 'jpeg' || 'gif') {
+
+                        $filename = basename($_FILES['files']['name'][$key]);
+                        $filename = str_replace(' ', '_', $filename);
+
+                        $targetFile = $uploadDir . jdate('YmjHms') . $filename;
+
+                        if (file_exists($uploadDir)) {
+
+                            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFile)) {
+
+                                $query = 'INSERT INTO `TBFile` VALUES (?,?,?)';
+                                $query  = str_replace(";", "", $query);
+                                $stmt = $con->prepare($query);
+                                $stmt->execute([0, $id, jdate('Ymj') . "/" . jdate('YmjHms') . $filename]);
+                            } else {
+                                echo json_encode($errors[] = "Something went wrong- File - $filename");
+                            }
+                        } else {
+
+                            mkdir($uploadDir, 0777, true);
+                            if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFile)) {
+                                $query = 'INSERT INTO `TBFile` VALUES (?,?,?)';
+                                $query  = str_replace(";", "", $query);
+                                $stmt = $con->prepare($query);
+                                $stmt->execute([0, $id, jdate('Ymj') . "/" . jdate('YmjHms') . $filename]);
+                            } else {
+                                echo json_encode($errors[] = "Something went wrong- File - $filename");
+                            }
+                        }
+                    } else {
+                        echo "typeFileNotSupport";
+                    }
+                }
+            } else {
+                echo "NoFileSelected";
+            }
+        }
+
         $query = 'UPDATE `TBTask` SET `status` = :status , `subject` = :subject , `description` = :description , `priority` = :priority ,
-                        `tagPartners` = :tagPartners , `date` = :deadline , `author` = :author WHERE id = :id';
+        `tagPartners` = :tagPartners , `date` = :deadline , `author` = :author WHERE id = :id';
 
         $query  = str_replace(";", "", $query);
         $stmt = $con->prepare($query);
@@ -505,62 +554,12 @@ function updateTask()
         $stmt->bindparam(':deadline', $deadline, PDO::PARAM_STR);
         $stmt->bindparam(':author', $author, PDO::PARAM_STR);
         $stmt->bindparam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $status = $stmt->execute();
 
-        if ($result) {
-
-            $errors = array();
-            $success = array();
-
-            if (isset($_FILES['files'])) {
-
-                $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/file/" .  jdate('Ymj') . "/";
-
-                if (!empty(array_filter($_FILES['files']['name']))) {
-
-                    foreach ($_FILES['files']['name'] as $key => $val) {
-                        $type = $_FILES['files']['type'][$key];
-                        if ($type == 'jpg' || 'png' || 'jpeg' || 'gif') {
-
-                            $filename = basename($_FILES['files']['name'][$key]);
-                            $filename = str_replace(' ', '_', $filename);
-
-                            $targetFile = $uploadDir . jdate('YmjHms') . $filename;
-
-                            if (file_exists($uploadDir)) {
-
-                                if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFile)) {
-
-                                    $query = 'INSERT INTO `TBFile` VALUES (?,?,?)';
-                                    $query  = str_replace(";", "", $query);
-                                    $stmt = $con->prepare($query);
-                                    $stmt->execute([0, $id, jdate('Ymj') . "/" . jdate('YmjHms') . $filename]);
-                                } else {
-                                    echo json_encode($errors[] = "Something went wrong- File - $filename");
-                                }
-                            } else {
-
-                                mkdir($uploadDir, 0777, true);
-                                if (move_uploaded_file($_FILES["files"]["tmp_name"][$key], $targetFile)) {
-                                    $query = 'INSERT INTO `TBFile` VALUES (?,?,?)';
-                                    $query  = str_replace(";", "", $query);
-                                    $stmt = $con->prepare($query);
-                                    $stmt->execute([0, $id, jdate('Ymj') . "/" . jdate('YmjHms') . $filename]);
-                                } else {
-                                    echo json_encode($errors[] = "Something went wrong- File - $filename");
-                                }
-                            }
-                        } else {
-                            echo json_encode($errors[] = "type file is not support.");
-                        }
-                    }
-                } else {
-                    echo json_encode($errors[] = "No File Selected");
-                }
-            }
+        if ($status) {
+            echo "updateOK";
         } else {
-            echo json_encode("errUpdate");
+            echo "errUpdate";
         }
 
         $query = 'INSERT INTO `TBHistoryTask` VALUES (?,?,?,?,?)';
@@ -568,7 +567,7 @@ function updateTask()
         $stmt = $con->prepare($query);
         $stmt->execute([0, $id, $author, "descripation is not set yet", jdate('Y/m/j H:m')]);
     } else {
-        echo json_encode("NoData");
+        echo "NoData";
     }
 
     $con = null;
@@ -674,30 +673,81 @@ function updateUser()
 
     if (isset($_POST['name']) && isset($_POST['mail']) && isset($_POST['jobPostion']) && isset($_POST['token'])) {
 
-        $query = 'UPDATE TBUser SET `name` = :username , `mail` = :mail , `jobPostion` = :jobPostion WHERE `token` = :token';
+        $name = $_POST['name'];
+        $mail = $_POST['mail'];
+        $jobPostion = $_POST['jobPostion'];
+        $token = $_POST['token'];
 
+        if (isset($_FILES['avator'])) {
+
+            $query = 'SELECT avator FROM `TBUser` WHERE token = :token LIMIT 1';
+            $query = str_replace(";", "", $query);
+            $stmt = $con->prepare($query);
+            $stmt->bindparam(':token', $token, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($result) {
+
+                $avator = $result['avator'];
+                $deleteDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/image/userAvator/" . $avator;
+
+                if ($avator && file_exists($deleteDir)) {
+                    unlink($deleteDir);
+                }
+
+                $uploadDir = $_SERVER['DOCUMENT_ROOT'] . "/assets/image/userAvator/";
+
+                $type = $_FILES['avator']['type'];
+                if ($type == 'jpg' || 'png' || 'jpeg' || 'gif') {
+
+                    $filename = basename($_FILES['avator']['name']);
+                    $filename = str_replace(' ', '', $filename);
+
+                    $targetFile = $uploadDir . jdate('YmjHms') . $filename;
+
+                    if (move_uploaded_file($_FILES["avator"]["tmp_name"], $targetFile)) {
+
+                        $query = 'UPDATE TBUser SET `name` = :username , `mail` = :mail , `jobPostion` = :jobPostion , `avator` = :avator WHERE `token` = :token';
+                        $avator = jdate('YmjHms') . $filename;
+                        $query = str_replace(";", "", $query);
+                        $stmt = $con->prepare($query);
+                        $stmt->bindparam(':username', $name, PDO::PARAM_STR);
+                        $stmt->bindparam(':mail', $mail, PDO::PARAM_STR);
+                        $stmt->bindparam(':jobPostion', $jobPostion, PDO::PARAM_STR);
+                        $stmt->bindparam(':avator', $avator, PDO::PARAM_STR);
+                        $stmt->bindparam(':token', $token, PDO::PARAM_STR);
+                        $stmt->execute();
+                    }
+                } else {
+                    echo "typeFileNotSupport";
+                }
+            }
+        } else {
+
+            $query = 'UPDATE TBUser SET `name` = :username , `mail` = :mail , `jobPostion` = :jobPostion  WHERE `token` = :token';
+            $query = str_replace(";", "", $query);
+            $stmt = $con->prepare($query);
+            $stmt->bindparam(':username', $name, PDO::PARAM_STR);
+            $stmt->bindparam(':mail', $mail, PDO::PARAM_STR);
+            $stmt->bindparam(':jobPostion', $jobPostion, PDO::PARAM_STR);
+            $stmt->bindparam(':token', $token, PDO::PARAM_STR);
+            $stmt->execute();
+        }
+
+        $query = 'SELECT * FROM `TBUser` WHERE token = :token LIMIT 1';
         $query = str_replace(";", "", $query);
         $stmt = $con->prepare($query);
-        $stmt->bindparam(':username', $_POST['name'], PDO::PARAM_STR);
-        $stmt->bindparam(':mail', $_POST['mail'], PDO::PARAM_STR);
-        $stmt->bindparam(':jobPostion', $_POST['jobPostion'], PDO::PARAM_STR);
-        $stmt->bindparam(':token', $_POST['token'], PDO::PARAM_STR);
+        $stmt->bindparam(':token', $token, PDO::PARAM_STR);
         $stmt->execute();
 
         if ($stmt) {
-
-            $query = 'SELECT * FROM `TBUser` WHERE token = :token LIMIT 1';
-            $query = str_replace(";", "", $query);
-            $stmt = $con->prepare($query);
-            $stmt->bindparam(':token', $_POST['token'], PDO::PARAM_STR);
-            $stmt->execute();
-
             echo json_encode($stmt->fetch(PDO::FETCH_OBJ));
         } else {
-            // echo json_encode("noUpdate");
+            echo json_encode("idNotFound");
         }
     } else {
-        echo json_encode("noData");
+        echo "noData";
     }
 
     $con = null;

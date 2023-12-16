@@ -70,11 +70,26 @@ export default function Sidebar() {
       path: "/main/pushBox",
       icon: "fas fa-envelope-open",
     },
-    {
-      name: "Edit Task",
-      path: "/main/editTask",
-      icon: "fas fa-envelope-open",
-    },
+    // {
+    //   name: "Edit Task",
+    //   path: "/main/editTask",
+    //   icon: "fas fa-envelope-open",
+    // },
+    // {
+    //   name: "Edit Task",
+    //   path: "/main/editTask",
+    //   icon: "fas fa-envelope-open",
+    // },
+    // {
+    //   name: "Edit Task",
+    //   path: "/main/editTask",
+    //   icon: "fas fa-envelope-open",
+    // },
+    // {
+    //   name: "Edit Task",
+    //   path: "/main/editTask",
+    //   icon: "fas fa-envelope-open",
+    // },
   ];
 
   return (
@@ -84,7 +99,7 @@ export default function Sidebar() {
         className={
           showSidebar === "MINI"
             ? "w-20 h-full py-4 bg-white flex flex-col justify-start  items-center gap-12 border-r border-gray-300 -translate-x-0 duration-1000 overflow-hidden"
-            : "w-0 h-full py-4 bg-white flex flex-col justify-start items-center gap-12 -translate-x-20 duration-1000 overflow-hidden"
+            : "w-0 h-full py-4 bg-white flex flex-col justify-start items-center gap-0 -translate-x-20 duration-1000 overflow-hidden"
         }
       >
         <section className="w-full flex flex-col justify-center items-center gap-5">
@@ -126,22 +141,19 @@ export default function Sidebar() {
             ))}
         </section>
       </section>
-
       {/*  big sidebar */}
       <section
         className={
           showSidebar === "BIG"
-            ? "w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-5 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
-            : "w-0 h-full bg-white flex flex-col justify-between items-center gap-5 -translate-x-80 duration-1000 overflow-hidden"
+            ? "w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
+            : "w-0 h-full bg-white flex flex-col justify-between items-center gap-0 -translate-x-80 duration-1000 overflow-hidden"
         }
       >
-        <section className="w-full flex flex-col justify-center items-center gap-4">
-          <section className="w-full flex flex-row justify-start items-center">
-            <i
-              onClick={() => setShowSidebar("MINI")}
-              className="fa fa-angle-left iconContainer bg-gray-100 text-slate-400 text-sm"
-            ></i>
-          </section>
+        <section className="w-full relative flex flex-col justify-center items-center gap-4">
+          <i
+            onClick={() => setShowSidebar("MINI")}
+            className="fa fa-angle-left absolute top-0 right-0 iconContainer bg-gray-100 text-slate-400 text-sm flex justify-center items-center"
+          ></i>
 
           <div className="badge">
             <div ref={circle_progres} className="progress-circle">
@@ -168,13 +180,10 @@ export default function Sidebar() {
             </div>
           </div>
 
-          <div className="w-full text-center">
-            <h4 className="text-slate-500 font-black text-base capitalize tracking-tight">
+          <div className="">
+            <h4 className="w-full text-center text-slate-500 font-black text-base capitalize tracking-tight">
               Hello {userData?.name}
             </h4>
-            <h5 className="text-slate-400 font-normal text-base">
-              {userData?.mail}
-            </h5>
           </div>
         </section>
 
@@ -185,7 +194,8 @@ export default function Sidebar() {
                 <section
                   className={
                     location.pathname === tab.path ||
-                    location.pathname === tab.path1 
+                    location.pathname === tab.path1 ||
+                    location.pathname === tab.path2
                       ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
                       : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:rounded-xl"
                   }

@@ -13,8 +13,7 @@ import Loader from "../loader/Loader";
 import { UserContext } from "../../context/UserContext";
 
 export default function Login() {
-  
-  const {setToken} = useContext(UserContext);
+  const { setToken } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -60,6 +59,8 @@ export default function Login() {
               Toastiy("An error has occurred, contact support", "in");
               setLoader(false);
               break;
+            default:
+              break;
           }
         })
         .catch((e) => console.log(e));
@@ -77,7 +78,6 @@ export default function Login() {
       axios
         .post("php/api.php", formData)
         .then((response) => {
-
           response.data?.map((item) => {
             switch (item.msg) {
               case "insertOk":
@@ -99,17 +99,7 @@ export default function Login() {
               default:
                 break;
             }
-
-            // signIn({
-            //   token: res.data.token,
-            //   expiresIn: 3600,
-            //   tokenType: "Bearer",
-            //   authState: { mobile: item.mobile },
-            // });
-
-            // });
           });
-
         })
         .catch((e) => console.log(e));
     }
@@ -291,7 +281,9 @@ export default function Login() {
         {loader && <Loader />}
 
         <h3
-          onClick={() => window.location.replace("https://kaktusprog.ir")}
+          onClick={() =>
+            window.location.replace("https://private-site-next.vercel.app/")
+          }
           className="absolute bottom-5 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer"
         >
           develop and design by mohammad dosi

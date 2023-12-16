@@ -36,7 +36,7 @@ export default function BoardContainer() {
 
   return (
     <section className="w-full h-full pb-8 space-y-4 relative overflow-hidden duration-1000">
-      <section className="w-full pt-4 px-6 flex flex-row justify-between items-center gap-8">
+      <section className="w-full pt-3 px-6 flex flex-row justify-between items-center gap-8">
         <div className="flex flex-row justify-center items-start gap-2">
           <i
             onClick={() => setBoard("Grid")}
@@ -59,7 +59,7 @@ export default function BoardContainer() {
 
         <button
           onClick={() => navigate("/main/createTask")}
-          className="h-8 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl"
+          className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
         >
           + create task
         </button>
