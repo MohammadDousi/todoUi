@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 
 import axios from "axios";
 import useToken from "../components/login/useToken";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Toastiy from "../components/toastfiy/Toastfiy";
 
 export const UserContext = createContext();

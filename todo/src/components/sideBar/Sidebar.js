@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
+import Popup from "reactjs-popup";
+
 import "./SidebarStyle.css";
 import avator4 from "../../assets/image/userAvator/profile(2).png";
 import avator5 from "../../assets/image/userAvator/profile(9).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 export default function Sidebar() {
@@ -70,26 +72,6 @@ export default function Sidebar() {
       path: "/main/pushBox",
       icon: "fas fa-envelope-open",
     },
-    // {
-    //   name: "Edit Task",
-    //   path: "/main/editTask",
-    //   icon: "fas fa-envelope-open",
-    // },
-    // {
-    //   name: "Edit Task",
-    //   path: "/main/editTask",
-    //   icon: "fas fa-envelope-open",
-    // },
-    // {
-    //   name: "Edit Task",
-    //   path: "/main/editTask",
-    //   icon: "fas fa-envelope-open",
-    // },
-    // {
-    //   name: "Edit Task",
-    //   path: "/main/editTask",
-    //   icon: "fas fa-envelope-open",
-    // },
   ];
 
   return (
@@ -127,17 +109,27 @@ export default function Sidebar() {
         <section className="w-full flex flex-col justify-center items-center gap-3">
           {sideTab &&
             sideTab.map((tab) => (
-              <Link key={tab.name} to={tab.path}>
-                <section
-                  className={
-                    location.pathname === tab.path
-                      ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                      : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-xl"
-                  }
-                >
-                  <i className={`${tab.icon} text-sm`}></i>
-                </section>
-              </Link>
+              <Popup
+                closeOnDocumentClick
+                on={["hover", "focus"]}
+                arrow={"center center"}
+                trigger={
+                  <Link key={tab.name} to={tab.path}>
+                    <section
+                      className={
+                        location.pathname === tab.path
+                          ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
+                          : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-xl"
+                      }
+                    >
+                      <i className={`${tab.icon} text-sm`}></i>
+                    </section>
+                  </Link>
+                }
+                position="right center"
+              >
+                <div>{tab.name}</div>
+              </Popup>
             ))}
         </section>
       </section>
@@ -150,10 +142,12 @@ export default function Sidebar() {
         }
       >
         <section className="w-full relative flex flex-col justify-center items-center gap-4">
-          <i
-            onClick={() => setShowSidebar("MINI")}
-            className="fa fa-angle-left absolute top-0 right-0 iconContainer bg-gray-100 text-slate-400 text-sm flex justify-center items-center"
-          ></i>
+          <div className="w-full flex justify-end items-center">
+            <i
+              onClick={() => setShowSidebar("MINI")}
+              className="fa fa-angle-left iconContainer bg-gray-100 text-slate-400 text-sm flex justify-center items-center"
+            ></i>
+          </div>
 
           <div className="badge">
             <div ref={circle_progres} className="progress-circle">

@@ -11,20 +11,9 @@ import Push from "./components/push/Push";
 import DetailTask from "./components/task/DetailTask";
 
 import EditTask from "./components/task/EditTask";
+import Search from "./components/search/Search";
 
 export default function Main() {
-  // const userData = useContext(UserContext);
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!userData.name) {
-  //     console.log("hi");
-  //     Toastiy("Please complete the profile information", "wa");
-  //     navigate(`/main/profile/${userData.token}`);
-  //   } else {
-  //     console.log(userData.name === "");
-  //   }
-  // }, []);
 
   return (
     <>
@@ -40,6 +29,7 @@ export default function Main() {
           <Route path="/detailTask/:id" element={<DetailTask />} />
           <Route path="/editTask/:id" element={<EditTask />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/pushBox" element={<Push />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>

@@ -11,24 +11,24 @@ export default function Header() {
 
       <div className="flex justify-center items-center gap-14">
         <ul className="flex justify-start items-center gap-6">
-          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
             Dashboard
           </li>
           <li
             onClick={() =>
               window.location.replace("https://private-site-next.vercel.app/")
             }
-            className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer"
+            className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer"
           >
             About Us
           </li>
-          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
             News
           </li>
-          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
             User Policy
           </li>
-          <li className="text-textColor font-bold hover:font-black text-sm hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
             Contacts
           </li>
         </ul>
@@ -37,6 +37,8 @@ export default function Header() {
           <i className="fa fa-search text-slate-400/70"></i>
           <input
             type="text"
+            onFocus={() => navigate("/main/search")}
+            onChange={() => {}}
             placeholder="Search Products, Orders and Clients"
             className="w-full bg-transparent text-slate-800 text-sm font-bold text-left tracking-wide placeholder:text-slate-400/70 placeholder:font-normal"
           />
@@ -67,7 +69,6 @@ export default function Header() {
                 </p>
               </section>
               <section className="flex flex-row justify-center items-center gap-4">
-
                 <button
                   onClick={() => close()}
                   className="h-10 px-8 hover:px-10 bg-slate-200 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"

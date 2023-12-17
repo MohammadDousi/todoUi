@@ -12,7 +12,6 @@ import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 export default function DetailTask() {
   const params = useParams(); // get param from nav address
 
-
   const navigate = useNavigate();
   const [loader, setLoader] = useState(true);
 
@@ -200,11 +199,15 @@ export default function DetailTask() {
               edit history
             </h4>
 
-            <div className="w-full max-h-screen px-3 bg-gray-200/50 border border-slate-300 divide-y divide-slate-300 flex flex-col-reverse justify-start items-start rounded-xl">
+            <div className="w-full max-h-screen px-4 py-2 bg-gray-200/50 border border-slate-300 flex flex-col-reverse justify-start items-start rounded-xl">
               {history?.map((item, index) => (
                 <section
                   key={item.id + Math.random()}
-                  className="w-full py-3 flex flex-col justify-start items-start gap-1"
+                  className={
+                    index === 0
+                      ? "w-full py-2 flex flex-col justify-start items-start gap-1"
+                      : "w-full py-2 border-b border-slate-300 flex flex-col justify-start items-start gap-1"
+                  }
                 >
                   <div className="w-full flex flex-col justify-start items-center">
                     <h3 className="w-full text-slate-400 font-normal text-sm capitalize">

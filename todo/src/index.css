@@ -19,6 +19,10 @@
     .popup-content {
       @apply !rounded-xl w-auto;
     }
+    /* tooltip sidebar */
+    [role="tooltip"].popup-content {
+      @apply w-auto ml-1 !py-1 px-6 shadow-xl bg-amber-200 text-amber-700 text-sm font-bold border-0 !rounded-lg;
+    }
 
     .minHeight {
       min-height: 9rem;

@@ -42,6 +42,7 @@ export default function EditTask() {
     deadline: [],
     tagPartners: [],
     image: [],
+    descriptionEdit: "",
   });
 
   const [user, setUser] = useState([]); // get user from server and show for teammate
@@ -87,6 +88,7 @@ export default function EditTask() {
               deadline: date,
               tagPartners: teg,
               image: response.data,
+              descriptionEdit: "",
             });
             setLoader(false);
           })
@@ -104,7 +106,8 @@ export default function EditTask() {
       dataToSend?.priority.trim() &&
       dataToSend?.deadline &&
       dataToSend?.status &&
-      dataToSend?.id
+      dataToSend?.id &&
+      dataToSend?.descriptionEdit
     ) {
       let formData = new FormData();
       formData.append("fun", "updateTask");
@@ -120,6 +123,8 @@ export default function EditTask() {
       for (let i = 0; i < dataToSend?.image.length; i++) {
         formData.append("files[]", dataToSend?.image[i]);
       }
+
+      formData.append("descriptionEdit", dataToSend?.descriptionEdit);
 
       axios
         .post("php/api.php", formData)
@@ -197,7 +202,7 @@ export default function EditTask() {
               nested
               trigger={
                 <button className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500">
-                  delete task
+                  delete
                 </button>
               }
               position="right center"
@@ -233,12 +238,67 @@ export default function EditTask() {
               )}
             </Popup>
 
-            <button
-              onClick={() => updateTask()}
-              className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+            <Popup
+              modal
+              contentStyle={{ width: "50%", borderRadius: "0.75rem" }}
+              trigger={
+                <button
+                  onClick={() => updateTask()}
+                  className="h-10 px-8 hover:px-10 bg-green-200 hover:bg-green-500 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                >
+                  update
+                </button>
+              }
+              position="right center"
             >
-              accept & edit
-            </button>
+              {(close) => (
+                <div className="p-10 flex flex-col justify-center items-end gap-8">
+                  <section className="w-full space-y-1">
+                    <p className="w-full text-left text-green-600 font-black text-xl capitalize">
+                      accept & edit
+                    </p>
+                    <p className="w-full text-left text-slate-600 font-normal text-base">
+                      Description of the changes
+                    </p>
+                  </section>
+
+                  <textarea
+                    type="text"
+                    placeholder="ex: changes subject a to b , add or remove file ..."
+                    className="w-full minHeight h-auto px-8 py-4 text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 placeholder:text-slate-300 focus:border-blue-500"
+                    value={dataToSend?.descriptionEdit}
+                    onChange={(e) =>
+                      setDataToSend({
+                        ...dataToSend,
+                        descriptionEdit: e.target.value,
+                      })
+                    }
+                  />
+
+                  <section className="flex flex-row justify-center items-center gap-4">
+                    <button
+                      onClick={() => close()}
+                      className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      no care !
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (dataToSend?.descriptionEdit.length !== 0) {
+                          updateTask();
+                          close();
+                        } else {
+                          Toastiy("Enter the description edit", "wa");
+                        }
+                      }}
+                      className="h-10 px-8 hover:px-10  bg-green-200 hover:bg-green-500 text-green-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      accept & edit
+                    </button>
+                  </section>
+                </div>
+              )}
+            </Popup>
           </section>
         </section>
 
@@ -626,7 +686,7 @@ export default function EditTask() {
         </section>
 
         <section className="w-full flex flex-col justify-start items-start gap-1.5">
-          <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
+          <div className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
             <h2 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               select Image
               <span className="font-normal normal-case">
@@ -634,7 +694,7 @@ export default function EditTask() {
                 - ( The size of the image should not be more than 500 KB )
               </span>
             </h2>
-          </h4>
+          </div>
 
           <section className="w-full flex flex-row justify-start items-start gap-4">
             <section className="w-24 h-24 bg-white border-dotted border-2 border-slate-300 rounded-xl">

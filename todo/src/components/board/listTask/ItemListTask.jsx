@@ -1,8 +1,7 @@
-import React from "react";
 
 import axios from "axios";
 import defultAvator from "../../../assets/image/userAvator/defultAvatorMen.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ItemListTask(props) {
   const { data } = props;
@@ -15,21 +14,21 @@ export default function ItemListTask(props) {
   return (
     <tr
       onClick={() => navigate(`/main/detailTask/${data?.id}`)}
-      className="w-full py-4 px-6 flex jtify-center items-center gap-5 cursor-pointer duration-300 hover:bg-amber-50"
+      className="w-full py-5 px-4 flex justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-amber-50"
     >
       <th className="w-1/12 flex justify-start items-start">
         <p
           className={
             data?.status === "todo"
-              ? "h-full py-1 px-5 bg-gray-100 text-sm font-medium text-center text-gray-600 rounded-full"
+              ? "h-full py-1 px-3 bg-gray-100 text-sm font-medium text-center text-gray-600 rounded-full"
               : data?.status === "InProgres"
-              ? "h-full py-1 px-5 bg-blue-100 text-sm font-medium text-center text-blue-600 rounded-full"
+              ? "h-full py-1 px-3 bg-blue-100 text-sm font-medium text-center text-blue-600 rounded-full"
               : data?.status === "review"
-              ? "h-full py-1 px-5 bg-amber-100 text-sm font-medium text-center text-amber-600 rounded-full"
-              : "h-full py-1 px-5 bg-green-100 text-sm font-medium text-center text-green-600 rounded-full"
+              ? "h-full py-1 px-3 bg-amber-100 text-sm font-medium text-center text-amber-600 rounded-full"
+              : "h-full py-1 px-3 bg-green-100 text-sm font-medium text-center text-green-600 rounded-full"
           }
         >
-          {data?.status === "InProgres" ? "in progres" : data?.status}
+          {data?.status === "inProgres" ? "in progres" : data?.status}
         </p>
       </th>
       <th className="w-2/12 flex justify-start items-start">
@@ -37,7 +36,7 @@ export default function ItemListTask(props) {
           {data?.subject}
         </p>
       </th>
-      <th className="w-5/12 flex justify-start items-start">
+      <th className="w-3/12 flex justify-start items-start">
         <p className="w-full text-slate-500 text-sm font-normal tracking-wide text-left text-justify">
           {data?.description.length >= 50
             ? `${data?.description.slice(0, 35)}...`
@@ -48,19 +47,19 @@ export default function ItemListTask(props) {
         <p
           className={
             data?.priority === "force"
-              ? "h-full py-1 px-5 bg-red-100 text-sm font-medium text-center text-red-600 rounded-full"
+              ? "h-full py-1 px-3 bg-red-100 text-sm font-medium text-center text-red-600 rounded-full"
               : data?.priority === "high"
-              ? "h-full py-1 px-5 bg-amber-100 text-sm font-medium text-center text-amber-600 rounded-full"
+              ? "h-full py-1 px-3 bg-amber-100 text-sm font-medium text-center text-amber-600 rounded-full"
               : data?.priority === "normal"
-              ? "h-full py-1 px-5 bg-lime-100 text-sm font-medium text-center text-lime-600 rounded-full"
-              : "h-full py-1 px-5 bg-teal-100 text-sm font-medium text-center text-teal-600 rounded-full"
+              ? "h-full py-1 px-3 bg-lime-100 text-sm font-medium text-center text-lime-600 rounded-full"
+              : "h-full py-1 px-3 bg-teal-100 text-sm font-medium text-center text-teal-600 rounded-full"
           }
         >
           {data?.priority}
         </p>
       </th>
       <th className="w-1/12 flex justify-center items-start">
-        <p className="w-full text-sm text-slate-400 font-normal capitalize">
+        <p className="text-sm text-slate-400 font-normal capitalize">
           {`${date?.year}/${date?.month}/${date?.day}`}
         </p>
       </th>
@@ -88,15 +87,11 @@ export default function ItemListTask(props) {
             </div> */}
         </section>
       </th>
-      <th className="w-2/12 flex justify-start items-start">
-        <p className="w-full text-slate-400 text-sm font-normal text-left capitalize">
+      <th className="w-2/12 flex justify-center items-start">
+        <p className="text-slate-400 text-sm font-normal text-left capitalize">
           {data?.name} {/* author name  */}
         </p>
       </th>
-
-      {/* <th className="w-1/12 flex justify-center items-center">
-        <i className="fa fa-angle-right w-8 h-8 text-gray-400 text-sm bg-gray-200/50 rounded-xl flex justify-center items-center"></i>
-      </th> */}
     </tr>
   );
 }

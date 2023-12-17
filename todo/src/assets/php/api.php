@@ -209,7 +209,6 @@ function getcode()
 
 
 
-
 function getSingleTask()
 {
 
@@ -246,9 +245,13 @@ function getAllTaskForSingleUser()
 
         $id = $_POST['id'];
 
-        $query = 'SELECT * FROM `TBTask` WHERE author = :id ORDER BY `id` DESC';
+
+        // $query = 'SELECT TBTask.* , TBUser.name FROM TBTask, TBUser WHERE TBTask.author = TBUser.id ORDER BY `id` DESC';
+
+        $query = 'SELECT * FROM TBTask WHERE TBTask.author = :id OR TBTask.tagPartners LIKE :searchId ORDER BY `id` DESC';
         $query = str_replace(";", "", $query);
         $stmt = $con->prepare($query);
+        $stmt->bindValue(':searchId', '%' . $id . '%', PDO::PARAM_STR);
         $stmt->bindparam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -382,7 +385,6 @@ function getAllEditHistoryTask()
     $con = null;
 }
 
-
 function createNewTask()
 {
 
@@ -480,7 +482,7 @@ function updateTask()
 
     if (
         isset($_POST['id']) && isset($_POST['status']) && isset($_POST['subject']) && isset($_POST['description']) &&
-        isset($_POST['priority']) && isset($_POST['deadline']) && isset($_POST['author'])
+        isset($_POST['priority']) && isset($_POST['deadline']) && isset($_POST['author']) && isset($_POST['descriptionEdit'])
     ) {
 
         $id = $_POST['id'];
@@ -491,6 +493,7 @@ function updateTask()
         $tagPartners = $_POST['tagPartners'];
         $deadline = $_POST['deadline'];
         $author = $_POST['author'];
+        $descriptionEdit = $_POST['descriptionEdit'];
 
         if (isset($_FILES['files'])) {
 
@@ -565,7 +568,7 @@ function updateTask()
         $query = 'INSERT INTO `TBHistoryTask` VALUES (?,?,?,?,?)';
         $query  = str_replace(";", "", $query);
         $stmt = $con->prepare($query);
-        $stmt->execute([0, $id, $author, "descripation is not set yet", jdate('Y/m/j H:m')]);
+        $stmt->execute([0, $id, $author, $descriptionEdit, jdate('Y/m/j H:m')]);
     } else {
         echo "NoData";
     }
@@ -617,11 +620,6 @@ function deleteTask()
 
     $con = null;
 }
-
-
-
-
-
 
 function getAllUser()
 {

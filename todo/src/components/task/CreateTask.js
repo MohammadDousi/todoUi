@@ -51,8 +51,6 @@ export default function CreateTask() {
   }, [user]);
 
   useEffect(() => {
-    console.log(userData);
-
     let formData = new FormData();
     formData.append("fun", "getAllUser");
 
@@ -86,7 +84,7 @@ export default function CreateTask() {
       formData.append("deadline", JSON.stringify(dataToSend.deadline));
       formData.append("author", userData?.id);
 
-      formData.append("tagPartners", JSON.stringify(dataToSend.tagPartners));
+      formData.append("tagPartners", JSON.stringify(dataToSend?.tagPartners));
 
       for (let i = 0; i < dataToSend.image.length; i++) {
         formData.append("files[]", dataToSend.image[i]);
@@ -105,6 +103,7 @@ export default function CreateTask() {
               setLoader(false);
               break;
           }
+          console.log(response.data);
         })
         .catch((e) => console.log(e));
     } else {
@@ -284,8 +283,7 @@ export default function CreateTask() {
                       value={searchTeammate}
                     />
 
-                    {console.log(dataToSend?.tagPartners)}
-                    {dataToSend?.tagPartners.length != 0 &&
+                    {dataToSend?.tagPartners.length !== 0 &&
                       dataToSend?.tagPartners?.map((person, index) => (
                         <div
                           key={index}

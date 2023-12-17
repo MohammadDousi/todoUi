@@ -35,8 +35,9 @@ export default function BoardContainer() {
   }, []);
 
   return (
-    <section className="w-full h-full pb-8 space-y-4 relative overflow-hidden duration-1000">
-      <section className="w-full pt-3 px-6 flex flex-row justify-between items-center gap-8">
+    <section className="w-full h-full pb-8 relative overflow-hidden duration-1000">
+  
+      <section className="w-full p-3 px-6 flex flex-row justify-between items-center gap-8">
         <div className="flex flex-row justify-center items-start gap-2">
           <i
             onClick={() => setBoard("Grid")}
