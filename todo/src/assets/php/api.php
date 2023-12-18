@@ -371,7 +371,7 @@ function getAllEditHistoryTask()
     if (isset($_POST['id'])) {
 
 
-        $query = 'SELECT TBHistoryTask.* , TBUser.name FROM TBHistoryTask, TBUser WHERE TBHistoryTask.idTask = :id AND TBHistoryTask.editor = TBUser.id ORDER BY `id`';
+        $query = 'SELECT TBHistoryTask.* , TBUser.name FROM TBHistoryTask, TBUser WHERE TBHistoryTask.idTask = :id AND TBHistoryTask.editor = TBUser.id ORDER BY TBHistoryTask.id DESC';
 
         // $query = 'SELECT * FROM `TBHistoryTask` WHERE idTask = :id ORDER BY `id` DESC';
         $query = str_replace(";", "", $query);

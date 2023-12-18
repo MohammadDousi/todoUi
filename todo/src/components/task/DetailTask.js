@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 
@@ -60,7 +60,7 @@ export default function DetailTask() {
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail & description task" />
@@ -73,8 +73,8 @@ export default function DetailTask() {
           </button>
         </section>
 
-        <section className="w-full flex flex-row justify-start items-start gap-4">
-          <div className="w-3/4 flex flex-col justify-start items-start gap-8">
+        <section className="w-full h-full flex flex-row justify-start items-start gap-4 overflow-hidden">
+          <div className="w-3/4 h-full flex flex-col justify-start items-start gap-8 overflow-x-hidden">
             {/* subject and Priority */}
             <section className="w-full flex flex-row justify-start items-start gap-4">
               <section className="w-2/3 flex flex-col justify-start items-start gap-1.5">
@@ -185,7 +185,7 @@ export default function DetailTask() {
                     <img
                       src={`${axios.defaults.baseURL}/file/${item.file}`}
                       alt={item.file}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain cursor-pointer"
                     />
                   </section>
                 ))}
@@ -194,24 +194,24 @@ export default function DetailTask() {
           </div>
 
           {/* edit history container */}
-          <section className="w-1/4 h-full flex flex-col justify-start items-start gap-1.5">
+          <section className="w-1/4 h-auto max-h-full flex flex-col justify-start items-start gap-1.5 overflow-hidden">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               edit history
             </h4>
 
-            <div className="w-full max-h-screen px-4 py-2 bg-gray-200/50 border border-slate-300 flex flex-col-reverse justify-start items-start rounded-xl">
+            <div className="w-full h-auto max-h-full px-4 py-2 bg-gray-200/50 border border-slate-300 flex flex-col justify-start items-start rounded-xl overflow-auto">
               {history?.map((item, index) => (
                 <section
                   key={item.id + Math.random()}
                   className={
-                    index === 0
+                    index + Number(1) === history.length
                       ? "w-full py-2 flex flex-col justify-start items-start gap-1"
                       : "w-full py-2 border-b border-slate-300 flex flex-col justify-start items-start gap-1"
                   }
                 >
                   <div className="w-full flex flex-col justify-start items-center">
                     <h3 className="w-full text-slate-400 font-normal text-sm capitalize">
-                      {index === 0
+                      {index + Number(1) === history.length
                         ? "Create by " + item.name
                         : "Edit by " + item.name}
                     </h3>

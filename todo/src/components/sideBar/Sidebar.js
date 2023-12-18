@@ -84,7 +84,7 @@ export default function Sidebar() {
         formData.delete(key, value);
       }
     }
-  }, [userData , showSidebar , location.pathname]);
+  }, [userData, location.pathname]);
 
 
   const sideTab = [
