@@ -10,11 +10,11 @@ export default function ItemListTask(props) {
   let tag = JSON.parse(data?.tagPartners);
 
   const navigate = useNavigate();
-
+  
   return (
     <tr
       onClick={() => navigate(`/main/detailTask/${data?.id}`)}
-      className="w-full py-5 px-4 flex justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-amber-50"
+      className="w-full py-5 px-4 bg-white flex justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-amber-50"
     >
       <th className="w-1/12 flex justify-start items-start">
         <p

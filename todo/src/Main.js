@@ -19,7 +19,7 @@ export default function Main() {
     <>
       <Header />
 
-      <main className="w-full h-full flex flex-row justify-start items-start">
+      <main className="w-full h-full flex flex-row justify-start items-start overflow-hidden">
         <Sidebar />
 
         <Routes>

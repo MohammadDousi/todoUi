@@ -8,12 +8,14 @@ import avator4 from "../../assets/image/userAvator/profile(2).png";
 import avator5 from "../../assets/image/userAvator/profile(9).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+import logo from "../../assets/image/svg/logo.png";
 
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 
 export default function Sidebar() {
   const { userData } = useContext(UserContext);
+  const location = useLocation();
 
   const [showSidebar, setShowSidebar] = useState("BIG");
 
@@ -38,6 +40,12 @@ export default function Sidebar() {
         .then((response) => {
           // array item 0 -> count task for user is not done - all task
           // array item 1 -> count task for user is done
+
+          if (response.data[1] === 0) {
+            countDoneBig.current.style.display = "none";
+          } else {
+            countDoneBig.current.style.display = "flex";
+          }
 
           countAllBig.current.innerText = response.data[0];
           countAllMini.current.innerText = response.data[0];
@@ -76,9 +84,8 @@ export default function Sidebar() {
         formData.delete(key, value);
       }
     }
-  }, [userData]);
+  }, [userData , showSidebar , location.pathname]);
 
-  const location = useLocation();
 
   const sideTab = [
     {
@@ -173,14 +180,14 @@ export default function Sidebar() {
               </Popup>
             ))}
         </section>
-        
       </section>
       {/*  big sidebar */}
+
       <section
         className={
           showSidebar === "BIG"
             ? "w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
-            : "w-0 h-full bg-white flex flex-col justify-between items-center gap-0 -translate-x-80 duration-1000 overflow-hidden"
+            : "w-0 h-auto bg-white px-0 py-4 flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
         }
       >
         <section className="w-full relative flex flex-col justify-center items-center gap-4">
@@ -245,31 +252,37 @@ export default function Sidebar() {
             ))}
         </section>
 
-        <section className="w-full bg-green-100 border border-green-300 p-3 rounded-xl flex flex-row justify-between items-center">
-          <h3 className="text-green-600 font-bold text-xs pl-2 capitalize">
-            is online :
-          </h3>
-          <section className="flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
-            <img
-              className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
-              src={avator4}
-              alt={avator4}
-            />
-            <img
-              className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
-              src={avator5}
-              alt={avator5}
-            />
-            <img
-              className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
-              src={avator6}
-              alt={avator6}
-            />
-            <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
-              +2
-            </div>
+        <div className="w-full flex flex-col justify-start items-start gap-1">
+          <section className="w-full bg-green-100 border border-green-300 p-3 rounded-xl flex flex-row justify-between items-center">
+            <h3 className="text-green-600 font-bold text-xs capitalize">
+              is online :
+            </h3>
+            <section className="flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
+              <img
+                className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
+                src={avator4}
+                alt={avator4}
+              />
+              <img
+                className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
+                src={avator5}
+                alt={avator5}
+              />
+              <img
+                className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125"
+                src={avator6}
+                alt={avator6}
+              />
+              <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
+                +2
+              </div>
+            </section>
           </section>
-        </section>
+
+          <h3 className="w-full pt-1 text-center text-blue-400 font-black text-xs uppercase">
+            todo dev. by mohammad dosi
+          </h3>
+        </div>
       </section>
     </>
   );

@@ -52,8 +52,8 @@ export default function BoardContainer() {
             }}
             className={
               board === "grid"
-                ? "fa fa-th-large iconContainer text-slate-500 text-xs bg-white shadow-lg"
-                : "fa fa-th-large iconContainer text-slate-500 text-xs "
+                ? "fa fa-th-large iconContainer text-slate-500 text-xs bg-white shadow-lg duration-500"
+                : "fa fa-th-large iconContainer text-slate-500 text-xs duration-500"
             }
           ></i>
 
@@ -64,8 +64,8 @@ export default function BoardContainer() {
             }}
             className={
               board === "list"
-                ? "fas fa-list-ul iconContainer text-slate-500 text-xs bg-white shadow-lg"
-                : "fas fa-list-ul iconContainer text-slate-500 text-xs"
+                ? "fas fa-list-ul iconContainer text-slate-500 text-xs bg-white shadow-lg duration-500"
+                : "fas fa-list-ul iconContainer text-slate-500 text-xs duration-500"
             }
           ></i>
         </div>
