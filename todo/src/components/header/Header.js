@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
+import { UserContext } from "../../context/UserContext";
 
 export default function Header() {
+  const { setSearch } = useContext(UserContext);
+
   const navigate = useNavigate();
+
+  const search = (e) => {
+    if (e.target.value) {
+      let formData = new FormData();
+      formData.append("fun", "searchTask");
+      formData.append("search", e.target.value);
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          console.log(response.data);
+          setSearch(response.data);
+        })
+        .catch((e) => console.log(e));
+
+      for (let [key, value] of formData) {
+        formData.delete(key, value);
+      }
+    } else {
+      setSearch([]);
+    }
+  };
 
   return (
     <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
@@ -33,13 +59,13 @@ export default function Header() {
           </li>
         </ul>
 
-        <div className="w-[29rem] px-6 py-2 bg-gray-200/50 flex justify-between items-center gap-4 rounded-xl ">
+        <div className="w-[29rem] h-12 px-6 bg-gray-200/50 flex justify-between items-center gap-4 rounded-xl ">
           <i className="fa fa-search text-slate-400/70"></i>
           <input
             type="text"
             onFocus={() => navigate("/main/search")}
-            onChange={() => {}}
-            placeholder="Search Products, Orders and Clients"
+            onChange={(e) => search(e)}
+            placeholder="Search subject, description, partners and date"
             className="w-full bg-transparent text-slate-800 text-sm font-bold text-left tracking-wide placeholder:text-slate-400/70 placeholder:font-normal"
           />
           <i className="fa fa-angle-right text-slate-400/70"></i>
@@ -71,7 +97,7 @@ export default function Header() {
               <section className="flex flex-row justify-center items-center gap-4">
                 <button
                   onClick={() => close()}
-                  className="h-10 px-8 hover:px-10 bg-slate-200 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                  className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
                 >
                   no care !
                 </button>

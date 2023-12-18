@@ -19,34 +19,64 @@ export default function Sidebar() {
 
   const circle_progres = useRef();
   const circle_count = useRef();
-  const count = useRef();
+  const countDoneBig = useRef();
+  const countDoneMini = useRef();
+  const countAllBig = useRef();
+  const countAllMini = useRef();
+
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    let all_task = 5,
-      ok_task = 2,
-      progressStartValue = 100,
-      progressEndValue = 0,
-      speed = 15;
+    setUser(userData);
+    if (user?.id) {
+      let formData = new FormData();
+      formData.append("fun", "countTaskForUser");
+      formData.append("id", user.id);
 
-    all_task = 360 / all_task;
-    ok_task = all_task * ok_task;
-    progressEndValue = 360 - ok_task;
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          // array item 0 -> count task for user is not done - all task
+          // array item 1 -> count task for user is done
 
-    let progress = setInterval(() => {
-      progressStartValue--;
-      circle_progres.current.style.background = `conic-gradient(#fff ${
-        progressStartValue * 3.6
-      }deg , #2563eb 0deg)`;
-      circle_count.current.style.transform = `rotate(${
-        progressStartValue * 3.6
-      }deg)`;
-      count.current.style.transform = `rotate(${progressStartValue * -3.6}deg)`;
+          countAllBig.current.innerText = response.data[0];
+          countAllMini.current.innerText = response.data[0];
+          countDoneBig.current.innerText = response.data[1];
+          countDoneMini.current.innerText = response.data[1];
+          let all_task = response.data[0],
+            ok_task = response.data[1],
+            progressStartValue = 100,
+            progressEndValue = 0,
+            speed = 15;
 
-      if (Math.floor(progressStartValue * 3.6) <= progressEndValue) {
-        clearInterval(progress);
+          all_task = 360 / all_task;
+          ok_task = all_task * ok_task;
+          progressEndValue = 360 - ok_task;
+
+          let progress = setInterval(() => {
+            progressStartValue--;
+            circle_progres.current.style.background = `conic-gradient(#fff ${
+              progressStartValue * 3.6
+            }deg , #2563eb 0deg)`;
+            circle_count.current.style.transform = `rotate(${
+              progressStartValue * 3.6
+            }deg)`;
+            countDoneBig.current.style.transform = `rotate(${
+              progressStartValue * -3.6
+            }deg)`;
+
+            if (Math.floor(progressStartValue * 3.6) <= progressEndValue) {
+              clearInterval(progress);
+            }
+          }, speed);
+        })
+        .catch((e) => console.log(e));
+
+      for (let [key, value] of formData) {
+        formData.delete(key, value);
       }
-    }, speed);
-  }, []);
+    }
+  }, [userData]);
 
   const location = useLocation();
 
@@ -72,6 +102,11 @@ export default function Sidebar() {
       path: "/main/pushBox",
       icon: "fas fa-envelope-open",
     },
+    {
+      name: "search",
+      path: "/main/search",
+      icon: "fas fa-search",
+    },
   ];
 
   return (
@@ -84,13 +119,17 @@ export default function Sidebar() {
             : "w-0 h-full py-4 bg-white flex flex-col justify-start items-center gap-0 -translate-x-20 duration-1000 overflow-hidden"
         }
       >
-        <section className="w-full flex flex-col justify-center items-center gap-5">
+        <section className="w-full flex flex-col justify-center items-center gap-6">
           <i
             onClick={() => setShowSidebar("BIG")}
             className="fa fa-angle-right iconContainer bg-gray-100 text-slate-400 text-sm"
           ></i>
 
-          <div className="w-full h-auto flex flex-col justify-center items-center gap-2">
+          <div className="w-full h-auto flex flex-col justify-center items-center gap-3">
+            <div
+              ref={countAllMini}
+              className="w-7 h-7 bg-amber-200 text-amber-700 text-sm font-bold flex justify-center items-center rounded-full"
+            ></div>
             <img
               className="w-12 h-20 z-0 object-cover rounded-full ring-2 ring-blue-400 ring-offset-2"
               src={
@@ -100,9 +139,10 @@ export default function Sidebar() {
               }
               alt="profile pic"
             />
-            <div className="w-6 h-6 text-white text-sm font-semibold flex justify-center items-center rounded-full bg-blue-600">
-              2
-            </div>
+            <div
+              ref={countDoneMini}
+              className="w-6 h-6 text-white text-sm font-bold flex justify-center items-center rounded-full bg-blue-600"
+            ></div>
           </div>
         </section>
 
@@ -110,11 +150,12 @@ export default function Sidebar() {
           {sideTab &&
             sideTab.map((tab) => (
               <Popup
+                key={tab.name}
                 closeOnDocumentClick
                 on={["hover", "focus"]}
                 arrow={"center center"}
                 trigger={
-                  <Link key={tab.name} to={tab.path}>
+                  <Link to={tab.path}>
                     <section
                       className={
                         location.pathname === tab.path
@@ -132,6 +173,7 @@ export default function Sidebar() {
               </Popup>
             ))}
         </section>
+        
       </section>
       {/*  big sidebar */}
       <section
@@ -161,15 +203,17 @@ export default function Sidebar() {
                 alt={userData?.avator ? userData?.avator : defaultAvator}
               />
               <div
+                ref={countAllBig}
+                className="w-7 h-7 absolute -top-8 bg-amber-200 text-amber-700 text-sm font-bold flex justify-center items-center rounded-full"
+              ></div>
+              <div
                 ref={circle_count}
                 className="w-32 h-32 z-10 absolute flex justify-center items-center rounded-full"
               >
                 <div
-                  ref={count}
-                  className="w-7 h-7 absolute -top-2.5 flex justify-center items-center rounded-full bg-blue-600"
-                >
-                  <p className="text-white text-sm font-semibold">2</p>
-                </div>
+                  ref={countDoneBig}
+                  className="w-7 h-7 absolute -top-2.5 text-white text-sm font-bold bg-blue-600 flex justify-center items-center rounded-full"
+                ></div>
               </div>
             </div>
           </div>
@@ -195,7 +239,7 @@ export default function Sidebar() {
                   }
                 >
                   <i className={tab.icon}></i>
-                  <h3 className="text-xs font-black">{tab.name}</h3>
+                  <h3 className="text-xs font-black capitalize">{tab.name}</h3>
                 </section>
               </Link>
             ))}

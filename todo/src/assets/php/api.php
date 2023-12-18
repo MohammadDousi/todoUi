@@ -51,6 +51,12 @@ if (isset($_POST['fun'])) {
         case 'updateUser':
             updateUser();
             break;
+        case 'searchTask':
+            searchTask();
+            break;
+        case 'countTaskForUser';
+            countTaskForUser();
+            break;
         case 'getcode':
             getcode();
             break;
@@ -701,13 +707,13 @@ function updateUser()
 
                     $filename = basename($_FILES['avator']['name']);
                     $filename = str_replace(' ', '', $filename);
+                    $avator = jdate('YmjHms') . $filename;
 
                     $targetFile = $uploadDir . jdate('YmjHms') . $filename;
 
                     if (move_uploaded_file($_FILES["avator"]["tmp_name"], $targetFile)) {
 
                         $query = 'UPDATE TBUser SET `name` = :username , `mail` = :mail , `jobPostion` = :jobPostion , `avator` = :avator WHERE `token` = :token';
-                        $avator = jdate('YmjHms') . $filename;
                         $query = str_replace(";", "", $query);
                         $stmt = $con->prepare($query);
                         $stmt->bindparam(':username', $name, PDO::PARAM_STR);
@@ -746,6 +752,67 @@ function updateUser()
         }
     } else {
         echo "noData";
+    }
+
+    $con = null;
+}
+
+function searchTask()
+{
+
+    global $con;
+
+    if (isset($_POST['search'])) {
+
+        $search = $_POST['search'];
+
+        $query = 'SELECT * FROM TBTask WHERE `subject` LIKE :search OR `description` LIKE :search OR `tagPartners` LIKE :search OR `date` LIKE :search ORDER BY `id` DESC';
+        $query = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt) {
+            echo json_encode($stmt->fetchALL(PDO::FETCH_OBJ));
+        } else {
+            echo json_encode("notFound");
+        }
+    }
+
+    $con = null;
+}
+
+function countTaskForUser()
+{
+    global $con;
+
+    if (isset($_POST['id'])) {
+
+        $id = $_POST['id'];
+        $count = array();
+
+        $query = 'SELECT COUNT(id) FROM TBTask WHERE (`author` = :id OR `tagPartners` LIKE :id)';
+        $query = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', '%' . $id . '%', PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        array_push($count, $result['COUNT(id)']);
+
+        $query = 'SELECT COUNT(id) FROM TBTask WHERE `status` = "done" AND (`author` = :id OR `tagPartners` LIKE :id)';
+        $query = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', '%' . $id . '%', PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        array_push($count, $result['COUNT(id)']);
+
+
+        echo json_encode($count);
     }
 
     $con = null;

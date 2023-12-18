@@ -69,7 +69,6 @@ export default function Profile() {
     axios
       .post("php/api.php", formData)
       .then((response) => {
-        console.log(response.data);
         setUserData(response.data);
         setEditButton(!editButton);
         setChangeAvator(false);
@@ -85,10 +84,6 @@ export default function Profile() {
           default:
             break;
         }
-
-        console.log(response.data);
-
-        // Toastiy("Edit profile successfully", "su");
       })
       .catch((e) => console.log(e));
 

@@ -34,24 +34,36 @@ export default function BoardContainer() {
     }
   }, []);
 
+  useEffect(() => {
+    setBoard(localStorage.getItem("board"));
+    if (!board) {
+      setBoard("grid");
+    }
+  }, [board]);
+
   return (
     <section className="w-full h-full pb-8 relative overflow-hidden duration-1000">
-  
-      <section className="w-full p-3 px-6 flex flex-row justify-between items-center gap-8">
+      <section className="w-full py-3 px-6 flex flex-row justify-between items-center gap-8">
         <div className="flex flex-row justify-center items-start gap-2">
           <i
-            onClick={() => setBoard("Grid")}
+            onClick={() => {
+              localStorage.setItem("board", "grid");
+              setBoard("Grid");
+            }}
             className={
-              board === "Grid"
+              board === "grid"
                 ? "fa fa-th-large iconContainer text-slate-500 text-xs bg-white shadow-lg"
                 : "fa fa-th-large iconContainer text-slate-500 text-xs "
             }
           ></i>
 
           <i
-            onClick={() => setBoard("List")}
+            onClick={() => {
+              localStorage.setItem("board", "list");
+              setBoard("List");
+            }}
             className={
-              board === "List"
+              board === "list"
                 ? "fas fa-list-ul iconContainer text-slate-500 text-xs bg-white shadow-lg"
                 : "fas fa-list-ul iconContainer text-slate-500 text-xs"
             }
@@ -66,7 +78,7 @@ export default function BoardContainer() {
         </button>
       </section>
 
-      {board === "Grid" ? (
+      {board === "grid" ? (
         <GridBord allTask={allTask} />
       ) : (
         <ListBoard allTask={allTask} />

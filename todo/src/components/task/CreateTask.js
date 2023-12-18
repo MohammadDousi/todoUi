@@ -16,9 +16,12 @@ import Toastiy from "../toastfiy/Toastfiy";
 
 import defultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTask() {
   const { userData } = useContext(UserContext);
+
+  const navigate = useNavigate()
 
   const [loader, setLoader] = useState(false);
 
@@ -96,6 +99,7 @@ export default function CreateTask() {
           switch (response.data) {
             case "insertOk":
               Toastiy("Create new task is successful.", "su");
+              navigate("/main/board");
               setLoader(false);
               break;
             default:
@@ -103,7 +107,6 @@ export default function CreateTask() {
               setLoader(false);
               break;
           }
-          console.log(response.data);
         })
         .catch((e) => console.log(e));
     } else {

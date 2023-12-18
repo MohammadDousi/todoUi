@@ -129,10 +129,10 @@ export default function EditTask() {
       axios
         .post("php/api.php", formData)
         .then((response) => {
-          console.log(response.data);
           switch (response.data) {
             case "updateOk":
               Toastiy("edit task is successful", "su");
+              navigate("/main/board");
               break;
             case "errUpdate":
               Toastiy("The update was unsuccessful", "er");
@@ -149,7 +149,6 @@ export default function EditTask() {
               setLoader(false);
               break;
           }
-          console.log(response.log);
           setLoader(false);
         })
         .catch((e) => console.log(e));
@@ -184,7 +183,6 @@ export default function EditTask() {
             break;
         }
         setLoader(false);
-        console.log(response);
       })
       .catch((e) => console.log(e));
   };

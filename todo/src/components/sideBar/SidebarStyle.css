@@ -1,6 +1,6 @@
 .progress-circle {
   @apply w-32 h-32 relative flex justify-center items-center  rounded-full;
-  background: conic-gradient(#fff 3.6deg, bg-blue-500 0deg);
+  background: conic-gradient(#fff 3.6deg, bg-amber-500 0deg);
 }
 
 .progress-circle::before {
