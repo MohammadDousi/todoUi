@@ -3,10 +3,10 @@ import ItemGridTask from "./gridTask/ItemGridTask.js";
 import noData from "../../assets/image/svg/noData.svg";
 
 export default function GridBord({ allTask }) {
-  const todo = allTask.filter((item) => item.status === "todo");
-  const done = allTask.filter((item) => item.status === "done");
-  const review = allTask.filter((item) => item.status === "review");
-  const inProgres = allTask.filter((item) => item.status === "inProgres");
+  const todo = allTask?.filter((item) => item.status === "todo");
+  const done = allTask?.filter((item) => item.status === "done");
+  const review = allTask?.filter((item) => item.status === "review");
+  const inProgres = allTask?.filter((item) => item.status === "inProgres");
 
   return (
     <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-row justify-start items-start gap-6">
@@ -14,7 +14,7 @@ export default function GridBord({ allTask }) {
         <HeaderGridTask
           data={{
             title: "TO DO",
-            countTask: todo.length,
+            countTask: todo?.length,
             color: "bg-slate-600",
           }}
         />
@@ -24,10 +24,10 @@ export default function GridBord({ allTask }) {
             <ItemGridTask key={item.id} data={item} />
           ))}
 
-          {done.length === 0 &&
-            review.length === 0 &&
-            inProgres.length === 0 &&
-            todo.length === 0 && (
+          {done?.length === 0 &&
+            review?.length === 0 &&
+            inProgres?.length === 0 &&
+            todo?.length === 0 && (
               <div className="w-full px-5 py-10 bg-white rounded-xl flex flex-col justify-center items-center gap-5 shadow-md duration-500">
                 <img src={noData} alt="no data" className="w-20" />
                 <h2 className="text-slate-600 text-lg font-black text-center capitalize">
@@ -42,7 +42,7 @@ export default function GridBord({ allTask }) {
         <HeaderGridTask
           data={{
             title: "in progres",
-            countTask: inProgres.length,
+            countTask: inProgres?.length,
             color: "bg-blue-500",
           }}
         />
@@ -58,7 +58,7 @@ export default function GridBord({ allTask }) {
         <HeaderGridTask
           data={{
             title: "REVIEW",
-            countTask: review.length,
+            countTask: review?.length,
             color: "bg-amber-400",
           }}
         />
@@ -74,7 +74,7 @@ export default function GridBord({ allTask }) {
         <HeaderGridTask
           data={{
             title: "DONE",
-            countTask: done.length,
+            countTask: done?.length,
             color: "bg-green-500",
           }}
         />

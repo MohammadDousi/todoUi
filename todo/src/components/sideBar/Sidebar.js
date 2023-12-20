@@ -12,6 +12,7 @@ import logo from "../../assets/image/svg/logo.png";
 
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import Toastiy from "../toastfiy/Toastfiy";
 
 export default function Sidebar() {
   const { userData } = useContext(UserContext);
@@ -27,7 +28,6 @@ export default function Sidebar() {
   const countAllMini = useRef();
 
   const [user, setUser] = useState({});
-
   useEffect(() => {
     setUser(userData);
     if (user?.id) {
@@ -45,6 +45,14 @@ export default function Sidebar() {
             countDoneBig.current.style.display = "none";
           } else {
             countDoneBig.current.style.display = "flex";
+          }
+
+          if (
+            localStorage.getItem("countTaskForUser") !==
+            String(response.data[0])
+          ) {
+            localStorage.setItem("countTaskForUser", response.data[0]);
+            Toastiy("You have been tagged in a new task", "in");
           }
 
           countAllBig.current.innerText = response.data[0];
@@ -85,7 +93,6 @@ export default function Sidebar() {
       }
     }
   }, [userData, location.pathname]);
-
 
   const sideTab = [
     {
