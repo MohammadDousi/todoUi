@@ -8,19 +8,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
 
-import useSWR from "swr";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
 export default function BoardContainer() {
   const navigate = useNavigate();
 
   const [board, setBoard] = useState("grid"); // change between board grid or list
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [allTask, setAllTask] = useState([]); // get all task from server
 
   // useEffect(() => {
   //   let formData = new FormData();
   //   formData.append("fun", "getAllTask");
 
-  //   fetcher = axios
+  //   axios
   //     .post("php/api.php", formData)
   //     .then((response) => {
   //       setAllTask(response.data);
@@ -33,38 +34,32 @@ export default function BoardContainer() {
   //   }
   // }, []);
 
-  // const { data, error, mutate } = useSWR("php/api.php", fetcher, {
-  //   refreshInterval: 30000,
-  // });
-
-  //   const fetcher = axios
-  //     .post("php/api.php", formData)
-  //     .then((response) => {
-  //       setAllTask(response.data);
-  //       setLoader(false);
-  //     })
-  //     .catch((e) => console.log(e));
-
-  //   for (let [key, value] of formData) {
-  //     formData.delete(key, value);
-  //   }
-
-  //   const { data, error, mutate } = useSWR("php/api.php", fetcher, {
-  //     refreshInterval: 30000,
-  //   });
-
   let formData = new FormData();
   formData.append("fun", "getAllTask");
-  const fetcher = (url) => axios.post(url, formData).then((res) => res.data);
 
-  const { data, error, isLoading, mutate } = useSWR("php/api.php", fetcher, {
-    refreshInterval: 2000,
+  const queryClient = useQueryClient();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      axios
+        .post("https://todoui.kaktusprog.ir/assets/php/api.php", formData)
+        .then((response) => response.data),
   });
+
+  // Mutations
+  // const mutation = useMutation({
+  //   mutationFn: postTodo,
+  //   onSuccess: () => {
+  //     // Invalidate and refetch
+  //     queryClient.invalidateQueries({ queryKey: ["todos"] });
+  //   },
+  // });
 
   useEffect(() => {
     setLoader(false);
     setAllTask(data);
-    mutate();
+    // mutate(data);
   }, [data]);
 
   useEffect(() => {

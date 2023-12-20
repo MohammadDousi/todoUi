@@ -277,8 +277,7 @@ function getAllTask()
 {
 
     global $con;
-
-    $query = 'SELECT TBTask.* , TBUser.name FROM TBTask, TBUser WHERE TBTask.author = TBUser.id ORDER BY `id` DESC';
+    $query = 'SELECT TBTask.* , TBUser.name FROM TBTask, TBUser WHERE TBTask.author = TBUser.id ORDER BY `id` DESC';;
     $query = str_replace(";", "", $query);
     $stmt = $con->prepare($query);
     $stmt->execute();

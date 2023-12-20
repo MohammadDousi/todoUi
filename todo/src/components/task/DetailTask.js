@@ -45,11 +45,14 @@ export default function DetailTask() {
             formData.append("fun", "getAllEditHistoryTask");
             formData.append("id", params.id);
 
+            console.log(params.id)
+
             axios
               .post("php/api.php", formData)
               .then((response) => {
                 setHistory(response.data);
                 setLoader(false);
+                console.log(response.data);
               })
               .catch((e) => console.log(e));
           })

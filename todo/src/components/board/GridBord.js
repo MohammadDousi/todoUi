@@ -3,6 +3,7 @@ import ItemGridTask from "./gridTask/ItemGridTask.js";
 import noData from "../../assets/image/svg/noData.svg";
 
 export default function GridBord({ allTask }) {
+  
   const todo = allTask?.filter((item) => item.status === "todo");
   const done = allTask?.filter((item) => item.status === "done");
   const review = allTask?.filter((item) => item.status === "review");

@@ -69,6 +69,7 @@ export default function ItemGridTask(props) {
             <img
               key={item.avator}
               className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
+              loading="lazy"
               src={
                 item.avator
                   ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`

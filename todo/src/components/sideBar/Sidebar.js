@@ -8,7 +8,6 @@ import avator4 from "../../assets/image/userAvator/profile(2).png";
 import avator5 from "../../assets/image/userAvator/profile(9).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
-import logo from "../../assets/image/svg/logo.png";
 
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
@@ -16,7 +15,9 @@ import Toastiy from "../toastfiy/Toastfiy";
 
 export default function Sidebar() {
   const { userData } = useContext(UserContext);
+
   const location = useLocation();
+  let formData = new FormData();
 
   const [showSidebar, setShowSidebar] = useState("BIG");
 
@@ -28,10 +29,11 @@ export default function Sidebar() {
   const countAllMini = useRef();
 
   const [user, setUser] = useState({});
+
   useEffect(() => {
     setUser(userData);
+
     if (user?.id) {
-      let formData = new FormData();
       formData.append("fun", "countTaskForUser");
       formData.append("id", user.id);
 
@@ -47,27 +49,35 @@ export default function Sidebar() {
             countDoneBig.current.style.display = "flex";
           }
 
-          if (
-            localStorage.getItem("countTaskForUser") !==
-            String(response.data[0])
-          ) {
-            localStorage.setItem("countTaskForUser", response.data[0]);
-            Toastiy("You have been tagged in a new task", "in");
-          }
-
           countAllBig.current.innerText = response.data[0];
           countAllMini.current.innerText = response.data[0];
           countDoneBig.current.innerText = response.data[1];
           countDoneMini.current.innerText = response.data[1];
-          let all_task = response.data[0],
-            ok_task = response.data[1],
+          let allTask = Number(response.data[0]),
+            doneTask = Number(response.data[1]),
             progressStartValue = 100,
             progressEndValue = 0,
             speed = 15;
 
-          all_task = 360 / all_task;
-          ok_task = all_task * ok_task;
-          progressEndValue = 360 - ok_task;
+          allTask = 360 / allTask;
+          doneTask === 0 ? (doneTask = 0) : (doneTask = allTask * doneTask);
+          progressEndValue = 360 - doneTask;
+
+          if (
+            localStorage.getItem("countTaskForUser") ===
+            String(response.data[0])
+          ) {
+          } else if (
+            localStorage.getItem("countTaskForUser") > String(response.data[0])
+          ) {
+            Toastiy("You have been eliminated in a task", "in");
+            localStorage.setItem("countTaskForUser", response.data[0]);
+          } else if (
+            localStorage.getItem("countTaskForUser") < String(response.data[0])
+          ) {
+            Toastiy("You have been tagged in a new task", "in");
+            localStorage.setItem("countTaskForUser", response.data[0]);
+          }
 
           let progress = setInterval(() => {
             progressStartValue--;
@@ -85,12 +95,13 @@ export default function Sidebar() {
               clearInterval(progress);
             }
           }, speed);
-        })
-        .catch((e) => console.log(e));
 
-      for (let [key, value] of formData) {
-        formData.delete(key, value);
-      }
+          for (let [key, value] of formData) {
+            formData.delete(key, value);
+          }
+        })
+
+        .catch((e) => console.log(e));
     }
   }, [userData, location.pathname]);
 
@@ -226,7 +237,7 @@ export default function Sidebar() {
               >
                 <div
                   ref={countDoneBig}
-                  className="w-7 h-7 absolute -top-2.5 text-white text-sm font-bold bg-blue-600 flex justify-center items-center rounded-full"
+                  className="w-7 h-7 hidden absolute -top-2.5 text-white text-sm font-bold bg-blue-600 flex justify-center items-center rounded-full"
                 ></div>
               </div>
             </div>

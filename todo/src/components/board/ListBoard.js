@@ -35,7 +35,7 @@ export default function ListBoard({ allTask }) {
             </tr>
           </thead>
 
-          <tbody className="w-full max-h-full flex flex-col justify-start items-center divide-y divide-slate-200/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
+          <tbody className="w-full max-h-full flex flex-col justify-start items-center bg-white divide-y divide-slate-200/50 rounded-b-xl shadow-md shadow-slate-200 overflow-x-hidden">
             {allTask?.length === 0 && (
               <tr className="w-full">
                 <th className="w-full px-5 py-10 flex flex-col justify-center items-center gap-5">

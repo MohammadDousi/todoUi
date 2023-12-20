@@ -1,5 +1,4 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import axios from "axios";
 //// components
 import Main from "./Main";
 import Login from "./components/login/Login";
@@ -9,21 +8,18 @@ import NotFound from "./components/notFound/NotFound";
 import pattern from "./assets/image/svg/pattern.svg";
 
 //// context
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProvider from "./context/UserContext";
-import { SWRConfig } from "swr";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
     <UserProvider>
-      <SWRConfig
-        value={{
-          refreshInterval: 3000,
-          fetcher: (url) => axios(url).then((res) => res.data),
-        }}
-      >
+      <QueryClientProvider client={queryClient}>
         <img
           src={pattern}
           alt="pattern background"
@@ -50,7 +46,7 @@ function App() {
           pauseOnHover
           theme="colored"
         />
-      </SWRConfig>
+      </QueryClientProvider>
     </UserProvider>
   );
 }
