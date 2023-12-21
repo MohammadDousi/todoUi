@@ -34,6 +34,7 @@ export default function EditTask() {
   const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
   const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
   const [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
+  const [WarningUploadFile, setWarningUploadFile] = useState(true); // check size file
 
   const [dataToSend, setDataToSend] = useState({
     subject: "",
@@ -97,6 +98,19 @@ export default function EditTask() {
       .catch((e) => console.log(e));
   }, []);
 
+  useEffect(() => {
+    setWarningUploadFile(true);
+    for (let i = 0; i < dataToSend?.image?.length; i++) {
+      if (dataToSend?.image[i]?.size > 1500000) {
+        Toastiy(
+          `The size of the ${dataToSend?.image[i]?.name} image should not be more than 1.5 Mb`,
+          "wa"
+        );
+        setWarningUploadFile(false);
+      }
+    }
+  }, [dataToSend?.image]);
+
   const updateTask = () => {
     setLoader(true);
 
@@ -104,10 +118,11 @@ export default function EditTask() {
       dataToSend?.subject.trim() &&
       dataToSend?.description.trim() &&
       dataToSend?.priority.trim() &&
-      dataToSend?.deadline &&
+      dataToSend?.deadline.day &&
       dataToSend?.status &&
       dataToSend?.id &&
-      dataToSend?.descriptionEdit
+      dataToSend?.descriptionEdit &&
+      WarningUploadFile
     ) {
       let formData = new FormData();
       formData.append("fun", "updateTask");
@@ -689,7 +704,7 @@ export default function EditTask() {
               select Image
               <span className="font-normal normal-case">
                 {" "}
-                - ( The size of the image should not be more than 500 KB )
+                - ( The size of the image should not be more than 1.5 Mb )
               </span>
             </h2>
           </div>
@@ -705,93 +720,111 @@ export default function EditTask() {
               </label>
             </section>
 
-            {dataToSend?.image.map((image, index) => (
+            {dataToSend?.image?.map((image, index) => (
               <section
                 key={index + Math.random()}
-                className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden"
+                className="flex flex-col justify-start items-start gap-1"
               >
-                <img
-                  src={
-                    image.file
-                      ? `${axios.defaults.baseURL}/file/${image.file}`
-                      : URL.createObjectURL(image)
-                  }
-                  alt={image.file}
-                  className="w-full h-full object-contain"
-                />
+                <section className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden">
+                  <img
+                    src={
+                      image.file
+                        ? `${axios.defaults.baseURL}/file/${image.file}`
+                        : URL.createObjectURL(image)
+                    }
+                    alt={image.file}
+                    className="w-full h-full object-contain"
+                  />
+                  <Popup
+                    modal
+                    nested
+                    trigger={
+                      <i className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"></i>
+                    }
+                    position="right center"
+                  >
+                    {(close) => (
+                      <div className="p-10 flex flex-col justify-center items-center gap-8">
+                        <section className="w-full space-y-1">
+                          <p className="w-full text-left text-red-600 font-black text-xl capitalize">
+                            Attached Files delete
+                          </p>
+                          <p className="w-full text-left text-slate-600 font-normal text-base">
+                            Are you sure you want to delete file ?
+                          </p>
+                        </section>
+                        <section className="flex flex-row justify-center items-center gap-4">
+                          <button
+                            onClick={() => close()}
+                            className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                          >
+                            no care !
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDataToSend({
+                                ...dataToSend,
+                                image: dataToSend?.image?.filter(
+                                  (x) => x.file !== image.file
+                                ),
+                              });
 
-                <Popup
-                  modal
-                  nested
-                  trigger={
-                    <i className="fas fa-times-circle absolute bottom-1 right-2 text-red-200 hover:text-red-500 text-xl cursor-pointer"></i>
+                              formData.append("fun", "deleteFile");
+                              formData.append("id", image?.id);
+                              formData.append("idTask", params?.id);
+
+                              axios
+                                .post("php/api.php", formData)
+                                .then((response) => {
+                                  switch (response.data) {
+                                    case "isDelete":
+                                      Toastiy(
+                                        "Delete file is successfully",
+                                        "su"
+                                      );
+                                      break;
+                                    case "errDelete":
+                                      Toastiy("Error deleting file", "er");
+                                      break;
+                                    case "errNoSuchFile":
+                                      Toastiy("File was not found", "er");
+                                      break;
+                                    case "noData":
+                                      Toastiy("Server error", "er");
+                                      break;
+                                    default:
+                                      break;
+                                  }
+                                })
+                                .catch((e) => console.log(e));
+                              close();
+                            }}
+                            className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                          >
+                            delete file
+                          </button>
+                        </section>
+                      </div>
+                    )}
+                  </Popup>
+                </section>
+
+                <h3 className="pl-2 font-normal text-xs">
+                  {image?.name?.length >= 10
+                    ? image?.name?.slice(0, 10)
+                    : image?.name}
+                </h3>
+                <h3
+                  className={
+                    image?.size < 1500000
+                      ? "pl-2 font-normal text-xs"
+                      : "pl-2 font-bold text-sm text-red-500"
                   }
-                  position="right center"
                 >
-                  {(close) => (
-                    <div className="p-10 flex flex-col justify-center items-center gap-8">
-                      <section className="w-full space-y-1">
-                        <p className="w-full text-left text-red-600 font-black text-xl capitalize">
-                          Attached Files delete
-                        </p>
-                        <p className="w-full text-left text-slate-600 font-normal text-base">
-                          Are you sure you want to delete file ?
-                        </p>
-                      </section>
-                      <section className="flex flex-row justify-center items-center gap-4">
-                        <button
-                          onClick={() => close()}
-                          className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
-                        >
-                          no care !
-                        </button>
-                        <button
-                          onClick={() => {
-                            setDataToSend({
-                              ...dataToSend,
-                              image: dataToSend.image.filter(
-                                (x) => x.file !== image.file
-                              ),
-                            });
-
-                            formData.append("fun", "deleteFile");
-                            formData.append("id", image.id);
-                            formData.append("idTask", params.id);
-
-                            axios
-                              .post("php/api.php", formData)
-                              .then((response) => {
-                                switch (response.data) {
-                                  case "isDelete":
-                                    Toastiy(
-                                      "Delete file is successfully",
-                                      "su"
-                                    );
-                                    break;
-                                  case "errDelete":
-                                    Toastiy("Error deleting file", "er");
-                                    break;
-                                  case "errNoSuchFile":
-                                    Toastiy("File was not found", "er");
-                                    break;
-                                  case "noData":
-                                    Toastiy("Server error", "er");
-                                    break;
-                                  default:
-                                    break;
-                                }
-                              })
-                              .catch((e) => console.log(e));
-                            close();
-                          }}
-                          className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
-                        >
-                          delete file
-                        </button>
-                      </section>
-                    </div>
-                  )}
-                </Popup>
+                  {Number(Math.floor(image?.size)) < 1000000
+                    ? Math.floor(image?.size / 1024) + " Kb"
+                    : Math.floor(image?.size / 1024) + " Mb"}
+                </h3>
               </section>
             ))}
 

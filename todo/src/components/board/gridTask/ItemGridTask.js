@@ -2,6 +2,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 import defultAvator from "../../../assets/image/userAvator/defultAvatorMen.png";
+import Popup from "reactjs-popup";
 
 export default function ItemGridTask(props) {
   const { data } = props;
@@ -67,21 +68,32 @@ export default function ItemGridTask(props) {
 
         <section className="flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
           {tag?.map((item, index) => (
-            <img
+            <Popup
               key={index}
-              className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
-              loading="lazy"
-              src={
-                item.avator
-                  ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
-                  : defultAvator
+              closeOnDocumentClick
+              on={["hover"]}
+              position="bottom center"
+              arrow={"center bottom"}
+              contentStyle={{ width : "auto", padding : "4px 10px", backgroundColor : "#475569" , color : "#fff" , fontSize : "12px"}}
+              trigger={
+                <img
+                  className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
+                  loading="lazy"
+                  src={
+                    item.avator
+                      ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                      : defultAvator
+                  }
+                  alt={
+                    item.avator
+                      ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                      : defultAvator
+                  }
+                />
               }
-              alt={
-                item.avator
-                  ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
-                  : defultAvator
-              }
-            />
+            >
+              <div>{item.name}</div>
+            </Popup>
           ))}
 
           {/* <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">

@@ -21,6 +21,8 @@ export default function Sidebar() {
 
   const [showSidebar, setShowSidebar] = useState("BIG");
 
+  const [colorCircle, setColorCircle] = useState("#2563eb");
+
   const circle_progres = useRef();
   const circle_count = useRef();
   const countDoneBig = useRef();
@@ -47,6 +49,15 @@ export default function Sidebar() {
             countDoneBig.current.style.display = "none";
           } else {
             countDoneBig.current.style.display = "flex";
+          }
+
+          if (response.data[1] === response.data[0]) {
+            setColorCircle("#22c55e");
+            countDoneBig.current.style.display = "none";
+            countAllBig.current.style.backgroundColor = "#bbf7d0";
+            countAllBig.current.style.color = "#15803d";
+            countAllMini.current.style.backgroundColor = "#bbf7d0";
+            countAllMini.current.style.color = "#15803d";
           }
 
           countAllBig.current.innerText = response.data[0];
@@ -83,7 +94,7 @@ export default function Sidebar() {
             progressStartValue--;
             circle_progres.current.style.background = `conic-gradient(#fff ${
               progressStartValue * 3.6
-            }deg , #2563eb 0deg)`;
+            }deg , ${colorCircle} 0deg)`;
             circle_count.current.style.transform = `rotate(${
               progressStartValue * 3.6
             }deg)`;
@@ -179,6 +190,14 @@ export default function Sidebar() {
                 closeOnDocumentClick
                 on={["hover", "focus"]}
                 arrow={"center center"}
+                position="right center"
+                contentStyle={{
+                  width: "auto",
+                  marginLeft: "4px",
+                  padding: "4px 14px",
+                  backgroundColor: "#bfdbfe",
+                  color: "#1d4ed8",
+                }}
                 trigger={
                   <Link to={tab.path}>
                     <section
@@ -192,7 +211,6 @@ export default function Sidebar() {
                     </section>
                   </Link>
                 }
-                position="right center"
               >
                 <div>{tab.name}</div>
               </Popup>

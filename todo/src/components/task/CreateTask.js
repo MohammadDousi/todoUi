@@ -21,14 +21,14 @@ import { useNavigate } from "react-router-dom";
 export default function CreateTask() {
   const { userData } = useContext(UserContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [loader, setLoader] = useState(false);
 
   const [showHoverTagTeammate, setShowHoverTagTeammate] = useState(false); // show and hide hover person teammate
   const [searchTeammate, setSearchTeammate] = useState(""); // search teammate
   const [filterSearchTeammate, setFilterSearchTeammate] = useState([]); // set data group and sort
-
+  const [WarningUploadFile, setWarningUploadFile] = useState(true); // check size file
   const [dataToSend, setDataToSend] = useState({
     subject: "",
     description: "",
@@ -70,6 +70,19 @@ export default function CreateTask() {
     }
   }, []);
 
+  useEffect(() => {
+    setWarningUploadFile(true);
+    for (let i = 0; i < dataToSend.image.length; i++) {
+      if (dataToSend.image[i].size > 1500000) {
+        Toastiy(
+          `The size of the ${dataToSend.image[i].name} image should not be more than 1.5 Mb`,
+          "wa"
+        );
+        setWarningUploadFile(false);
+      }
+    }
+  }, [dataToSend.image]);
+
   const sendData = () => {
     setLoader(true);
 
@@ -77,7 +90,8 @@ export default function CreateTask() {
       dataToSend.subject.trim() &&
       dataToSend.description.trim() &&
       dataToSend.priority.trim() &&
-      dataToSend.deadline
+      dataToSend.deadline.day &&
+      WarningUploadFile
     ) {
       let formData = new FormData();
       formData.append("fun", "createNewTask");
@@ -416,7 +430,7 @@ export default function CreateTask() {
             select Image
             <span className="font-normal normal-case">
               {" "}
-              - ( The size of the image should not be more than 500 KB )
+              - ( The size of the image should not be more than 1.5 Mb )
             </span>
           </h2>
 
@@ -431,23 +445,23 @@ export default function CreateTask() {
               </label>
             </section>
 
-            {dataToSend.image.map((image) => (
+            {dataToSend?.image?.map((image) => (
               <section
-                key={image.size + Math.random()}
+                key={image?.size + Math.random()}
                 className="flex flex-col justify-start items-start gap-1"
               >
                 <section className="w-24 h-24 relative bg-white border border-slate-300 rounded-xl flex justify-center items-center overflow-hidden">
                   <img
                     src={image && URL.createObjectURL(image)}
-                    alt={image.name}
+                    alt={image}
                     className="w-full h-full object-contain"
                   />
                   <i
                     onClick={() => {
                       setDataToSend({
                         ...dataToSend,
-                        image: dataToSend.image.filter(
-                          (x) => x.name !== image.name
+                        image: dataToSend.image?.filter(
+                          (x) => x.name !== image?.name
                         ),
                       });
                     }}
@@ -456,25 +470,20 @@ export default function CreateTask() {
                 </section>
 
                 <h3 className="pl-2 font-normal text-xs">
-                  {image.name.length >= 10
-                    ? image.name.slice(0, 10)
-                    : image.name}
+                  {image?.name?.length >= 10
+                    ? image?.name?.slice(0, 10)
+                    : image?.name}
                 </h3>
                 <h3
                   className={
-                    image.size < 2000000
+                    image?.size < 1500000
                       ? "pl-2 font-normal text-xs"
                       : "pl-2 font-bold text-sm text-red-500"
                   }
                 >
-                  {/* {image.size > 2000000 &&
-                    Toastiy(
-                      "The size of the image should not be more than 500 KB",
-                      "wa"
-                    )} */}
-
-                  {Number(Math.floor(image.size / 1024)).toLocaleString() +
-                    " KB"}
+                  {Number(Math.floor(image?.size)) < 1000000
+                    ? Math.floor(image?.size / 1024) + " Kb"
+                    : Math.floor(image?.size / 1024) + " Mb"}
                 </h3>
               </section>
             ))}
@@ -489,7 +498,7 @@ export default function CreateTask() {
               onChange={(event) => {
                 setDataToSend({
                   ...dataToSend,
-                  image: [...dataToSend.image, event.target.files[0]],
+                  image: [...dataToSend?.image, event.target.files[0]],
                 });
               }}
             />
