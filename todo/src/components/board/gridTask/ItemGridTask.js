@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import defultAvator from "../../../assets/image/userAvator/defultAvatorMen.png";
 
@@ -8,10 +8,11 @@ export default function ItemGridTask(props) {
 
   let date = JSON.parse(data?.date); // get data from data
   let tag = JSON.parse(data.tagPartners);
+  const navigate = useNavigate();
 
   return (
-    <Link
-      to={`/main/detailTask/${data?.id}`}
+    <section
+      onClick={() => navigate(`/main/detailTask/${data?.id}`)}
       className="w-full p-5 bg-white flex flex-col justify-between items-center gap-4 shadow-md cursor-pointer duration-300 rounded-xl"
     >
       {/* <img
@@ -65,9 +66,9 @@ export default function ItemGridTask(props) {
         </div>
 
         <section className="flex justify-end items-center -space-x-2 hover:space-x-1 duration-1000">
-          {tag?.map((item) => (
+          {tag?.map((item, index) => (
             <img
-              key={item.avator}
+              key={index}
               className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
               loading="lazy"
               src={
@@ -88,6 +89,6 @@ export default function ItemGridTask(props) {
           </div> */}
         </section>
       </section>
-    </Link>
+    </section>
   );
 }

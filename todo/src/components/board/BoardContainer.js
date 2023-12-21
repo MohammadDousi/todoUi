@@ -40,26 +40,26 @@ export default function BoardContainer() {
   const queryClient = useQueryClient();
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["repoData"],
+    queryKey: ["getAllTask"],
     queryFn: () =>
       axios
         .post("https://todoui.kaktusprog.ir/assets/php/api.php", formData)
         .then((response) => response.data),
+    refetchInterval: 2000,
   });
 
-  // Mutations
   // const mutation = useMutation({
-  //   mutationFn: postTodo,
+  //   mutationFn: ["getAllTask"],
   //   onSuccess: () => {
   //     // Invalidate and refetch
-  //     queryClient.invalidateQueries({ queryKey: ["todos"] });
+  //     queryClient.invalidateQueries({ queryKey: ["getAllTask"] });
   //   },
   // });
 
   useEffect(() => {
     setLoader(false);
     setAllTask(data);
-    // mutate(data);
+    // mutation.mutate(data);
   }, [data]);
 
   useEffect(() => {

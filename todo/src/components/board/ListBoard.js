@@ -47,8 +47,8 @@ export default function ListBoard({ allTask }) {
               </tr>
             )}
 
-            {allTask?.map((item) => (
-              <ItemListTask key={item.id + Math.random()} data={item} />
+            {allTask?.map((item , index) => (
+              <ItemListTask key={index} data={item} />
             ))}
           </tbody>
         </table>

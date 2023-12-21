@@ -21,8 +21,8 @@ export default function GridBord({ allTask }) {
         />
 
         <div className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
-          {todo?.map((item) => (
-            <ItemGridTask key={item.id} data={item} />
+          {todo?.map((item,index) => (
+            <ItemGridTask key={index} data={item} />
           ))}
 
           {done?.length === 0 &&

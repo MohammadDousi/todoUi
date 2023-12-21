@@ -65,9 +65,9 @@ export default function ItemListTask(props) {
       </th>
       <th className="w-1/12 flex justify-center items-start">
         <section className="flex justify-center items-center -space-x-2 hover:space-x-1 duration-1000">
-          {tag?.map((item) => (
+          {tag?.map((item , index) => (
             <img
-              key={item.avator}
+              key={index}
               className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
               src={
                 item.avator

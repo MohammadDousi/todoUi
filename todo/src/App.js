@@ -15,7 +15,13 @@ import UserProvider from "./context/UserContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true,
+      },
+    },
+  });
 
   return (
     <UserProvider>
