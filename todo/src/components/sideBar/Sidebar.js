@@ -4,10 +4,11 @@ import axios from "axios";
 import Popup from "reactjs-popup";
 
 import "./SidebarStyle.css";
-import avator4 from "../../assets/image/userAvator/profile(2).png";
-import avator5 from "../../assets/image/userAvator/profile(9).png";
+import avator4 from "../../assets/image/userAvator/profile(3).png";
+import avator5 from "../../assets/image/userAvator/profile(8).png";
 import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
+import logo from "../../assets/image/svg/logo.png";
 
 import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
@@ -20,9 +21,6 @@ export default function Sidebar() {
   let formData = new FormData();
 
   const [showSidebar, setShowSidebar] = useState("BIG");
-
-  const [colorCircle, setColorCircle] = useState("#2563eb");
-
   const circle_progres = useRef();
   const circle_count = useRef();
   const countDoneBig = useRef();
@@ -45,19 +43,10 @@ export default function Sidebar() {
           // array item 0 -> count task for user is not done - all task
           // array item 1 -> count task for user is done
 
-          if (response.data[1] === 0) {
+          if (response.data[1] === 0 || response.data[1] === response.data[0]) {
             countDoneBig.current.style.display = "none";
           } else {
             countDoneBig.current.style.display = "flex";
-          }
-
-          if (response.data[1] === response.data[0]) {
-            setColorCircle("#22c55e");
-            countDoneBig.current.style.display = "none";
-            countAllBig.current.style.backgroundColor = "#bbf7d0";
-            countAllBig.current.style.color = "#15803d";
-            countAllMini.current.style.backgroundColor = "#bbf7d0";
-            countAllMini.current.style.color = "#15803d";
           }
 
           countAllBig.current.innerText = response.data[0];
@@ -68,7 +57,7 @@ export default function Sidebar() {
             doneTask = Number(response.data[1]),
             progressStartValue = 100,
             progressEndValue = 0,
-            speed = 15;
+            speed = 10;
 
           allTask = 360 / allTask;
           doneTask === 0 ? (doneTask = 0) : (doneTask = allTask * doneTask);
@@ -94,7 +83,7 @@ export default function Sidebar() {
             progressStartValue--;
             circle_progres.current.style.background = `conic-gradient(#fff ${
               progressStartValue * 3.6
-            }deg , ${colorCircle} 0deg)`;
+            }deg , #2563eb 0deg)`;
             circle_count.current.style.transform = `rotate(${
               progressStartValue * 3.6
             }deg)`;
@@ -288,7 +277,7 @@ export default function Sidebar() {
             ))}
         </section>
 
-        <div className="w-full flex flex-col justify-start items-start gap-1">
+        <div className="w-full flex flex-col justify-center items-center gap-1">
           <section className="w-full bg-green-100 border border-green-300 p-3 rounded-xl flex flex-row justify-between items-center">
             <h3 className="text-green-600 font-bold text-xs capitalize">
               is online :
@@ -315,9 +304,15 @@ export default function Sidebar() {
             </section>
           </section>
 
-          <h3 className="w-full pt-1 text-center text-blue-400 font-black text-xs uppercase">
-            todo dev. by mohammad dosi
-          </h3>
+          <Link
+            to={"https://private-site-next.vercel.app/"}
+            className="mt-2 flex flex-row justify-center items-center gap-2 cursor-pointer"
+          >
+            <img src={logo} alt="logo" className="h-4" />
+            <h3 className="w-full text-center text-blue-400 font-black text-xs capitalize">
+              dev. by mohammad dosi
+            </h3>
+          </Link>
         </div>
       </section>
     </>

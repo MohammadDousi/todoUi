@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { UserContext } from "../../context/UserContext";
 
@@ -37,24 +37,22 @@ export default function Header() {
 
       <div className="flex justify-center items-center gap-14">
         <ul className="flex justify-start items-center gap-6">
-          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
-            Dashboard
-          </li>
           <li
-            onClick={() =>
-              window.location.replace("https://private-site-next.vercel.app/")
-            }
+            onClick={() => navigate("/main/board")}
             className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer"
           >
-            About Us
+            Dashboard
           </li>
           <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
+            <Link to={"https://private-site-next.vercel.app/"}>About Us</Link>
+          </li>
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500">
             News
           </li>
-          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500">
             User Policy
           </li>
-          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
+          <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500">
             Contacts
           </li>
         </ul>

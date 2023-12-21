@@ -2,7 +2,7 @@ import React, { useContext, useRef } from "react";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import OtpInput from "react-otp-input";
 import pic from "../../assets/image/svg/standOut.svg";
@@ -280,13 +280,10 @@ export default function Login() {
 
         {loader && <Loader />}
 
-        <h3
-          onClick={() =>
-            window.location.replace("https://private-site-next.vercel.app/")
-          }
-          className="absolute bottom-5 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer"
-        >
-          develop and design by mohammad dosi
+        <h3 className="absolute bottom-5 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer">
+          <Link to={"https://private-site-next.vercel.app/"}>
+            develop and design by mohammad dosi
+          </Link>
         </h3>
       </main>
     </>
