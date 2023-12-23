@@ -14,6 +14,9 @@ if (isset($_POST['fun'])) {
         case 'verifyOtpCode':
             verifyOtpCode();
             break;
+        case 'verifyUsername':
+            verifyUsername();
+            break;
         case 'getAllTask':
             getAllTask();
             break;
@@ -104,6 +107,7 @@ function verifyMobile()
 
     $con = null;
 }
+
 function verifyOtpCode()
 {
     global $con;
@@ -161,7 +165,7 @@ function verifyOtpCode()
                         $token = $item['token'];
                     }
 
-                    $arr[] = ['token' => $token, 'msg' => 'insertOk'];
+                    $arr[] = ['token' => $token, 'msg' => 'updateOk'];
                     echo json_encode($arr);
                 }
             } else {
@@ -181,6 +185,35 @@ function verifyOtpCode()
     $con = null;
 }
 
+function verifyUsername()
+{
+
+    global $con;
+
+    if (isset($_POST['name']) && isset($_POST['token'])) {
+
+        $username = $_POST['name'];
+        $token = $_POST['token'];
+
+        $query = 'UPDATE TBUser SET `name` = :username  WHERE `token` = :token';
+        $query = str_replace(";", "", $query);
+        $stmt = $con->prepare($query);
+        $stmt->bindparam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindparam(':token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        $status = $stmt->execute();
+
+        if ($status) {
+            echo "updateUser";
+        } else {
+            echo "errUpdateUser";
+        }
+    } else {
+        echo "noData";
+    }
+
+    $con = null;
+}
 
 
 

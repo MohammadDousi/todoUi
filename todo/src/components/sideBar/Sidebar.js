@@ -305,7 +305,7 @@ export default function Sidebar() {
           </section>
 
           <Link
-            to={"https://private-site-next.vercel.app/"}
+            to={"https://www.kaktusprog.ir/"}
             className="mt-2 flex flex-row justify-center items-center gap-2 cursor-pointer"
           >
             <img src={logo} alt="logo" className="h-4" />

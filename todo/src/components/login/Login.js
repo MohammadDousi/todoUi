@@ -21,7 +21,12 @@ export default function Login() {
 
   const [levelLogin, setLevelLogin] = useState("MOBILE"); // check and switch between conatiner mobile and otp code
   const [mobileOk, setMobileOk] = useState(false); // check for regiex moile - true is ok number mobile
-  const [data, setData] = useState({ mobileNumber: "", otp: "" }); // set mobiel and otp code
+  const [data, setData] = useState({
+    mobileNumber: "",
+    otp: "",
+    userName: "",
+    token: "",
+  }); // set mobiel and otp code
 
   const [touched, setTouched] = useState({});
 
@@ -31,8 +36,8 @@ export default function Login() {
   let intervalTimer = useRef();
 
   const verifyMobile = () => {
-    setLoader(true);
-    if (mobileOk) {
+    if (mobileOk && data.mobileNumber.length !== 0) {
+      setLoader(true);
       let formData = new FormData();
       formData.append("fun", "verifyMobile");
       formData.append("mobileNumber", data.mobileNumber);
@@ -64,12 +69,14 @@ export default function Login() {
           }
         })
         .catch((e) => console.log(e));
+    } else {
+      Toastiy("Enter your mobile number correctly", "wa");
     }
   };
 
   const verifyOtpCode = () => {
-    setLoader(true);
     if (data.otp.length === 4) {
+      setLoader(true);
       let formData = new FormData();
       formData.append("fun", "verifyOtpCode");
       formData.append("mobileNumber", data.mobileNumber);
@@ -81,12 +88,17 @@ export default function Login() {
           response.data?.map((item) => {
             switch (item.msg) {
               case "insertOk":
-                const token = item.token;
-                setToken(token);
-                Toastiy("Welcome to Todo Application", "in");
+                setData({ ...data, token: item.token });
+                setLoader(false);
+                clearInterval(intervalTimer.current);
+                setLevelLogin("NAME");
+                break;
+              case "updateOk":
+                setToken(item.token);
                 setLoader(false);
                 clearInterval(intervalTimer.current);
                 navigate("/main");
+                Toastiy("Welcome to Todo Application", "in");
                 break;
               case "noInsert":
                 break;
@@ -102,6 +114,8 @@ export default function Login() {
           });
         })
         .catch((e) => console.log(e));
+    } else {
+      Toastiy("The code is not correct", "wa");
     }
   };
 
@@ -142,10 +156,46 @@ export default function Login() {
   };
 
   useEffect(() => {
-    /^09[0-9]{9}$/g.test(data.mobileNumber.trim())
+    /^09[0-9]{9}$/g.test(data?.mobileNumber)
       ? setMobileOk(true)
       : setMobileOk(false);
-  }, [data.mobileNumber]);
+  }, [data?.mobileNumber]);
+
+  const verifyUsername = () => {
+    if (data.userName.length !== 0) {
+      setLoader(true);
+      let formData = new FormData();
+      formData.append("fun", "verifyUsername");
+      formData.append("name", data.userName);
+      formData.append("token", data?.token);
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          switch (response.data) {
+            case "updateUser":
+              setLoader(false);
+              Toastiy("Welcome to Todo Application", "in");
+              setToken(data?.token);
+              navigate("/main");
+              break;
+            case "errUpdateUser":
+              Toastiy("Login error, please try again.", "er");
+              setLoader(false);
+              break;
+            case "noData":
+              Toastiy("An error has occurred, contact support", "in");
+              setLoader(false);
+              break;
+            default:
+              break;
+          }
+        })
+        .catch((e) => console.log(e));
+    } else {
+      Toastiy("Enter name correctly", "wa");
+    }
+  };
 
   const [helpOtp, setHelpOtp] = useState("");
   const code = () => {
@@ -169,6 +219,7 @@ export default function Login() {
 
         {/* container mobile and otp code */}
         <section className="w-1/2 relative flex flex-row justify-start items-center">
+          {/* get mobile */}
           <section
             className={
               levelLogin === "MOBILE"
@@ -195,9 +246,9 @@ export default function Login() {
                     ? "w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-rose-500 focus:border-blue-500"
                     : "w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
                 }
-                value={data.mobileNumber}
+                value={data?.mobileNumber}
                 onChange={(e) => {
-                  setData({ mobileNumber: e.target.value });
+                  setData({ ...data, mobileNumber: e.target.value });
                 }}
                 onFocus={(e) =>
                   setTouched({ ...touched, [e.target.name]: true })
@@ -217,7 +268,7 @@ export default function Login() {
               verify number
             </button>
           </section>
-
+          {/* get code */}
           <section
             className={
               levelLogin === "OTP"
@@ -242,8 +293,8 @@ export default function Login() {
 
             <section className="w-full relative flex flex-col justify-center items-center gap-10">
               <OtpInput
-                value={data.otp}
-                onChange={(value) => setData({ ...data, otp: value.trim() })}
+                value={data?.otp}
+                onChange={(value) => setData({ ...data, otp: value })}
                 numInputs={4}
                 inputType="tel"
                 containerStyle="w-full flex justify-center items-start"
@@ -272,16 +323,65 @@ export default function Login() {
                 onClick={() => verifyOtpCode()}
                 className="h-10 px-8 hover:px-10 bg-amber-200 text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
               >
-                check & Login
+                verify code
               </button>
             </section>
+          </section>
+          {/* get name */}
+          <section
+            className={
+              levelLogin === "NAME"
+                ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
+                : "w-10/12 p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 overflow-hidden"
+            }
+          >
+            <section className="w-full flex flex-col justify-center items-start gap-1">
+              <p className="w-full text-blue-600 font-black text-3xl capitalize">
+                Register your username
+              </p>
+              <p className="w-full text-slate-600 font-normal text-lg ">
+                this name will be displayed to other users.
+              </p>
+            </section>
+
+            <section className="w-full relative flex flex-col justify-center items-end gap-2">
+              <input
+                type="text"
+                name="userName"
+                placeholder="ex : mohammad dosi"
+                className={
+                  !data.userName && touched.userName
+                    ? "w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-rose-500 focus:border-blue-500"
+                    : "w-full h-12 px-8 text-slate-600 font-black text-base tracking-widest rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+                }
+                value={data.userName}
+                onChange={(e) => {
+                  setData({ ...data, userName: e.target.value });
+                }}
+                onFocus={(e) =>
+                  setTouched({ ...touched, [e.target.name]: true })
+                }
+              />
+              {!data.userName && touched.userName && (
+                <span className="w-full absolute -bottom-7 pl-8 text-rose-500 font-normal text-sm text-left">
+                  Register your username.
+                </span>
+              )}
+            </section>
+
+            <button
+              onClick={() => verifyUsername()}
+              className="h-10 px-8 hover:px-10 bg-amber-200 text-amber-700 text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+            >
+              login
+            </button>
           </section>
         </section>
 
         {loader && <Loader />}
 
         <h3 className="absolute bottom-5 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer">
-          <Link to={"https://private-site-next.vercel.app/"}>
+          <Link to={"https://www.kaktusprog.ir/"}>
             develop and design by mohammad dosi
           </Link>
         </h3>

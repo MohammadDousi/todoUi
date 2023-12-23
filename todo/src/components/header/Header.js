@@ -44,7 +44,7 @@ export default function Header() {
             Dashboard
           </li>
           <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500 cursor-pointer">
-            <Link to={"https://private-site-next.vercel.app/"}>About Us</Link>
+            <Link to={"https://www.kaktusprog.ir/"}>About Us</Link>
           </li>
           <li className="text-textColor font-bold text-sm hover:text-blue-600 duration-500">
             News
