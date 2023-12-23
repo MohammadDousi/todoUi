@@ -140,8 +140,8 @@ export default function Sidebar() {
       <section
         className={
           showSidebar === "MINI"
-            ? "w-20 h-full py-4 bg-white flex flex-col justify-start  items-center gap-12 border-r border-gray-300 -translate-x-0 duration-1000 overflow-hidden"
-            : "w-0 h-full py-4 bg-white flex flex-col justify-start items-center gap-0 -translate-x-20 duration-1000 overflow-hidden"
+            ? "sm:hidden w-20 h-full py-4 bg-white flex flex-col justify-start  items-center gap-12 border-r border-gray-300 -translate-x-0 duration-1000 overflow-hidden"
+            : "sm:hidden w-0 h-full py-4 bg-white flex flex-col justify-start items-center gap-0 -translate-x-20 duration-1000 overflow-hidden"
         }
       >
         <section className="w-full flex flex-col justify-center items-center gap-6">
@@ -191,7 +191,8 @@ export default function Sidebar() {
                   <Link to={tab.path}>
                     <section
                       className={
-                        location.pathname === tab.path
+                        location.pathname === tab.path ||
+                        location.pathname === tab.path2
                           ? "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
                           : "w-10 h-10 flex flex-col justify-center items-center gap-3 cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-xl"
                       }
@@ -207,12 +208,11 @@ export default function Sidebar() {
         </section>
       </section>
       {/*  big sidebar */}
-
       <section
         className={
           showSidebar === "BIG"
-            ? "w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
-            : "w-0 h-auto bg-white px-0 py-4 flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
+            ? "sm:hidden w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
+            : "sm:hidden w-0 h-auto bg-white px-0 py-4 flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
         }
       >
         <section className="w-full relative flex flex-col justify-center items-center gap-4">
@@ -264,7 +264,6 @@ export default function Sidebar() {
                 <section
                   className={
                     location.pathname === tab.path ||
-                    location.pathname === tab.path1 ||
                     location.pathname === tab.path2
                       ? "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 bg-amber-200 text-amber-700 shadow-2xl rounded-xl"
                       : "p-5 flex flex-col justify-center items-center gap-3 cursor-pointer duration-300 hover:bg-blue-100 text-slate-400 font-black hover:text-blue-600 hover:rounded-xl"
@@ -314,6 +313,54 @@ export default function Sidebar() {
             </h3>
           </Link>
         </div>
+      </section>
+      {/*  mobile side bottom */}
+      <section
+        className={
+          "md:hidden w-full absolute z-50 bottom-4 left-0 flex flex-row justify-center items-center"
+        }
+      >
+        <section
+          className={
+            "w-auto h-auto py-2 px-4 bg-white flex flex-col justify-center items-center rounded-xl shadow-lg duration-1000 overflow-hidden"
+          }
+        >
+          <section className="w-full h-full flex flex-row justify-center items-center gap-4">
+            {sideTab &&
+              sideTab.map((tab) => (
+                <Popup
+                  key={tab.name}
+                  closeOnDocumentClick
+                  on={["hover", "focus"]}
+                  arrow={"center center"}
+                  position="top center"
+                  contentStyle={{
+                    width: "auto",
+                    marginTop: "-4px",
+                    padding: "4px 14px",
+                    backgroundColor: "#bfdbfe",
+                    color: "#1d4ed8",
+                  }}
+                  trigger={
+                    <Link to={tab.path}>
+                      <section
+                        className={
+                          location.pathname === tab.path ||
+                          location.pathname === tab.path2
+                            ? "size-14 flex flex-col justify-center items-center cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
+                            : "size-14 flex flex-col justify-center items-center cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-xl"
+                        }
+                      >
+                        <i className={`${tab.icon} text-base`}></i>
+                      </section>
+                    </Link>
+                  }
+                >
+                  <div>{tab.name}</div>
+                </Popup>
+              ))}
+          </section>
+        </section>
       </section>
     </>
   );

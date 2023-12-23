@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { UserContext } from "../../context/UserContext";
 
+import "./headerStyle.css";
 export default function Header() {
   const { setSearch } = useContext(UserContext);
 
@@ -35,7 +36,7 @@ export default function Header() {
     <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
       <i className="fa fa-bars iconContainer bg-gray-100 text-slate-400 text-sm"></i>
 
-      <div className="flex justify-center items-center gap-14">
+      <div className="hidden lg:flex justify-center items-center gap-14">
         <ul className="flex justify-start items-center gap-6">
           <li
             onClick={() => navigate("/main/board")}

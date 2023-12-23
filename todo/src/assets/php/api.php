@@ -200,7 +200,6 @@ function verifyUsername()
         $stmt = $con->prepare($query);
         $stmt->bindparam(':username', $username, PDO::PARAM_STR);
         $stmt->bindparam(':token', $token, PDO::PARAM_STR);
-        $stmt->execute();
         $status = $stmt->execute();
 
         if ($status) {

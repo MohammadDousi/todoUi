@@ -13,26 +13,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 export default function BoardContainer() {
   const navigate = useNavigate();
 
-  const [board, setBoard] = useState("grid"); // change between board grid or list
+  const [board, setBoard] = useState(); // change between board grid or list
   const [loader, setLoader] = useState(false);
   const [allTask, setAllTask] = useState([]); // get all task from server
-
-  // useEffect(() => {
-  //   let formData = new FormData();
-  //   formData.append("fun", "getAllTask");
-
-  //   axios
-  //     .post("php/api.php", formData)
-  //     .then((response) => {
-  //       setAllTask(response.data);
-  //       setLoader(false);
-  //     })
-  //     .catch((e) => console.log(e));
-
-  //   for (let [key, value] of formData) {
-  //     formData.delete(key, value);
-  //   }
-  // }, []);
 
   let formData = new FormData();
   formData.append("fun", "getAllTask");
@@ -64,11 +47,16 @@ export default function BoardContainer() {
 
   useEffect(() => {
     setBoard(localStorage.getItem("board"));
+    if (!localStorage.getItem("board")) {
+      localStorage.setItem("board", "grid");
+    }
   }, [board]);
 
   return (
-    <section className="w-full h-full pb-8 relative overflow-hidden duration-1000">
-      <section className="w-full py-3 px-6 flex flex-row justify-between items-center gap-8">
+    <section className="w-full h-full pt-3.5 lg:py-0 relative overflow-hidden duration-1000">
+      {/* w-full h-full pb-8 relative overflow-hidden duration-1000 */}
+      <section className="w-full py-3 px-6 hidden lg:flex flex-row justify-between items-center gap-8">
+        {/* w-full py-3 px-6 flex flex-row justify-between items-center gap-8 */}
         <div className="flex flex-row justify-center items-start gap-2">
           <i
             onClick={() => {
@@ -98,6 +86,7 @@ export default function BoardContainer() {
         <button
           onClick={() => navigate("/main/createTask")}
           className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+          // h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500
         >
           + create task
         </button>

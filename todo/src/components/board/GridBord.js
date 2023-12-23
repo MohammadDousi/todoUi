@@ -3,15 +3,14 @@ import ItemGridTask from "./gridTask/ItemGridTask.js";
 import noData from "../../assets/image/svg/noData.svg";
 
 export default function GridBord({ allTask }) {
-  
   const todo = allTask?.filter((item) => item.status === "todo");
   const done = allTask?.filter((item) => item.status === "done");
   const review = allTask?.filter((item) => item.status === "review");
   const inProgres = allTask?.filter((item) => item.status === "inProgres");
 
   return (
-    <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-row justify-start items-start gap-6">
-      <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
+    <section className="w-full h-full px-6 pb-44 lg:pb-0 absolute z-20 left-0 flex flex-col lg:flex-row justify-start items-start gap-6 overflow-auto lg:overflow-hidden">
+      <div className="w-full lg:w-1/4 h-full flex flex-col justify-start items-start gap-3">
         <HeaderGridTask
           data={{
             title: "TO DO",
@@ -20,8 +19,8 @@ export default function GridBord({ allTask }) {
           }}
         />
 
-        <div className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
-          {todo?.map((item,index) => (
+        <div className="w-full h-auto lg:h-5/6 pb-2 lg:pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
+          {todo?.map((item, index) => (
             <ItemGridTask key={index} data={item} />
           ))}
 
@@ -39,7 +38,7 @@ export default function GridBord({ allTask }) {
         </div>
       </div>
 
-      <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
+      <div className="w-full lg:w-1/4 h-full flex flex-col justify-start items-start gap-3">
         <HeaderGridTask
           data={{
             title: "in progres",
@@ -48,14 +47,14 @@ export default function GridBord({ allTask }) {
           }}
         />
 
-        <div className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
+        <div className="w-full h-auto lg:h-5/6 pb-2 lg:pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
           {inProgres?.map((item) => (
             <ItemGridTask key={item.id} data={item} />
           ))}
         </div>
       </div>
 
-      <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
+      <div className="w-full lg:w-1/4 h-full flex flex-col justify-start items-start gap-3">
         <HeaderGridTask
           data={{
             title: "REVIEW",
@@ -64,14 +63,14 @@ export default function GridBord({ allTask }) {
           }}
         />
 
-        <div className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
+        <div className="w-full h-auto lg:h-5/6 pb-2 lg:pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
           {review?.map((item) => (
             <ItemGridTask key={item.id} data={item} />
           ))}
         </div>
       </div>
 
-      <div className="w-1/4 h-full flex flex-col justify-start items-start gap-3">
+      <div className="w-full lg:w-1/4 h-full flex flex-col justify-start items-start gap-3">
         <HeaderGridTask
           data={{
             title: "DONE",
@@ -80,7 +79,7 @@ export default function GridBord({ allTask }) {
           }}
         />
 
-        <div className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
+        <div className="w-full h-auto lg:h-5/6 pb-2 lg:pb-8 flex flex-col justify-start items-start gap-5 overflow-auto">
           {done?.map((item) => (
             <ItemGridTask key={item.id} data={item} />
           ))}

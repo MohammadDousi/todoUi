@@ -7,3 +7,11 @@
   content: "";
   @apply w-[7.6rem] h-[7.6rem] absolute flex content-center justify-center items-center rounded-full bg-white border-2 border-white;
 }
+
+/* @media (min-width: 0px) and (max-width: 425px) {
+
+  .sideBottom {
+    @apply ;
+  }
+
+} */

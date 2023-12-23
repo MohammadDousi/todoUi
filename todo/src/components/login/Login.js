@@ -211,20 +211,20 @@ export default function Login() {
 
   return (
     <>
-      <main className="w-screen h-screen relative bg-gray-200/30 flex flex-row justify-center items-center">
+      <main className="w-screen h-full relative bg-gray-200/30 flex flex-row justify-center items-center">
         {/* image  */}
-        <section className="w-1/2 flex flex-row justify-center items-center">
+        <section className="w-1/2 hidden lg:flex flex-row justify-center items-center">
           <img src={pic} alt={pic} className="w-7/12 object-cover rounded-xl" />
         </section>
 
         {/* container mobile and otp code */}
-        <section className="w-1/2 relative flex flex-row justify-start items-center">
+        <section className="w-full lg:w-1/2 relative flex flex-row justify-center lg:justify-start items-center">
           {/* get mobile */}
           <section
             className={
               levelLogin === "MOBILE"
-                ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
-                : "w-10/12 p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 overflow-hidden"
+                ? "w-10/12 p-10 lg:p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
+                : "w-10/12 p-10 lg:p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 overflow-hidden"
             }
           >
             <section className="w-full flex flex-col justify-center items-start gap-1">
@@ -272,8 +272,8 @@ export default function Login() {
           <section
             className={
               levelLogin === "OTP"
-                ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
-                : "w-10/12 p-16 bg-white absolute bg-gray-200/50 translate-y-full scale-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 overflow-hidden"
+                ? "w-10/12 p-10 lg:p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
+                : "w-10/12 p-10 lg:p-16 bg-white absolute bg-gray-200/50 translate-y-full scale-0 flex flex-col justify-center items-end gap-5 rounded-xl duration-1000 overflow-hidden"
             }
           >
             <i
@@ -331,8 +331,8 @@ export default function Login() {
           <section
             className={
               levelLogin === "NAME"
-                ? "w-10/12 p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
-                : "w-10/12 p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 overflow-hidden"
+                ? "w-10/12 p-10 lg:p-16 bg-white translate-y-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 shadow-2xl shadow-slate-300"
+                : "w-10/12 p-10 lg:p-16 bg-white absolute -translate-y-full scale-0 flex flex-col justify-center items-end gap-12 rounded-xl duration-1000 overflow-hidden"
             }
           >
             <section className="w-full flex flex-col justify-center items-start gap-1">
@@ -380,7 +380,7 @@ export default function Login() {
 
         {loader && <Loader />}
 
-        <h3 className="absolute bottom-5 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer">
+        <h3 className="absolute bottom-7 z-30 text-slate-600 font-normal text-sm capitalize cursor-pointer">
           <Link to={"https://www.kaktusprog.ir/"}>
             develop and design by mohammad dosi
           </Link>

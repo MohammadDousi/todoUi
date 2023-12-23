@@ -131,7 +131,7 @@ export default function CreateTask() {
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
+      <section className="w-full h-full pt-3.5 px-6 pb-36 lg:pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="create new task" />
@@ -144,8 +144,8 @@ export default function CreateTask() {
         </section>
 
         {/* subject and Priority */}
-        <section className="w-full flex flex-row justify-start items-start gap-4">
-          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+        <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+          <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               subject
             </h4>
@@ -160,7 +160,7 @@ export default function CreateTask() {
             />
           </section>
 
-          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5 ">
+          <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5 ">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               Priority
             </h4>
@@ -263,8 +263,8 @@ export default function CreateTask() {
         </section>
 
         {/* tag teammate and deadline */}
-        <section className="w-full flex flex-row justify-start items-start gap-4">
-          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+        <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+          <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               tag Partners
             </h4>
@@ -388,7 +388,7 @@ export default function CreateTask() {
             </section>
           </section>
 
-          <section className="w-1/2 relative flex flex-col justify-start items-start gap-1.5">
+          <section className="w-full lg:w-1/2 relative flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               deadline
             </h4>
@@ -403,7 +403,7 @@ export default function CreateTask() {
               }}
               minDate={new DateObject({ calendar: persian })}
               calendarPosition="bottom-center"
-              numberOfMonths={2}
+              numberOfMonths={1}
               animations={[transition({ duration: 500, from: 35 })]}
               editable={false}
               placeholder="click to open"
