@@ -10,11 +10,12 @@ import avator6 from "../../assets/image/userAvator/profile(10).png";
 import defaultAvator from "../../assets/image/userAvator/defultAvatorMen.png";
 import logo from "../../assets/image/svg/logo.png";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import Toastiy from "../toastfiy/Toastfiy";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const { userData } = useContext(UserContext);
 
   const location = useLocation();
@@ -123,14 +124,14 @@ export default function Sidebar() {
       icon: "fas fa-user",
     },
     {
-      name: "Push",
-      path: "/main/pushBox",
-      icon: "fas fa-envelope-open",
-    },
-    {
       name: "search",
       path: "/main/search",
       icon: "fas fa-search",
+    },
+    {
+      name: "Push",
+      path: "/main/pushBox",
+      icon: "fas fa-envelope-open",
     },
   ];
 
@@ -317,7 +318,7 @@ export default function Sidebar() {
       {/*  mobile side bottom */}
       <section
         className={
-          "md:hidden w-full absolute z-50 bottom-4 left-0 flex flex-row justify-center items-center"
+          "lg:hidden w-full absolute z-50 bottom-4 left-0 flex flex-row justify-center items-center"
         }
       >
         <section
@@ -325,7 +326,7 @@ export default function Sidebar() {
             "w-auto h-auto py-2 px-4 bg-white flex flex-col justify-center items-center rounded-xl shadow-lg duration-1000 overflow-hidden"
           }
         >
-          <section className="w-full h-full flex flex-row justify-center items-center gap-4">
+          <section className="w-full h-full flex flex-row justify-center items-center gap-1.5">
             {sideTab &&
               sideTab.map((tab) => (
                 <Popup
@@ -347,8 +348,8 @@ export default function Sidebar() {
                         className={
                           location.pathname === tab.path ||
                           location.pathname === tab.path2
-                            ? "size-14 flex flex-col justify-center items-center cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-xl"
-                            : "size-14 flex flex-col justify-center items-center cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-xl"
+                            ? "size-12 flex flex-col justify-center items-center cursor-pointer duration-500 bg-amber-200 text-amber-700 shadow-xl rounded-2xl"
+                            : "size-12 flex flex-col justify-center items-center cursor-pointer duration-500 hover:bg-blue-100 text-slate-400 hover:text-blue-600 hover:rounded-2xl"
                         }
                       >
                         <i className={`${tab.icon} text-base`}></i>
@@ -359,6 +360,46 @@ export default function Sidebar() {
                   <div>{tab.name}</div>
                 </Popup>
               ))}
+            <Popup
+              modal
+              trigger={
+                <i className="fas fa-times size-12 flex flex-col justify-center items-center cursor-pointer duration-500 text-slate-400 hover:bg-red-200 hover:text-red-700 hover:shadow-xl hover:rounded-2xl"></i>
+              }
+              arrow={"center center"}
+            >
+              {(close) => (
+                <div className="p-10 flex flex-col justify-center items-center gap-8">
+                  <section className="w-full space-y-1">
+                    <p className="w-full text-left text-red-600 font-black text-xl capitalize">
+                      exit
+                    </p>
+                    <p className="w-full text-left text-slate-600 font-normal text-base">
+                      Do you want to exit ?
+                    </p>
+                  </section>
+                  <section className="flex flex-row justify-center items-center gap-4">
+                    <button
+                      onClick={() => close()}
+                      className="h-10 px-8 hover:px-10 hover:bg-slate-500 text-slate-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      no care !
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        sessionStorage.clear();
+                        localStorage.clear();
+                        navigate("/login");
+                        close();
+                      }}
+                      className="h-10 px-8 hover:px-10 bg-red-200 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
+                    >
+                      yes , exit
+                    </button>
+                  </section>
+                </div>
+              )}
+            </Popup>
           </section>
         </section>
       </section>

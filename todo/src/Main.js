@@ -14,7 +14,6 @@ import EditTask from "./components/task/EditTask";
 import Search from "./components/search/Search";
 
 export default function Main() {
-
   return (
     <>
       <Header />
@@ -22,17 +21,20 @@ export default function Main() {
       <main className="w-full h-full flex flex-row justify-start items-start overflow-hidden">
         <Sidebar />
 
-        <Routes>
-          <Route path="/" element={<BoardContainer />} />
-          <Route path="/board" element={<BoardContainer />} />
-          <Route path="/createTask" element={<CreateTask />} />
-          <Route path="/detailTask/:id" element={<DetailTask />} />
-          <Route path="/editTask/:id" element={<EditTask />} />
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/pushBox" element={<Push />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
+        <section className="w-full h-full relative overflow-x-hidden">
+          
+          <Routes>
+            <Route path="/" element={<BoardContainer />} />
+            <Route path="/board" element={<BoardContainer />} />
+            <Route path="/createTask" element={<CreateTask />} />
+            <Route path="/detailTask/:id" element={<DetailTask />} />
+            <Route path="/editTask/:id" element={<EditTask />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/pushBox" element={<Push />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </section>
       </main>
     </>
   );

@@ -4,7 +4,7 @@ import TitlePage from '../titlePage/TitlePage'
 
 export default function Push() {
   return (
-    <section className="w-full h-full relative overflow-x-hidden">
+    <>
       <section className="w-full absolute pt-4 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         
         <section className="w-full flex flex-col justify-start items-start gap-6">
@@ -67,6 +67,6 @@ export default function Push() {
         </section>
 
       </section>
-    </section>
+    </>
   )
 }

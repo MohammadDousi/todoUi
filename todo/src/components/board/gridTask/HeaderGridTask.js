@@ -3,7 +3,7 @@ import React from "react";
 export default function HeaderGridTask({ data }) {
   return (
     <section
-      className={`w-full relative bg-white flex flex-row justify-between items-center shadow-lg rounded-xl overflow-hidden`}
+      className={`w-full h-12 relative bg-white flex flex-row justify-between items-center shadow-lg rounded-xl overflow-hidden`}
     >
       <span
         className={`w-full h-full absolute ${data.color} opacity-10 lg:opacity-0 z-10`}

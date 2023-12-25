@@ -6,12 +6,11 @@ import { UserContext } from "../../context/UserContext";
 
 import "./headerStyle.css";
 export default function Header() {
-  const { setSearch } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   return (
-    <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
+    <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 hidden lg:flex justify-between items-center">
       <i className="fa fa-bars iconContainer bg-gray-100 text-slate-400 text-sm"></i>
 
       <div className="hidden lg:flex justify-center items-center gap-14">

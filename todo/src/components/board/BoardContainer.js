@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../loader/Loader";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import TitlePage from "../titlePage/TitlePage";
 
 export default function BoardContainer() {
   const navigate = useNavigate();
@@ -53,52 +54,52 @@ export default function BoardContainer() {
   }, [board]);
 
   return (
-    <section className="w-full h-full pt-3.5 lg:py-0 relative overflow-hidden duration-1000">
-      {/* w-full h-full pb-8 relative overflow-hidden duration-1000 */}
-      <section className="w-full py-3 px-6 hidden lg:flex flex-row justify-between items-center gap-8">
-        {/* w-full py-3 px-6 flex flex-row justify-between items-center gap-8 */}
-        <div className="flex flex-row justify-center items-start gap-2">
-          <i
-            onClick={() => {
-              localStorage.setItem("board", "grid");
-              setBoard("Grid");
-            }}
-            className={
-              board === "grid"
-                ? "fa fa-th-large iconContainer text-slate-500 text-xs bg-white shadow-lg duration-500"
-                : "fa fa-th-large iconContainer text-slate-500 text-xs duration-500"
-            }
-          ></i>
+    <section className="w-full h-full relative overflow-x-hidden">
+      <section className="w-full h-full absolute pt-4 px-6 duration-1000 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
 
-          <i
-            onClick={() => {
-              localStorage.setItem("board", "list");
-              setBoard("List");
-            }}
-            className={
-              board === "list"
-                ? "fas fa-list-ul iconContainer text-slate-500 text-xs bg-white shadow-lg duration-500"
-                : "fas fa-list-ul iconContainer text-slate-500 text-xs duration-500"
-            }
-          ></i>
-        </div>
+        {/* title and btn create new task */}
+        <section className="w-full flex flex-row justify-between items-center gap-4">
+          <TitlePage title="dashboard" />
 
-        <button
-          onClick={() => navigate("/main/createTask")}
-          className="h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500"
-          // h-10 px-8 hover:px-10 bg-blue-600 text-white text-xs font-bold uppercase cursor-pointer tracking-widest rounded-xl duration-500
-        >
-          + create task
-        </button>
+          <section className="w-1/2 hidden lg:flex flex-row justify-end items-center gap-8">
+            <div className="flex flex-row justify-center items-start gap-2">
+              <i
+                onClick={() => {
+                  localStorage.setItem("board", "grid");
+                  setBoard("Grid");
+                }}
+                className={
+                  board === "grid"
+                    ? "fa fa-th-large iconContainer text-slate-500 text-xs bg-white shadow-lg duration-500"
+                    : "fa fa-th-large iconContainer text-slate-500 text-xs duration-500"
+                }
+              ></i>
+
+              <i
+                onClick={() => {
+                  localStorage.setItem("board", "list");
+                  setBoard("List");
+                }}
+                className={
+                  board === "list"
+                    ? "fas fa-list-ul iconContainer text-slate-500 text-xs bg-white shadow-lg duration-500"
+                    : "fas fa-list-ul iconContainer text-slate-500 text-xs duration-500"
+                }
+              ></i>
+            </div>
+          </section>
+        </section>
+
+        <section className="w-full h-full relative overflow-hidden duration-1000">
+          {board === "grid" ? (
+            <GridBord allTask={allTask} />
+          ) : (
+            <ListBoard allTask={allTask} />
+          )}
+        </section>
+
+        {loader && <Loader />}
       </section>
-
-      {board === "grid" ? (
-        <GridBord allTask={allTask} />
-      ) : (
-        <ListBoard allTask={allTask} />
-      )}
-
-      {loader && <Loader />}
     </section>
   );
 }

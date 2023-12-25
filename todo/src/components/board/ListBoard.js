@@ -6,7 +6,7 @@ import noData from "../../assets/image/svg/noData.svg";
 export default function ListBoard({ allTask }) {
 
   return (
-    <section className="w-full h-full px-6 absolute z-20 left-0 flex flex-col justify-start items-start gap-5">
+    <section className="w-full h-full absolute z-20 left-0 flex flex-col justify-start items-start gap-5">
       <section className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-3">
         <table className="w-full h-full">
           <thead className="w-full flex bg-white rounded-t-xl border-b border-slate-300 shadow-md shadow-slate-200">
