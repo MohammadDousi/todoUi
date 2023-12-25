@@ -63,7 +63,7 @@ export default function DetailTask() {
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-3.5 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6">
+      <section className="w-full h-full pt-3 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail & description task" />

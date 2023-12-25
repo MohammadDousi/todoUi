@@ -1,29 +1,50 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import TitlePage from "../titlePage/TitlePage";
-import { UserContext } from "../../context/UserContext";
 import ItemListTask from "../board/listTask/ItemListTask";
 import searchPic from "../../assets/image/svg/search.svg";
 
 export default function Search() {
-  const { search } = useContext(UserContext);
+  const [search, setSearch] = useState([]);
+
+  const searchHandler = (e) => {
+    if (e.target.value) {
+      let formData = new FormData();
+      formData.append("fun", "searchTask");
+      formData.append("search", e.target.value);
+
+      axios
+        .post("php/api.php", formData)
+        .then((response) => {
+          console.log(response.data);
+          setSearch(response.data);
+        })
+        .catch((e) => console.log(e));
+
+      for (let [key, value] of formData) {
+        formData.delete(key, value);
+      }
+    } else {
+      setSearch([]);
+    }
+  };
 
   return (
     <section className="w-full h-full relative">
-      <section className="w-full h-full pt-[1.1rem] px-6 pb-4 absolute flex flex-col justify-start items-start gap-8">
+      <section className="w-full h-full pt-3 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="search" />
 
-          <div className="w-[29rem] h-12 px-6 bg-gray-200/50 flex justify-between items-center gap-4 rounded-xl ">
-            <i className="fa fa-search text-slate-400/70"></i>
-            <input
-              type="text"
-              onChange={(e) => search(e)}
-              placeholder="Search subject, description, partners and date"
-              className="w-full bg-transparent text-slate-800 text-sm font-bold text-left tracking-wide placeholder:text-slate-400/70 placeholder:font-normal"
-            />
-            <i className="fa fa-angle-right text-slate-400/70"></i>
-          </div>
+          <input
+            type="search"
+            autoFocus
+            placeholder="Search subject, description, partners and date"
+            className="w-1/2 h-10 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 duration-500"
+            onChange={(e) => searchHandler(e)}
+          />
+
+         
         </section>
 
         <section className="w-full h-5/6 pb-8 flex flex-col justify-start items-start gap-3">

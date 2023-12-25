@@ -10,7 +10,6 @@ export const UserContext = createContext();
 export default function UserProvider({ children }) {
   const { token, setToken } = useToken();
   const [userData, setUserData] = useState({});
-  const [search, setSearch] = useState([]);
 
   const navigate = useNavigate();
 
@@ -50,7 +49,7 @@ export default function UserProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ userData, setUserData, token, setToken, search, setSearch }}
+      value={{ userData, setUserData, token, setToken }}
     >
       {children}
     </UserContext.Provider>

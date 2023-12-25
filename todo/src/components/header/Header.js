@@ -10,28 +10,6 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  const search = (e) => {
-    if (e.target.value) {
-      let formData = new FormData();
-      formData.append("fun", "searchTask");
-      formData.append("search", e.target.value);
-
-      axios
-        .post("php/api.php", formData)
-        .then((response) => {
-          console.log(response.data);
-          setSearch(response.data);
-        })
-        .catch((e) => console.log(e));
-
-      for (let [key, value] of formData) {
-        formData.delete(key, value);
-      }
-    } else {
-      setSearch([]);
-    }
-  };
-
   return (
     <header className="w-full h-20 relative bg-white px-5 border-b border-slate-300 flex justify-between items-center">
       <i className="fa fa-bars iconContainer bg-gray-100 text-slate-400 text-sm"></i>
@@ -58,7 +36,7 @@ export default function Header() {
           </li>
         </ul>
 
-        <div className="w-[29rem] h-12 px-6 bg-gray-200/50 flex justify-between items-center gap-4 rounded-xl ">
+        {/* <div className="w-[29rem] h-12 px-6 bg-gray-200/50 flex justify-between items-center gap-4 rounded-xl ">
           <i className="fa fa-search text-slate-400/70"></i>
           <input
             type="text"
@@ -68,7 +46,7 @@ export default function Header() {
             className="w-full bg-transparent text-slate-800 text-sm font-bold text-left tracking-wide placeholder:text-slate-400/70 placeholder:font-normal"
           />
           <i className="fa fa-angle-right text-slate-400/70"></i>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center justify-end gap-4">

@@ -94,7 +94,7 @@ export default function Profile() {
 
   return (
     <section className="w-full h-full relative overflow-x-hidden">
-      <section className="w-full absolute pt-3.5 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full absolute pt-3 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="profile" />
           <section className="flex flex-row justify-end items-center gap-4">
