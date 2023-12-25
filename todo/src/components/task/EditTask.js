@@ -147,7 +147,7 @@ export default function EditTask() {
           switch (response.data) {
             case "updateOk":
               Toastiy("edit task is successful", "su");
-              navigate("/main/board");
+              navigate(`/main/detailTask/${dataToSend?.id}`);
               break;
             case "errUpdate":
               Toastiy("The update was unsuccessful", "er");

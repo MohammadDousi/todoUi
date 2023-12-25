@@ -140,8 +140,8 @@ export default function Sidebar() {
       <section
         className={
           showSidebar === "MINI"
-            ? "sm:hidden w-20 h-full py-4 bg-white flex flex-col justify-start  items-center gap-12 border-r border-gray-300 -translate-x-0 duration-1000 overflow-hidden"
-            : "sm:hidden w-0 h-full py-4 bg-white flex flex-col justify-start items-center gap-0 -translate-x-20 duration-1000 overflow-hidden"
+            ? "hidden w-20 h-full py-4 bg-white lg:flex flex-col justify-start  items-center gap-12 border-r border-gray-300 -translate-x-0 duration-1000 overflow-hidden"
+            : "hidden w-0 h-full py-4 bg-white lg:flex flex-col justify-start items-center gap-0 -translate-x-20 duration-1000 overflow-hidden"
         }
       >
         <section className="w-full flex flex-col justify-center items-center gap-6">
@@ -211,8 +211,8 @@ export default function Sidebar() {
       <section
         className={
           showSidebar === "BIG"
-            ? "sm:hidden w-80 h-full bg-white px-5 py-4 flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
-            : "sm:hidden w-0 h-auto bg-white px-0 py-4 flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
+            ? "hidden w-80 h-full bg-white px-5 py-4 lg:flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
+            : "hidden w-0 h-auto bg-white px-0 py-4 lg:flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
         }
       >
         <section className="w-full relative flex flex-col justify-center items-center gap-4">

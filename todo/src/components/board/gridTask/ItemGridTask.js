@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import defultAvator from "../../../assets/image/userAvator/defultAvatorMen.png";
 import Popup from "reactjs-popup";
+import { useState } from "react";
 
 export default function ItemGridTask(props) {
   const { data } = props;
@@ -74,31 +75,40 @@ export default function ItemGridTask(props) {
               on={["hover"]}
               position="bottom center"
               arrow={"center bottom"}
-              contentStyle={{ width : "auto", padding : "4px 10px", backgroundColor : "#475569" , color : "#fff" , fontSize : "12px"}}
+              contentStyle={{
+                width: "auto",
+                padding: "4px 10px",
+                backgroundColor: "#475569",
+                color: "#fff",
+                fontSize: "12px",
+              }}
               trigger={
-                <img
-                  className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
-                  loading="lazy"
-                  src={
-                    item.avator
-                      ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
-                      : defultAvator
-                  }
-                  alt={
-                    item.avator
-                      ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
-                      : defultAvator
-                  }
-                />
+                index <= 1 && (
+                  <img
+                    className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
+                    loading="lazy"
+                    src={
+                      item.avator
+                        ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                        : defultAvator
+                    }
+                    alt={
+                      item.avator
+                        ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                        : defultAvator
+                    }
+                  />
+                )
               }
             >
               <div>{item.name}</div>
             </Popup>
           ))}
-
-          {/* <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
-            +2
-          </div> */}
+          {tag?.length > 2 && (
+            <div className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
+              +{Number(tag.length - 2)}
+            </div>
+          )}
         </section>
       </section>
     </section>

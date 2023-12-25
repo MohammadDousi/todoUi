@@ -9,7 +9,7 @@ export default function GridBord({ allTask }) {
   const inProgres = allTask?.filter((item) => item.status === "inProgres");
 
   return (
-    <section className="w-full h-full px-6 pb-44 lg:pb-0 absolute z-20 left-0 flex flex-col lg:flex-row justify-start items-start gap-6 overflow-auto lg:overflow-hidden">
+    <section className="w-full h-full px-6 pb-40 lg:pb-0 absolute z-20 left-0 flex flex-col lg:flex-row justify-start items-start gap-6 overflow-auto lg:overflow-hidden">
       <div className="w-full lg:w-1/4 h-full flex flex-col justify-start items-start gap-3">
         <HeaderGridTask
           data={{

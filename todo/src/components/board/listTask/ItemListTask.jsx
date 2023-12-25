@@ -77,31 +77,35 @@ export default function ItemListTask(props) {
                 padding: "4px 10px",
                 backgroundColor: "#475569",
                 color: "#fff",
+                fontSize: "12px",
               }}
               trigger={
-                <img
-                  className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
-                  loading="lazy"
-                  src={
-                    item.avator
-                      ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
-                      : defultAvator
-                  }
-                  alt={
-                    item.avator
-                      ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
-                      : defultAvator
-                  }
-                />
+                index <= 1 && (
+                  <img
+                    className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 justify-self-start"
+                    loading="lazy"
+                    src={
+                      item.avator
+                        ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                        : defultAvator
+                    }
+                    alt={
+                      item.avator
+                        ? `${axios.defaults.baseURL}image/userAvator/${item.avator}`
+                        : defultAvator
+                    }
+                  />
+                )
               }
             >
               <div>{item.name}</div>
             </Popup>
           ))}
-
-          {/* <div className=" max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
-              +2
-            </div> */}
+          {tag?.length > 2 && (
+            <div className="max-w-none w-6 h-6 ring-2 ring-white duration-300 rounded-full hover:scale-125 bg-sky-200 flex justify-center items-center text-xs font-medium">
+              +{Number(tag.length - 2)}
+            </div>
+          )}
         </section>
       </th>
       <th className="w-2/12 flex justify-center items-start">
