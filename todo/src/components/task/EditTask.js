@@ -204,7 +204,7 @@ export default function EditTask() {
 
   return (
     <>
-      <section className="w-full h-full pt-3 px-6 pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
+      <section className="w-full h-full pt-3 px-6 pb-40 lg:pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail task > edit" />
@@ -316,15 +316,15 @@ export default function EditTask() {
         </section>
 
         {/* subject and Priority */}
-        <section className="w-full flex flex-row justify-start items-start gap-4">
-          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+        <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+          <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               subject
             </h4>
             <input
               type="text"
               placeholder="Description of the subject"
-              className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+              className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
               value={dataToSend?.subject}
               onChange={(e) =>
                 setDataToSend({ ...dataToSend, subject: e.target.value })
@@ -332,12 +332,12 @@ export default function EditTask() {
             />
           </section>
 
-          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5 ">
+          <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5 ">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               Priority
             </h4>
 
-            <div className="w-full h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
+            <div className="w-full h-14 lg:h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
               <div className="w-full flex justify-center items-center">
                 <input
                   type="radio"
@@ -439,12 +439,12 @@ export default function EditTask() {
         </section>
 
         {/* change status  */}
-        <section className="w-1/2 flex flex-col justify-start items-start gap-1.5 ">
+        <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5 ">
           <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
             choose status
           </h4>
 
-          <div className="w-full h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
+          <div className="w-full h-14 lg:h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
             <div className="w-full flex justify-center items-center">
               <input
                 type="radio"
@@ -528,8 +528,8 @@ export default function EditTask() {
         </section>
 
         {/* tag teammate and deadline */}
-        <section className="w-full flex flex-row justify-start items-start gap-4">
-          <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+        <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+          <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               tag Partners
             </h4>
@@ -540,7 +540,7 @@ export default function EditTask() {
                   <div
                     className={
                       dataToSend?.tagPartners?.length === 0
-                        ? "w-full h-12 flex flex-row flex-wrap gap-2"
+                        ? "w-full h-14 lg:h-12 flex flex-row flex-wrap gap-2"
                         : "w-full py-2.5 flex flex-row flex-wrap gap-2"
                     }
                   >
@@ -632,7 +632,7 @@ export default function EditTask() {
                           !foundPerson && setSearchTeammate("");
                           !foundPerson && setFilterSearchTeammate(user);
                         }}
-                        className="w-full h-12 py-1.5 px-8 flex flex-row justify-start items-center gap-4 cursor-pointer hover:bg-blue-50"
+                        className="w-full h-14 lg:h-12 py-1.5 px-8 flex flex-row justify-start items-center gap-4 cursor-pointer hover:bg-blue-50"
                       >
                         <img
                           src={
@@ -657,7 +657,7 @@ export default function EditTask() {
             </section>
           </section>
 
-          <section className="w-1/2 relative flex flex-col justify-start items-start gap-1.5">
+          <section className="w-full lg:w-1/2 relative flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               deadline
             </h4>
@@ -666,7 +666,7 @@ export default function EditTask() {
               calendar={persian}
               plugins={[weekends()]}
               locale={persian_en}
-              inputClass="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+              inputClass="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
               containerStyle={{
                 width: "100%",
               }}

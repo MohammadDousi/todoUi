@@ -73,8 +73,8 @@ export default function DetailTask() {
           </button>
         </section>
 
-        <section className="w-full h-full flex flex-row justify-start items-start gap-4 overflow-hidden">
-          <div className="w-3/4 h-full flex flex-col justify-start items-start gap-8 overflow-x-hidden">
+        <section className="w-full h-full flex flex-col lg:flex-row justify-start items-start gap-4 overflow-x-hidden lg:overflow-hidden">
+          <div className="w-full lg:w-3/4 h-auto lg:h-full flex flex-col justify-start items-start gap-8 lg:overflow-x-hidden">
             {/* subject and Priority */}
             <section className="w-full flex flex-row justify-start items-start gap-4">
               <section className="w-2/3 flex flex-col justify-start items-start gap-1.5">
@@ -82,7 +82,7 @@ export default function DetailTask() {
                   subject
                 </h4>
 
-                <p className="w-full h-12 px-8 bg-white text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 flex justify-start items-center">
+                <p className="w-full h-14 lg:h-12 px-8 bg-white text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 flex justify-start items-center">
                   {dataTask?.subject}
                 </p>
               </section>
@@ -95,12 +95,12 @@ export default function DetailTask() {
                 <div
                   className={
                     dataTask?.priority === "force"
-                      ? "w-full h-12 font-bold text-base text-center capitalize border border-red-300 bg-red-100 text-red-600 select-none rounded-xl flex flex-row justify-center items-center"
+                      ? "w-full h-14 lg:h-12 font-bold text-base text-center capitalize border border-red-300 bg-red-100 text-red-600 select-none rounded-xl flex flex-row justify-center items-center"
                       : dataTask?.priority === "high"
-                      ? "w-full h-12 font-bold text-base text-center capitalize border border-amber-300 bg-amber-100 text-amber-600 select-none rounded-xl flex flex-row justify-center items-center"
+                      ? "w-full h-14 lg:h-12 font-bold text-base text-center capitalize border border-amber-300 bg-amber-100 text-amber-600 select-none rounded-xl flex flex-row justify-center items-center"
                       : dataTask?.priority === "normal"
-                      ? "w-full h-12 font-bold text-base text-center capitalize border border-lime-300 bg-lime-100 text-lime-600 select-none rounded-xl flex flex-row justify-center items-center"
-                      : "w-full h-12 font-bold text-base text-center capitalize border border-teal-300 bg-teal-100 text-teal-600 select-none rounded-xl flex flex-row justify-center items-center"
+                      ? "w-full h-14 lg:h-12 font-bold text-base text-center capitalize border border-lime-300 bg-lime-100 text-lime-600 select-none rounded-xl flex flex-row justify-center items-center"
+                      : "w-full h-14 lg:h-12 font-bold text-base text-center capitalize border border-teal-300 bg-teal-100 text-teal-600 select-none rounded-xl flex flex-row justify-center items-center"
                   }
                 >
                   {dataTask?.priority}
@@ -120,15 +120,15 @@ export default function DetailTask() {
             </section>
 
             {/* tag teammate and deadline */}
-            <section className="w-full flex flex-row justify-start items-start gap-4">
-              <section className="w-1/2 flex flex-col justify-start items-start gap-1.5">
+            <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+              <section className="w-full lg:w-1/2 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   Partners of this task
                 </h4>
 
-                <section className="w-full flex flex-wrap justify-start items-center gap-3">
+                <section className="w-full flex flex-wrap flex-col justify-start items-center gap-3">
                   {!tag && (
-                    <div className="w-full h-12 px-8 bg-blue-50 border border-blue-300 text-slate-600 text-base tracking-wide rounded-xl flex justify-start items-center">
+                    <div className="w-full h-14 lg:h-12 px-8 bg-blue-50 border border-blue-300 text-slate-600 text-base tracking-wide rounded-xl flex justify-start items-center">
                       Cooperation is not selected for this task.
                     </div>
                   )}
@@ -136,7 +136,7 @@ export default function DetailTask() {
                   {tag?.map((item) => (
                     <section
                       key={item.name + Math.random()}
-                      className="px-5 h-12 bg-blue-50 hover:bg-white border border-blue-300 flex flex-row justify-center items-center gap-3 rounded-xl duration-300"
+                      className="px-5 h-14 lg:h-12 bg-blue-50 hover:bg-white border border-blue-300 flex flex-row justify-center items-center gap-3 rounded-xl duration-300"
                     >
                       <img
                         className="w-8 h-8 ring-2 ring-white rounded-full justify-self-start"
@@ -159,12 +159,12 @@ export default function DetailTask() {
                 </section>
               </section>
 
-              <section className="w-1/2 relative flex flex-col justify-start items-start gap-1.5">
+              <section className="w-full lg:w-1/2 relative flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   deadline
                 </h4>
 
-                <p className="w-full h-12 px-8 bg-white text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 flex justify-start items-center">
+                <p className="w-full h-14 lg:h-12 px-8 bg-white text-slate-600 font-normal text-base tracking-wide rounded-xl border border-slate-300 flex justify-start items-center">
                   {`${date?.year}/${date?.month}/${date?.day} - ${date?.hour}:${date?.min}`}
                 </p>
               </section>
@@ -194,7 +194,7 @@ export default function DetailTask() {
           </div>
 
           {/* edit history container */}
-          <section className="w-1/4 h-auto max-h-full flex flex-col justify-start items-start gap-1.5 overflow-hidden">
+          <section className="w-full lg:w-1/4 h-auto lg:max-h-full flex flex-col justify-start items-start gap-1.5 lg:overflow-hidden">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
               edit history
             </h4>

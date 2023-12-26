@@ -94,7 +94,7 @@ export default function Profile() {
 
   return (
     <>
-      <section className="w-full absolute pt-3 px-6 pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full absolute pt-3 px-6 pb-40 lg:pb-4 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="profile" />
           <section className="flex flex-row justify-end items-center gap-4">
@@ -183,8 +183,8 @@ export default function Profile() {
           </section>
         </section>
 
-        <section className="w-full flex flex-row justify-start items-stretch gap-4">
-          <section className="w-2/12 h-40 relative flex flex-col justify-start items-center gap-3">
+        <section className="w-full flex flex-col lg:flex-row justify-center lg:justify-start items-start lg:items-stretch gap-8 lg:gap-4">
+          <section className="w-full lg:w-2/12 h-40 relative flex flex-row lg:flex-col justify-center lg:justify-start items-center gap-3">
             <img
               src={
                 user.avator && changeAvator
@@ -194,7 +194,7 @@ export default function Profile() {
                   : defultAvator
               }
               alt={user?.avator}
-              className="w-36 h-36 ml-1 mt-4 rounded-xl ring-2 ring-amber-300 ring-offset-4 bg-white"
+              className="w-36 h-36 m-0 lg:ml-1 lg:mt-4 rounded-xl ring-2 ring-amber-300 ring-offset-4 bg-white"
             />
 
             <input
@@ -215,19 +215,17 @@ export default function Profile() {
               htmlFor="inputFile"
               className={
                 editButton
-                  ? "absolute -bottom-8 pl-2 text-red-500 text-sm font-bold capitalize cursor-pointer"
+                  ? "absolute lg:-bottom-8 lg:pl-2 text-red-500 text-sm font-bold capitalize cursor-pointer"
                   : "hidden"
               }
             >
               change avator
             </label>
-
-            {/* <i className="fa fa-image iconContainer absolute bottom-1 right-2 text-white text-sm bg-red-500 shadow-lg"></i> */}
           </section>
 
           <section className="w-full flex flex-col justify-start items-start gap-4">
-            <section className="w-full flex flex-row justify-start items-start gap-4">
-              <section className="w-1/3 flex flex-col justify-start items-start gap-1.5">
+            <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+              <section className="w-full lg:w-1/3 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   first & last name
                 </h4>
@@ -241,11 +239,11 @@ export default function Profile() {
                     !e.currentTarget.disabled &&
                       setUser({ ...user, name: e.target.value });
                   }}
-                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
+                  className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
                 />
               </section>
 
-              <section className="w-1/3 flex flex-col justify-start items-start gap-1.5">
+              <section className="w-full lg:w-1/3 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   job position
                 </h4>
@@ -260,11 +258,11 @@ export default function Profile() {
                       setUser({ ...user, jobPostion: e.target.value });
                   }}
                   placeholder="ex: editor , designer or admin , ..."
-                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
+                  className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
                 />
               </section>
 
-              <section className="w-1/3 flex flex-col justify-start items-start gap-1.5">
+              <section className="w-full lg:w-1/3 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   mobile number
                 </h4>
@@ -274,13 +272,13 @@ export default function Profile() {
                   value={user?.mobile || ""}
                   disabled
                   placeholder="ex: editor , designer or admin , ..."
-                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
+                  className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
                 />
               </section>
             </section>
 
-            <section className="w-full flex flex-row justify-start items-start gap-4">
-              <section className="w-1/3 flex flex-col justify-start items-start gap-1.5">
+            <section className="w-full flex flex-col lg:flex-row justify-start items-start gap-4">
+              <section className="w-full lg:w-1/3 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   email
                 </h4>
@@ -295,11 +293,11 @@ export default function Profile() {
                       setUser({ ...user, mail: e.target.value });
                   }}
                   placeholder="ex: editor , designer or admin , ..."
-                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
+                  className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
                 />
               </section>
 
-              <section className="w-1/3 flex flex-col justify-start items-start gap-1.5">
+              <section className="w-full lg:w-1/3 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   last login
                 </h4>
@@ -309,11 +307,11 @@ export default function Profile() {
                   defaultValue={user?.lastLogin || ""}
                   disabled
                   placeholder="ex: editor , designer or admin , ..."
-                  className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
+                  className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide capitalize rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 disabled:bg-slate-200/50 duration-500"
                 />
               </section>
 
-              <section className="w-1/3 flex flex-col justify-start items-start gap-1.5">
+              <section className="w-full lg:w-1/3 flex flex-col justify-start items-start gap-1.5">
                 <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
                   status
                 </h4>
@@ -324,12 +322,12 @@ export default function Profile() {
                   defaultValue={user?.status || ""}
                   className={
                     user?.status === "active"
-                      ? "w-full h-12 px-8 bg-green-100 text-green-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-green-300"
+                      ? "w-full h-14 lg:h-12 px-8 bg-green-100 text-green-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-green-300"
                       : user?.status === "deactive"
-                      ? "w-full h-12 px-8 bg-red-100 text-red-600 font-black text-base capitalize rounded-xl placeholder:text-red-300 border border-red-300"
+                      ? "w-full h-14 lg:h-12 px-8 bg-red-100 text-red-600 font-black text-base capitalize rounded-xl placeholder:text-red-300 border border-red-300"
                       : user?.status === "ban"
-                      ? "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
-                      : "w-full h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
+                      ? "w-full h-14 lg:h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
+                      : "w-full h-14 lg:h-12 px-8 bg-slate-100 text-slate-600 font-black text-base capitalize rounded-xl placeholder:text-slate-300 border border-slate-300"
                   }
                 />
               </section>

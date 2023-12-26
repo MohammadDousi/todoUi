@@ -131,7 +131,7 @@ export default function CreateTask() {
 
   return (
     <>
-      <section className="w-full h-full pt-3 px-6 pb-36 lg:pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
+      <section className="w-full h-full pt-3 px-6 pb-40 lg:pb-4 absolute flex flex-col justify-start items-start gap-8 overflow-x-hidden">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="create new task" />
@@ -152,7 +152,7 @@ export default function CreateTask() {
             <input
               type="text"
               placeholder="Description of the subject"
-              className="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 duration-500"
+              className="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500 duration-500"
               value={dataToSend.subject}
               onChange={(e) =>
                 setDataToSend({ ...dataToSend, subject: e.target.value })
@@ -165,7 +165,7 @@ export default function CreateTask() {
               Priority
             </h4>
 
-            <div className="w-full h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
+            <div className="w-full h-14 lg:h-12 px-2 py-1 bg-white flex flex-row justify-center items-center gap-3 rounded-xl border border-slate-300">
               <div className="w-full flex justify-center items-center">
                 <input
                   type="radio"
@@ -275,8 +275,8 @@ export default function CreateTask() {
                   <div
                     className={
                       dataToSend?.tagPartners.length === 0
-                        ? "w-full h-12 flex flex-row flex-wrap gap-2"
-                        : "w-full py-2.5 flex flex-row flex-wrap gap-2"
+                        ? "w-full h-14 lg:h-12 flex flex-row flex-wrap gap-2"
+                        : "w-full py-3 lg:py-2.5 flex flex-row flex-wrap gap-2"
                     }
                   >
                     <input
@@ -363,7 +363,7 @@ export default function CreateTask() {
                           !foundPerson && setSearchTeammate("");
                           !foundPerson && setFilterSearchTeammate(user);
                         }}
-                        className="w-full h-12 py-1.5 px-8 flex flex-row justify-start items-center gap-4 cursor-pointer hover:bg-blue-50"
+                        className="w-full h-14 lg:h-12 py-1.5 px-8 flex flex-row justify-start items-center gap-4 cursor-pointer hover:bg-blue-50"
                       >
                         <img
                           src={
@@ -397,7 +397,7 @@ export default function CreateTask() {
               calendar={persian}
               plugins={[weekends()]}
               locale={persian_en}
-              inputClass="w-full h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
+              inputClass="w-full h-14 lg:h-12 px-8 text-slate-600 font-normal text-base tracking-wide rounded-xl placeholder:text-slate-300 border border-slate-300 focus:border-blue-500"
               containerStyle={{
                 width: "100%",
               }}

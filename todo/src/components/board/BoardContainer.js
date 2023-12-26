@@ -55,10 +55,10 @@ export default function BoardContainer() {
 
   return (
     <section className="w-full h-full relative overflow-x-hidden">
-      <section className="w-full h-full absolute pt-4 px-6 duration-1000 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
+      <section className="w-full h-full absolute pt-4 duration-1000 flex flex-col justify-start items-start gap-6 overflow-x-hidden">
 
         {/* title and btn create new task */}
-        <section className="w-full flex flex-row justify-between items-center gap-4">
+        <section className="w-full px-6 flex flex-row justify-between items-center gap-4">
           <TitlePage title="dashboard" />
 
           <section className="w-1/2 hidden lg:flex flex-row justify-end items-center gap-8">
