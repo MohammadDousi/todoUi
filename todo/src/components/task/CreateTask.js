@@ -386,7 +386,30 @@ export default function CreateTask() {
                 </div>
               </section>
             </section>
+
+
+
+
+
+
+
+            
           </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           <section className="w-full lg:w-1/2 relative flex flex-col justify-start items-start gap-1.5">
             <h4 className="w-full px-3 text-slate-600 font-bold text-sm capitalize">
@@ -423,6 +446,32 @@ export default function CreateTask() {
             />
           </section>
         </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         {/* upload image  */}
         <section className="w-full flex flex-col justify-start items-start gap-1.5">

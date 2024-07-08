@@ -52,6 +52,7 @@ function App() {
           pauseOnHover
           theme="colored"
         />
+        
       </QueryClientProvider>
     </UserProvider>
   );

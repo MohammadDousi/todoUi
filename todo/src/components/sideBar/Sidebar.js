@@ -212,8 +212,8 @@ export default function Sidebar() {
       <section
         className={
           showSidebar === "BIG"
-            ? "hidden w-80 h-full bg-white px-5 py-4 lg:flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
-            : "hidden w-0 h-auto bg-white px-0 py-4 lg:flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
+            ? "hidden  w-80 h-full bg-white px-5 py-4 lg:flex flex-col justify-between items-center gap-0 border-r border-gray-300 translate-x-0 duration-1000 overflow-hidden"
+            : "hidden  w-0 h-auto bg-white px-0 py-4 lg:flex flex-col justify-start items-center gap-0 -translate-x-80 duration-1000"
         }
       >
         <section className="w-full relative flex flex-col justify-center items-center gap-4">

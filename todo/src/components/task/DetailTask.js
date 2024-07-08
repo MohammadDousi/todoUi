@@ -60,7 +60,7 @@ export default function DetailTask() {
 
   return (
     <>
-      <section className="w-full h-full pt-3 px-6 pb-4 absolute flex flex-col justify-start items-start gap-6">
+      <section className="w-full h-full pt-3 px-6 pb-40 lg:pb-4 absolute flex flex-col justify-start items-start gap-6">
         {/* title and btn create new task */}
         <section className="w-full flex flex-row justify-between items-center gap-4">
           <TitlePage title="detail & description task" />
@@ -126,7 +126,7 @@ export default function DetailTask() {
                   Partners of this task
                 </h4>
 
-                <section className="w-full flex flex-wrap flex-col justify-start items-center gap-3">
+                <section className="w-full flex flex-wrap flex-row justify-start items-start lg:items-center gap-3">
                   {!tag && (
                     <div className="w-full h-14 lg:h-12 px-8 bg-blue-50 border border-blue-300 text-slate-600 text-base tracking-wide rounded-xl flex justify-start items-center">
                       Cooperation is not selected for this task.
